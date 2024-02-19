@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "yahaha:item/suika_game_theme_kazoo_cover_music_disc"
+  }
+}

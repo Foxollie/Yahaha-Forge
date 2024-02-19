@@ -1,0 +1,30 @@
+{
+  "item.yahaha.korok_seed": "Korok Seed",
+  "item.yahaha.korok_seed_powder": "Korok Seed Powder",
+  "item.yahaha.korok_wand_empty": "Korok Wand",
+  "item.yahaha.korok_frond": "Korok Frond",
+  "item.yahaha.octorok_eyeball": "Octorok Eyeball",
+  "item.yahaha.korok_wand_block": "Korok Wand",
+  "item.yahaha.korok_wand_full": "Korok Wand",
+  "item.yahaha.fredrick_spawn_egg": "Fredrick Spawn Egg",
+  "tooltip.yahaha.korok_wand_empty": "§3EMPTY",
+  "item.yahaha.fredrick_wand_schematic": "§2Wand §2Schematic §2- §2Fredrick",
+
+  "entity.yahaha.fredrick": "§3Fredrick",
+
+  "item.yahaha.kazoo_view_highway_music_disc": "§bMusic §bDisc",
+  "item.yahaha.kazoo_view_highway_music_disc.desc": "cdotkom - Kazoo View Highway",
+
+  "item.yahaha.piranha_plants_on_parade_kazoo_cover_music_disc": "§bMusic §bDisc",
+  "item.yahaha.piranha_plants_on_parade_kazoo_cover_music_disc.desc": "cdotkom - Piranha Plants on Parade Kazoo Cover",
+
+  "item.yahaha.suika_game_theme_kazoo_cover_music_disc": "§bMusic §bDisc",
+  "item.yahaha.suika_game_theme_kazoo_cover_music_disc.desc": "cdotkom - Suika Game Theme Kazoo Cover",
+
+  "block.yahaha.korok_seed_infused_dirt": "Korok Seed Infused Dirt",
+  "block.yahaha.korok_seed_infused_gravel": "Korok Seed Infused Gravel",
+  "block.yahaha.korok_seed_block": "Block of Korok Seed",
+  "block.yahaha.wand_construction_table": "Wand Construction Table",
+
+  "creativetab.yahaha_tab": "YAHAHA"
+}
