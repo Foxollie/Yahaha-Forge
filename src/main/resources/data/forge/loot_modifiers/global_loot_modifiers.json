@@ -1,0 +1,13 @@
+{
+  "entries": [
+    "yahaha:korok_seed_from_grass",
+    "yahaha:korok_seed_from_oak_leaves",
+    "yahaha:korok_seed_from_birch_leaves",
+    "yahaha:korok_seed_from_dark_oak_leaves",
+    "yahaha:korok_frond_from_oak_leaves",
+    "yahaha:korok_frond_from_birch_leaves",
+    "yahaha:korok_frond_from_dark_oak_leaves",
+    "yahaha:octorok_eyeball_from_kelp"
+  ],
+  "replace": false
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "yahaha:item/piranha_plants_on_parade_kazoo_cover_music_disc"
+  }
+}
