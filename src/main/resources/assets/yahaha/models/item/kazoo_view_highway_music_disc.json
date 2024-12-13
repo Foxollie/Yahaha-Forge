@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "yahaha:item/kazoo_view_highway_music_disc"
+  }
+}

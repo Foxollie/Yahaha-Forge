@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "minecraft:logs"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "yahaha:korok_frond"
+    }
+  ],
+  "result": {
+    "item" : "yahaha:fredrick_wand_schematic",
+    "count": 1
+  }
+}

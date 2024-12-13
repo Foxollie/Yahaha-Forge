@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#G#",
+    "###",
+    "/ /"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+
+    "G": {
+      "item": "yahaha:korok_seed_block"
+    },
+
+    "/": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "result": {
+    "item": "yahaha:wand_construction_table",
+    "count": 1
+  }
+}

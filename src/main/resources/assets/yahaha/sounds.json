@@ -1,0 +1,90 @@
+{
+  "kazoo_view_highway": {
+  "sounds": [
+    {
+      "name": "yahaha:kazoo_view_highway",
+      "stream": true
+     }
+    ]
+  },
+  "piranha_plants_on_parade_kazoo_cover": {
+    "sounds": [
+      {
+        "name": "yahaha:piranha_plants_on_parade_kazoo_cover",
+        "stream": true
+      }
+    ]
+  },
+  "suika_game_theme_kazoo_cover": {
+    "sounds": [
+      {
+        "name": "yahaha:suika_game_theme_kazoo_cover",
+        "stream": true
+      }
+    ]
+  },
+  "hestu_dance": {
+    "sounds": [
+      {
+        "name": "yahaha:hestu_dance",
+        "stream": true
+      }
+    ]
+  },
+  "korok_pop": {
+    "sounds": [
+      {
+        "name": "yahaha:korok_pop",
+        "stream": true
+      }
+    ]
+  },
+  "fredrick_spawn": {
+    "sounds": [
+      {
+        "name": "yahaha:fredrick_spawn",
+        "stream": true
+      }
+    ]
+  },
+  "fredrick_hurt": {
+    "sounds": [
+      {
+        "name": "yahaha:fredrick_hurt",
+        "stream": true
+      }
+    ]
+  },
+  "fredrick_death": {
+    "sounds": [
+      {
+        "name": "yahaha:fredrick_death",
+        "stream": true
+      }
+    ]
+  },
+  "yahaha": {
+    "sounds": [
+      {
+        "name": "yahaha:yahaha",
+        "stream": true
+      }
+    ]
+  },
+  "korok_question_1": {
+    "sounds": [
+      {
+        "name": "yahaha:korok_question_1",
+        "stream": true
+      }
+    ]
+  },
+  "korok_question_2": {
+    "sounds": [
+      {
+        "name": "yahaha:korok_question_2",
+        "stream": true
+      }
+    ]
+  }
+}
