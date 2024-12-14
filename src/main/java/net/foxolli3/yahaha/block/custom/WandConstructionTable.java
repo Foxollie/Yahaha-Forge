@@ -75,11 +75,34 @@ public class WandConstructionTable extends BaseEntityBlock {
     }*/
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            serverPlayer.openMenu(state.getMenuProvider(level, pos));
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!level.isClientSide()) {
+            BlockEntity entity = level.getBlockEntity(pos);
+            ServerPlayer theplayer = (ServerPlayer) player;
+            if(entity instanceof WandConstructionTableBlockEntity) {
+                theplayer.openMenu((WandConstructionTableBlockEntity)entity, pos);
+            } else {
+                throw new IllegalStateException("Our Container provider is missing!");
+            }
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+
+        return ItemInteractionResult.sidedSuccess(true);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!level.isClientSide()) {
+            BlockEntity entity = level.getBlockEntity(pos);
+            ServerPlayer theplayer = (ServerPlayer) player;
+            if(entity instanceof WandConstructionTableBlockEntity) {
+                //ServerPlayer.openScreen(((ServerPlayer)pPlayer), (Breeder_Tile)entity, pPos);
+                theplayer.openMenu((WandConstructionTableBlockEntity)entity, pos);
+            } else {
+                throw new IllegalStateException("Our Container provider is missing!");
+            }
+        }
+
+        return InteractionResult.PASS;
     }
 
     @Nullable
