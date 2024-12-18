@@ -3,17 +3,17 @@ package net.foxolli3.yahaha.block.custom;
 import com.mojang.serialization.MapCodec;
 import net.foxolli3.yahaha.block.entity.ModBlockEntities;
 import net.foxolli3.yahaha.block.entity.WandConstructionTableBlockEntity;
+import net.foxolli3.yahaha.screen.FredrickWandSchematicScreen;
 import net.foxolli3.yahaha.screen.ModMenuTypes;
 import net.foxolli3.yahaha.screen.WandConstructionTableMenu;
 import net.foxolli3.yahaha.screen.WandConstructionTableScreen;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -29,7 +29,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class WandConstructionTable extends BaseEntityBlock {
-    public static final VoxelShape SHAPE = Block.box(1,0,1,15,12,15);
+    public static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 12, 15);
+
     public WandConstructionTable(Properties pProperties) {
         super(pProperties);
     }
@@ -40,7 +41,7 @@ public class WandConstructionTable extends BaseEntityBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContest){
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContest) {
         return SHAPE;
     }
 
@@ -57,7 +58,7 @@ public class WandConstructionTable extends BaseEntityBlock {
                 ((WandConstructionTableBlockEntity) blockEntity).drops();
             }
         }
-        super.onRemove(pState,pLevel,pPos,pNewState,pIsMoving);
+        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
 
     /*@Override
@@ -78,8 +79,34 @@ public class WandConstructionTable extends BaseEntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
             serverPlayer.openMenu(state.getMenuProvider(level, pos));
+            if (!level.isClientSide()) {
+                BlockEntity entity = level.getBlockEntity(pos);
+                ServerPlayer theplayer = (ServerPlayer) player;
+                if (entity instanceof WandConstructionTableBlockEntity) {
+                    //ServerPlayer.openScreen(((ServerPlayer)pPlayer), (Breeder_Tile)entity, pPos);
+                    theplayer.openMenu((WandConstructionTableBlockEntity) entity, pos);
+                } else {
+                    throw new IllegalStateException("Container provider is missing");
+                }
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!level.isClientSide()) {
+            BlockEntity entity = level.getBlockEntity(pos);
+            ServerPlayer theplayer = (ServerPlayer) player;
+            if(entity instanceof WandConstructionTableBlockEntity) {
+                theplayer.openMenu((WandConstructionTableBlockEntity)entity, pos);
+            } else {
+                throw new IllegalStateException("Our Container provider is missing!");
+            }
+        }
+
+        return ItemInteractionResult.sidedSuccess(true);
     }
 
     @Nullable

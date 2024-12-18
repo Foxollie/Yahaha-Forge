@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "yahaha:block/korok_seed_tile_slab"
+    },
+    "type=double": {
+      "model": "yahaha:block/korok_seed_tiles"
+    },
+    "type=top": {
+      "model": "yahaha:block/korok_seed_tile_slab_top"
+    }
+  }
+}

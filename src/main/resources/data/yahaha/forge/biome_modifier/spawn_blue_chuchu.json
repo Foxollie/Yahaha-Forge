@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#yahaha:has_mob/blue_chuchu",
+  "spawners": {
+    "type": "yahaha:blue_chuchu",
+    "weight": 20,
+    "minCount": 1,
+    "maxCount": 3
+  }
+}

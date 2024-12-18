@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "yahaha:item/white_chuchu_jelly"
+  }
+}

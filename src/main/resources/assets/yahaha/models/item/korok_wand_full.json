@@ -92,5 +92,8 @@
         0.6
       ]
     }
+  },
+  "textures": {
+    "particle": "item/korok_wand_frond"
   }
 }

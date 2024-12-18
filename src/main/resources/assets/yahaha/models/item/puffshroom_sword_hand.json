@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "yahaha:item/puffshroom_sword_hand"
+  }
+}

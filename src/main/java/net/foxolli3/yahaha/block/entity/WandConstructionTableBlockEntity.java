@@ -1,5 +1,6 @@
 package net.foxolli3.yahaha.block.entity;
 
+import net.foxolli3.yahaha.component.ModDataComponentTypes;
 import net.foxolli3.yahaha.item.Moditems;
 import net.foxolli3.yahaha.screen.WandConstructionTableMenu;
 import net.foxolli3.yahaha.sound.ModSounds;
@@ -180,8 +181,9 @@ public class WandConstructionTableBlockEntity extends BlockEntity implements Men
         isCrafting = String.valueOf("enableAble");
     }
 
+    ItemStack result;
+
     private void craftItem() {
-        ItemStack result = new ItemStack(Moditems.KOROK_WAND_FULL.get(),1);
         this.itemHandler.extractItem(INPUT_SLOT,1,false);
         this.itemHandler.extractItem(INPUT_SLOT_2,1,false);
         this.itemHandler.extractItem(INPUT_SLOT_3,1,false);
@@ -192,8 +194,17 @@ public class WandConstructionTableBlockEntity extends BlockEntity implements Men
 
 
 
-        this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
-                this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
+        ItemStack outputStack = new ItemStack(result.getItem(),
+                this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount());
+
+        // Check if the result has the FROND_USES component and copy it
+            if (result.has(ModDataComponentTypes.FROND_USES.get())) {
+                outputStack.set(ModDataComponentTypes.FROND_USES.get(), result.get(ModDataComponentTypes.FROND_USES.get()));
+            }
+
+        this.itemHandler.setStackInSlot(OUTPUT_SLOT, outputStack);
+
+
     }
 
     private void increaseCraftingProgress() {
@@ -201,18 +212,78 @@ public class WandConstructionTableBlockEntity extends BlockEntity implements Men
     }
 
     private boolean hasRecipe() {
-        boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top left
-                this.itemHandler.getStackInSlot(INPUT_SLOT_2).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top right
-                this.itemHandler.getStackInSlot(INPUT_SLOT_3).getItem() == Blocks.OAK_LOG.asItem() && //bottom right
-                this.itemHandler.getStackInSlot(INPUT_SLOT_4).getItem() == Moditems.KOROK_FROND.get() && //top center
-                this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_BLOCK.get() && //middle
-                this.itemHandler.getStackInSlot(INPUT_SLOT_6).getItem() == Items.COOKED_BEEF && //bottom
-                this.itemHandler.getStackInSlot(INPUT_SLOT_7).getItem() == Blocks.OAK_LOG.asItem(); //bottom left
-        ItemStack result = new ItemStack(Moditems.KOROK_WAND_FULL.get());
+        // Recipe 1: Crafting with Octorok Eyeballs and other ingredients
+        boolean hasRecipe1 =
+                        this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == Moditems.OCTOROK_EYEBALL.get() && // top left
+                        this.itemHandler.getStackInSlot(INPUT_SLOT_2).getItem() == Moditems.OCTOROK_EYEBALL.get() && // top right
+                        this.itemHandler.getStackInSlot(INPUT_SLOT_3).getItem() == Blocks.OAK_LOG.asItem() && // bottom right
+                        this.itemHandler.getStackInSlot(INPUT_SLOT_4).getItem() == Moditems.KOROK_FROND.get() && // top center
+                                (this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_BLOCK.get() ||
+                                        (this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_BLOCK.get() ||
+                                                (this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_BLOCK.get() ||
+                                                        (this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_BLOCK.get() ||
+                                                                (this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_BLOCK.get())))))  && // middle
+                        this.itemHandler.getStackInSlot(INPUT_SLOT_6).getItem() == Items.COOKED_BEEF && // bottom
+                        this.itemHandler.getStackInSlot(INPUT_SLOT_7).getItem() == Blocks.OAK_LOG.asItem(); // bottom left
+        if(hasRecipe1){
+            result = new ItemStack(Moditems.KOROK_WAND_FULL.get());
+        }
+
+        // Recipe 2: Crafting with Korok Wand Empty and Korok Fronds
+        boolean hasKorokWandEmptyInMiddle = this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_EMPTY.get(); // middle
+        int korokFrondCount = 0;
+        boolean noClutter = true;
+
+        // Count Korok Fronds in all the other slots (excluding the middle)
+        for (int i = 0; i < 8; i++) {
+            if (i != INPUT_SLOT_5 && this.itemHandler.getStackInSlot(i).getItem() == Moditems.KOROK_FROND.get()) {
+                korokFrondCount++;
+            } else if(i != INPUT_SLOT_5 && (this.itemHandler.getStackInSlot(i).getItem() != Moditems.KOROK_FROND.get() && this.itemHandler.getStackInSlot(i).getCount() > 0)){
+                    noClutter = false;
+            }
+        }
+
+        for (int i = 0; i < 8; i++) {
+            if (i != INPUT_SLOT_5 && this.itemHandler.getStackInSlot(i).getItem() == Moditems.KOROK_FROND.get()) {
+                korokFrondCount++;
+            } else if(i != INPUT_SLOT_5 && (this.itemHandler.getStackInSlot(i).getItem() != Moditems.KOROK_FROND.get() && this.itemHandler.getStackInSlot(i).getCount() > 0)){
+                noClutter = false;
+            }
+        }
+
+        // Recipe 2 conditions: Korok Wand Empty in the middle and 1-6 Korok Fronds in the other slots
+        boolean hasFrondsAndWandEmpty = hasKorokWandEmptyInMiddle && korokFrondCount > 0 && korokFrondCount <= 6;
+        boolean hasShroomAndWandEmpty = hasKorokWandEmptyInMiddle && korokFrondCount > 0 && korokFrondCount <= 6;
+
+        boolean canCraft = false;
+
+        // If Recipe 2 is valid, craft the Korok Wand Frond with the correct frond_use component
+        if (hasFrondsAndWandEmpty) {
+            // Create the item with the correct frond_use component
+            result = new ItemStack(Moditems.KOROK_WAND_FROND.get());
+            // Set the frond_use component based on how many fronds are in the grid
+            result.set(ModDataComponentTypes.FROND_USES.get(), korokFrondCount);
+
+            // Check if the crafted item can be inserted into the output slot
+            canCraft = canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem()) && noClutter;
+        }
 
 
-        return hasCraftingItem && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
+        if (hasShroomAndWandEmpty) {
+            // Create the item with the correct frond_use component
+            result = new ItemStack(Moditems.KOROK_WAND_FROND.get());
+            // Set the frond_use component based on how many fronds are in the grid
+            result.set(ModDataComponentTypes.FROND_USES.get(), korokFrondCount);
+
+            // Check if the crafted item can be inserted into the output slot
+            canCraft = canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem()) && noClutter;
+        }
+
+        // Return true if either Recipe 1 or Recipe 2 is valid and can craft
+        return (hasRecipe1 && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem())) || (hasFrondsAndWandEmpty && canCraft);
     }
+
+
 
     private boolean canInsertItemIntoOutputSlot(Item item) {
         return this.itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || this.itemHandler.getStackInSlot(OUTPUT_SLOT).is(item);

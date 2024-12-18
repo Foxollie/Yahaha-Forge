@@ -2,13 +2,32 @@
   "item.yahaha.korok_seed": "Korok Seed",
   "item.yahaha.korok_seed_powder": "Korok Seed Powder",
   "item.yahaha.korok_wand_empty": "Korok Wand",
+  "item.yahaha.korok_wand_puffshroom": "Korok Wand",
+  "item.yahaha.korok_wand_frond": "Korok Wand",
   "item.yahaha.korok_frond": "Korok Frond",
   "item.yahaha.octorok_eyeball": "Octorok Eyeball",
   "item.yahaha.korok_wand_block": "Korok Wand",
+  "item.yahaha.korok_wand_fire": "Korok Wand",
+  "item.yahaha.blue_chuchu_jelly": "Blue Chuchu Jelly",
+  "item.yahaha.red_chuchu_jelly": "Red Chuchu Jelly",
+  "item.yahaha.yellow_chuchu_jelly": "Yellow Chuchu Jelly",
+  "item.yahaha.white_chuchu_jelly": "White Chuchu Jelly",
   "item.yahaha.korok_wand_full": "Korok Wand",
   "item.yahaha.fredrick_spawn_egg": "Fredrick Spawn Egg",
+  "item.yahaha.blue_chuchu_spawn_egg": "Blue Chuchu Spawn Egg",
+  "item.yahaha.puffshroom": "Puffshroom",
   "tooltip.yahaha.korok_wand_empty": "§3EMPTY",
+  "tooltip.yahaha.korok_wand_block": "§3Korok Seed Block",
+  "tooltip.yahaha.korok_wand_full": "§3Fredrick",
+  "tooltip.yahaha.korok_wand_frond.shift_down": "Swing to blow away enemies in radius. Swing while falling to negate fall damage",
+  "tooltip.yahaha.korok_wand_frond": "[Press §eShift§r]",
+  "tooltip.yahaha.korok_wand_puffshroom.shift_down": "Swing to create a cloud of smoke. You'll become invisible and enemies will be pacified temporally",
+  "tooltip.yahaha.korok_wand_puffshroom": "[Press §eShift§r]",
   "item.yahaha.fredrick_wand_schematic": "§2Wand §2Schematic §2- §2Fredrick",
+
+  "block.yahaha.korok_seed_tile_stairs": "Korok Seed Tile Stairs",
+  "block.yahaha.korok_seed_tile_slab": "Korok Seed Tile Slab",
+  "block.yahaha.korok_seed_tiles": "Korok Seed Tiles",
 
   "entity.yahaha.fredrick": "§3Fredrick",
 
@@ -25,6 +44,11 @@
   "block.yahaha.korok_seed_infused_gravel": "Korok Seed Infused Gravel",
   "block.yahaha.korok_seed_block": "Block of Korok Seed",
   "block.yahaha.wand_construction_table": "Wand Construction Table",
+
+  "block.yahaha.fiery_korok_block": "Fiery Korok Block",
+  "block.yahaha.icy_korok_block": "Icy Korok Block",
+  "block.yahaha.electric_korok_block": "Electric Korok Block",
+  "block.yahaha.watery_korok_block": "Watery Korok Block",
 
   "creativetab.yahaha_tab": "YAHAHA"
 }

@@ -3,6 +3,7 @@ package net.foxolli3.yahaha.entity.custom;
 import net.foxolli3.yahaha.entity.ModEntities;
 import net.foxolli3.yahaha.item.Moditems;
 import net.foxolli3.yahaha.sound.ModSounds;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -36,8 +37,14 @@ import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.animation.*;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class FredrickMob extends TamableAnimal implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public FredrickMob(EntityType<? extends TamableAnimal> entityType, Level level) {
         super(entityType, level);
@@ -143,13 +150,15 @@ public class FredrickMob extends TamableAnimal implements GeoEntity {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("isSitting", this.isSitting());
     }
+
+    private boolean isTrading = false;
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
         Item itemForTaming = Moditems.KOROK_SEED_POWDER.get();
         Item tradeOutcome = Items.STICK;
-        Level  level = player.level();
+        Level level = player.level();
 
         if (item != Moditems.KOROK_SEED.get()) {
 
@@ -182,7 +191,7 @@ public class FredrickMob extends TamableAnimal implements GeoEntity {
             return InteractionResult.PASS;
         }
     } else {
-            if(!player.getCooldowns().isOnCooldown(Moditems.KOROK_SEED.get())) {
+            if(!isTrading) {
                 itemstack.shrink(1);
                 int randomTradeInt = randomTrade();
                 int tradeAmount = 1;
@@ -241,10 +250,17 @@ public class FredrickMob extends TamableAnimal implements GeoEntity {
                     tradeOutcome = Items.BAMBOO;
                     tradeAmount = 12;
                 }
-                player.getCooldowns().addCooldown(Moditems.KOROK_SEED.get(), 10);
-                    ItemEntity itementity = new ItemEntity(level, (double) player.getX() , (double) (player.getY() + 1D), (double) player.getZ(), new ItemStack(tradeOutcome, tradeAmount));
-                    itementity.setPickUpDelay(50);
-                    level.addFreshEntity(itementity);
+                    ItemEntity itementity = new ItemEntity(level, (double) this.getX() , (double) (this.getY() + 1D), (double) this.getZ(), new ItemStack(tradeOutcome, tradeAmount));
+                    for (int i = 0; i < 12; i++){
+                        if (level() instanceof ServerLevel _level) {
+                            scheduler.schedule(() -> _level.sendParticles(ParticleTypes.WAX_ON, this.getX(), this.getY(), this.getZ(), 5, -0.5, 0.5, -0.5, 1), i / 4, TimeUnit.SECONDS);
+                        }
+                    }
+                    isTrading = true;
+                    scheduler.schedule(() -> itementity.setPickUpDelay(50), 3, TimeUnit.SECONDS);
+                    scheduler.schedule(() -> itementity.setPos(this.getX(), this.getY(), this.getZ()), 3, TimeUnit.SECONDS);
+                    scheduler.schedule(() -> level.addFreshEntity(itementity), 3, TimeUnit.SECONDS);
+                    scheduler.schedule(() -> isTrading = false, 3, TimeUnit.SECONDS);
             }
         }
         return super.mobInteract(player, hand);

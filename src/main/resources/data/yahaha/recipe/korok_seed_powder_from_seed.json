@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "yahaha:korok_seed"
+    }
+  ],
+  "result": {
+    "id" : "yahaha:korok_seed_powder",
+    "count": 3
+  }
+}

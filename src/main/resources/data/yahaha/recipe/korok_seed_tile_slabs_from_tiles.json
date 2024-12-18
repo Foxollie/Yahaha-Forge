@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "/": {
+      "item": "yahaha:korok_seed_tiles"
+    }
+  },
+  "pattern": [
+    "///"
+  ],
+  "result": {
+    "count": 6,
+    "id": "yahaha:korok_seed_tile_slab"
+  }
+}

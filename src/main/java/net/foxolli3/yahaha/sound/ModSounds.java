@@ -34,6 +34,11 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> FREDRICK_SPAWN = registerSoundEvent("fredrick_spawn");
     public static final RegistryObject<SoundEvent> FREDRICK_HURT = registerSoundEvent("fredrick_hurt");
 
+    public static final RegistryObject<SoundEvent> FROND_USE = registerSoundEvent("frond_use");
+    public static final RegistryObject<SoundEvent> PUFFSHROOM = registerSoundEvent("puffshroom");
+    public static final RegistryObject<SoundEvent> CHUCHU_SPAWN = registerSoundEvent("chuchu_spawn");
+    public static final RegistryObject<SoundEvent> CHUCHU_ATTACK = registerSoundEvent("chuchu_attack");
+
     public static final RegistryObject<SoundEvent> FREDRICK_DEATH = registerSoundEvent("fredrick_death");
     public static final RegistryObject<SoundEvent> KOROK_QUESTION_1 = registerSoundEvent("korok_question_1");
     public static final RegistryObject<SoundEvent> KOROK_QUESTION_2 = registerSoundEvent("korok_question_2");

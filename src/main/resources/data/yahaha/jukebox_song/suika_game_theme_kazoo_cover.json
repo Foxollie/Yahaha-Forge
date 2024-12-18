@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "item.yahaha.suika_game_theme_kazoo_cover_music_disc.desc"
+  },
+  "length_in_seconds": 207.0,
+  "sound_event": "yahaha:suika_game_theme_kazoo_cover"
+}

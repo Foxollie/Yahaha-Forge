@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "/": {
+      "item": "yahaha:korok_seed"
+    }
+  },
+  "pattern": [
+    " / ",
+    " / ",
+    " / "
+  ],
+  "result": {
+    "count": 1,
+    "id": "yahaha:korok_wand_empty"
+  }
+}

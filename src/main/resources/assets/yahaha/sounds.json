@@ -1,10 +1,10 @@
 {
   "kazoo_view_highway": {
-  "sounds": [
-    {
-      "name": "yahaha:kazoo_view_highway",
-      "stream": true
-     }
+    "sounds": [
+      {
+        "name": "yahaha:kazoo_view_highway",
+        "stream": true
+      }
     ]
   },
   "piranha_plants_on_parade_kazoo_cover": {
@@ -86,5 +86,34 @@
         "stream": true
       }
     ]
-  }
+  },
+  "frond_use": {
+    "sounds": [
+      {
+        "name": "yahaha:frond_use",
+        "stream": true
+      }
+    ]
+  },"puffshroom": {
+  "sounds": [
+    {
+      "name": "yahaha:puffshroom",
+      "stream": true
+    }
+  ]
+},"chuchu_spawn": {
+  "sounds": [
+    {
+      "name": "yahaha:chuchu_spawn",
+      "stream": true
+    }
+  ]
+},"chuchu_attack": {
+  "sounds": [
+    {
+      "name": "yahaha:chuchu_attack",
+      "stream": true
+    }
+  ]
+}
 }

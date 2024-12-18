@@ -33,11 +33,6 @@ public class FredrickWandSchematicScreen extends Screen {
         pGuiGraphics.blit(TEXTURE, x - 85, y - 80, 0, 0, 256, 256);
     }
 
-    @Override
-    protected void renderBlurredBackground(float pPartialTick) {
-        super.renderBlurredBackground(pPartialTick);
-    }
-
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {

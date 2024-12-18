@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "forge:separate_transforms",
+  "base": {
+    "parent": "yahaha:item/puffshroom_sword_hand"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "yahaha:item/puffshroom_sword_inv"
+    },
+    "ground": {
+      "parent": "yahaha:item/puffshroom_sword_hand"
+    },
+    "fixed": {
+      "parent": "yahaha:item/puffshroom_sword_inv"
+    }
+  }
+}

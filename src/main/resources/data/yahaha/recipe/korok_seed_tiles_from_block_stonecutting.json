@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "yahaha:korok_seed_block"
+  },
+  "result": {
+    "count": 4,
+    "id": "yahaha:korok_seed_tiles"
+  }
+}

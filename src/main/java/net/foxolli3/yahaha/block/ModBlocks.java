@@ -5,9 +5,7 @@ import net.foxolli3.yahaha.block.custom.WandConstructionTable;
 import net.foxolli3.yahaha.item.Moditems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.common.data.SoundDefinition;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -26,6 +24,22 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GRAVEL)));
     public static final RegistryObject<Block> KOROK_SEED_BLOCK = registerBlock("korok_seed_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.CUT_COPPER).sound(SoundType.METAL)));
+    public static final RegistryObject<Block> FIERY_KOROK_BLOCK = registerBlock("fiery_korok_block",
+            () -> new SlimeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SLIME_BLOCK).sound(SoundType.HONEY_BLOCK).noOcclusion().lightLevel(p_50872_ -> 8)));
+    public static final RegistryObject<Block> ICY_KOROK_BLOCK = registerBlock("icy_korok_block",
+            () -> new SlimeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SLIME_BLOCK).sound(SoundType.HONEY_BLOCK).noOcclusion().lightLevel(p_50872_ -> 2)));
+    public static final RegistryObject<Block> ELECTRIC_KOROK_BLOCK = registerBlock("electric_korok_block",
+            () -> new SlimeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SLIME_BLOCK).sound(SoundType.HONEY_BLOCK).noOcclusion().lightLevel(p_50872_ -> 6)));
+    public static final RegistryObject<Block> WATERY_KOROK_BLOCK = registerBlock("watery_korok_block",
+            () -> new SlimeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SLIME_BLOCK).sound(SoundType.HONEY_BLOCK).noOcclusion().lightLevel(p_50872_ -> 4)));
+
+    public static final RegistryObject<Block> KOROK_SEED_TILES = registerBlock("korok_seed_tiles",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.CUT_COPPER).sound(SoundType.METAL)));
+
+    public static final RegistryObject<Block> KOROK_SEED_TILE_STAIRS = registerBlock("korok_seed_tile_stairs",
+            () -> new StairBlock(ModBlocks.KOROK_SEED_TILES.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(Blocks.CUT_COPPER).sound(SoundType.METAL)));
+    public static final RegistryObject<Block> KOROK_SEED_TILE_SLAB = registerBlock("korok_seed_tile_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CUT_COPPER).sound(SoundType.METAL)));
 
     public static final RegistryObject<Block> WAND_CONSTRUCTION_TABLE = registerBlock("wand_construction_table",
             () -> new WandConstructionTable(BlockBehaviour.Properties.ofFullCopy(Blocks.SPRUCE_WOOD).noOcclusion()));

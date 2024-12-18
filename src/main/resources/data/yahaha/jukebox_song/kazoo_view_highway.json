@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "item.yahaha.kazoo_view_highway_music_disc.desc"
+  },
+  "length_in_seconds": 126.0,
+  "sound_event": "yahaha:kazoo_view_highway"
+}
