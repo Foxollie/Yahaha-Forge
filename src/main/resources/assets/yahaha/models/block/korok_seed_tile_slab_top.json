@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "yahaha:block/korok_seed_tiles",
+    "side": "yahaha:block/korok_seed_tiles",
+    "top": "yahaha:block/korok_seed_tiles"
+  }
+}

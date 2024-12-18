@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "yahaha:overworld_korok_seed_block_placed",
+  "step": "underground_ores"
+}
