@@ -37,13 +37,45 @@ public class KorokWandEmpty extends Item {
             Level level = pContext.getLevel();
             Player player = pContext.getPlayer();
             BlockState state = pContext.getLevel().getBlockState(positionClicked);
-            ItemStack itemstack = player.getItemInHand(InteractionHand.MAIN_HAND);
+            ItemStack itemstack = player.getItemInHand(pContext.getHand());
             Item item = itemstack.getItem();
             boolean isKorokBlock = pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() == ModBlocks.KOROK_SEED_BLOCK.get();
+            boolean isKorokBlockFire = pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() == ModBlocks.FIERY_KOROK_BLOCK.get();
+            boolean isKorokBlockWater = pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() == ModBlocks.WATERY_KOROK_BLOCK.get();
+            boolean isKorokBlockIce = pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() == ModBlocks.ICY_KOROK_BLOCK.get();
+            boolean isKorokBlockThunder = pContext.getLevel().getBlockState(pContext.getClickedPos()).getBlock() == ModBlocks.ELECTRIC_KOROK_BLOCK.get();
 
-            if (isKorokBlock == true) {
+            if (isKorokBlock) {
                 if (item == Moditems.KOROK_WAND_EMPTY.get()) {
-                    player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Moditems.KOROK_WAND_BLOCK.get(),1));
+                    player.setItemInHand(pContext.getHand(), new ItemStack(Moditems.KOROK_WAND_BLOCK.get(),1));
+                    level.destroyBlock(positionClicked, false);
+
+                    return InteractionResult.SUCCESS;
+                }
+            } else if (isKorokBlockFire) {
+                if (item == Moditems.KOROK_WAND_EMPTY.get()) {
+                    player.setItemInHand(pContext.getHand(), new ItemStack(Moditems.KOROK_WAND_FIRE.get(),1));
+                    level.destroyBlock(positionClicked, false);
+
+                    return InteractionResult.SUCCESS;
+                }
+            } else if (isKorokBlockIce) {
+                if (item == Moditems.KOROK_WAND_EMPTY.get()) {
+                    player.setItemInHand(pContext.getHand(), new ItemStack(Moditems.KOROK_WAND_ICE.get(),1));
+                    level.destroyBlock(positionClicked, false);
+
+                    return InteractionResult.SUCCESS;
+                }
+            } else if (isKorokBlockThunder) {
+                if (item == Moditems.KOROK_WAND_EMPTY.get()) {
+                    player.setItemInHand(pContext.getHand(), new ItemStack(Moditems.KOROK_WAND_THUNDER.get(),1));
+                    level.destroyBlock(positionClicked, false);
+
+                    return InteractionResult.SUCCESS;
+                }
+            } else if (isKorokBlockWater) {
+                if (item == Moditems.KOROK_WAND_EMPTY.get()) {
+                    player.setItemInHand(pContext.getHand(), new ItemStack(Moditems.KOROK_WAND_WATER.get(),1));
                     level.destroyBlock(positionClicked, false);
 
                     return InteractionResult.SUCCESS;

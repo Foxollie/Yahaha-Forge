@@ -139,6 +139,9 @@ public class FredrickMob extends TamableAnimal implements GeoEntity {
         super.readAdditionalSaveData(tag);
         setSitting(tag.getBoolean("isSitting"));
     }
+    String tAnimationState(String tAnimationState) {
+        return this.getAnimatableInstanceCache().toString();
+    }
 
     @Override
     public boolean isFood(ItemStack pStack) {

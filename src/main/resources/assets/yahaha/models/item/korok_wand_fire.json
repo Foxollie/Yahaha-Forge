@@ -1,6 +1,5 @@
 {
   "credit": "Made with Blockbench",
-  "render_type": "minecraft:translucent",
   "parent": "builtin/entity",
   "texture_size": [
     32,

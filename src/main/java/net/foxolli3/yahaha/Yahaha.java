@@ -5,8 +5,7 @@ import net.foxolli3.yahaha.block.ModBlocks;
 import net.foxolli3.yahaha.block.entity.ModBlockEntities;
 import net.foxolli3.yahaha.component.ModDataComponentTypes;
 import net.foxolli3.yahaha.entity.ModEntities;
-import net.foxolli3.yahaha.entity.client.BlueChuChuRenderer;
-import net.foxolli3.yahaha.entity.client.FredrickRenderer;
+import net.foxolli3.yahaha.entity.client.*;
 import net.foxolli3.yahaha.item.CreativeModTabs;
 import net.foxolli3.yahaha.item.Moditems;
 import net.foxolli3.yahaha.loot.ModLootModifier;
@@ -18,6 +17,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -88,7 +88,12 @@ public class Yahaha {
             MenuScreens.register(ModMenuTypes.WAND_CONSTRUCTION_TABLE_MENU.get(), WandConstructionTableScreen::new);
 
             EntityRenderers.register(ModEntities.FREDRICK.get(), FredrickRenderer::new);
+            EntityRenderers.register(ModEntities.CRYO_FREDRICK.get(), CryoFredrickRenderer::new);
+            EntityRenderers.register(ModEntities.PYRO_FREDRICK.get(), PyroFredrickRenderer::new);
+            EntityRenderers.register(ModEntities.ELECTRO_FREDRICK.get(), ElectroFredrickRenderer::new);
+            EntityRenderers.register(ModEntities.HYDRO_FREDRICK.get(), HydroFredrickRenderer::new);
             EntityRenderers.register(ModEntities.BLUE_CHUCHU.get(), BlueChuChuRenderer::new);
+            EntityRenderers.register(ModEntities.YELLOW_CHUCHU.get(), YellowChuChuRenderer::new);
 
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.FIERY_KOROK_BLOCK.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.ICY_KOROK_BLOCK.get(), RenderType.translucent());
@@ -98,5 +103,11 @@ public class Yahaha {
     }
     private void setup(final FMLCommonSetupEvent event) {
 
+    }
+
+    public static final String ID = "yahaha";
+    private static final String MODEL_DIR = "textures/entity/";
+    public static ResourceLocation getModelTexture(String name) {
+        return ResourceLocation.fromNamespaceAndPath(ID, MODEL_DIR + name);
     }
 }

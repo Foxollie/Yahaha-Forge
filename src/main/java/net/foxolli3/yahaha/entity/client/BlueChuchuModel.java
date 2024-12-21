@@ -13,12 +13,12 @@ import software.bernie.geckolib.model.data.EntityModelData;
 public class BlueChuchuModel extends GeoModel<BlueChuchuMob> {
     @Override
     public ResourceLocation getModelResource(BlueChuchuMob animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "geo/blue_chuchu.geo.json");
+        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "geo/blue_chuchu_center.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(BlueChuchuMob animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "textures/entity/blue_chuchu.png");
+        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "textures/entity/blue_chuchu_center.png");
     }
 
     @Override

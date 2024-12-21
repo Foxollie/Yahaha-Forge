@@ -28,20 +28,31 @@ public class CreativeModTabs {
                         pOutput.accept(Moditems.KOROK_WAND_BLOCK.get());
                         pOutput.accept(Moditems.KOROK_WAND_FULL.get());
                         pOutput.accept(Moditems.KOROK_WAND_FIRE.get());
+                        pOutput.accept(Moditems.KOROK_WAND_FIRE_FULL.get());
+                        pOutput.accept(Moditems.KOROK_WAND_ICE.get());
+                        pOutput.accept(Moditems.KOROK_WAND_ICE_FULL.get());
+                        pOutput.accept(Moditems.KOROK_WAND_THUNDER.get());
+                        pOutput.accept(Moditems.KOROK_WAND_THUNDER_FULL.get());
+                        pOutput.accept(Moditems.KOROK_WAND_WATER.get());
+                        pOutput.accept(Moditems.KOROK_WAND_WATER_FULL.get());
+                        pOutput.accept(Moditems.KOROK_WAND_PUFFSHROOM.get());
+                        pOutput.accept(Moditems.KOROK_WAND_FROND.get());
                         pOutput.accept(Moditems.KAZOO_VIEW_HIGHWAY_DISC.get());
                         pOutput.accept(Moditems.PIRANHA_PLANTS_ON_PARADE_KAZOO_COVER_MUSIC_DISC.get());
                         pOutput.accept(Moditems.SUIKA_GAME_THEME_KAZOO_COVER_MUSIC_DISC.get());
                         pOutput.accept(Moditems.FREDRICK_SPAWN_EGG.get());
+                        pOutput.accept(Moditems.CRYO_FREDRICK_SPAWN_EGG.get());
+                        pOutput.accept(Moditems.PYRO_FREDRICK_SPAWN_EGG.get());
+                        pOutput.accept(Moditems.ELECTRO_FREDRICK_SPAWN_EGG.get());
+                        pOutput.accept(Moditems.HYDRO_FREDRICK_SPAWN_EGG.get());
                         pOutput.accept(Moditems.BLUE_CHUCHU_SPAWN_EGG.get());
+                        pOutput.accept(Moditems.YELLOW_CHUCHU_SPAWN_EGG.get());
                         pOutput.accept(Moditems.FREDRICK_WAND_SCHEMATIC.get());
                         pOutput.accept(Moditems.PUFFSHROOM.get());
-                        pOutput.accept(Moditems.KOROK_WAND_PUFFSHROOM.get());
-                        pOutput.accept(Moditems.KOROK_WAND_FROND.get());
                         pOutput.accept(Moditems.BLUE_CHUCHU_JELLY.get());
                         pOutput.accept(Moditems.RED_CHUCHU_JELLY.get());
                         pOutput.accept(Moditems.WHITE_CHUCHU_JELLY.get());
                         pOutput.accept(Moditems.YELLOW_CHUCHU_JELLY.get());
-
 
                         pOutput.accept(ModBlocks.KOROK_SEED_INFUSED_DIRT.get());
                         pOutput.accept(ModBlocks.KOROK_SEED_INFUSED_GRAVEL.get());

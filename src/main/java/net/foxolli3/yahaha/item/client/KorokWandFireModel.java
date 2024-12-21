@@ -9,7 +9,7 @@ import software.bernie.geckolib.model.GeoModel;
 public class KorokWandFireModel extends GeoModel<KorokWandFire> {
     @Override
     public ResourceLocation getModelResource(KorokWandFire animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "geo/korok_wand_block.geo.json");
+        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "geo/korok_wand_block_center.geo.json");
     }
 
     @Override

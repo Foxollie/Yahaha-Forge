@@ -1,19 +1,11 @@
 package net.foxolli3.yahaha.item.custom;
 
-import net.foxolli3.yahaha.entity.ModEntities;
-import net.foxolli3.yahaha.entity.custom.FredrickMob;
-import net.foxolli3.yahaha.item.Moditems;
-import net.foxolli3.yahaha.item.client.KorokWandBlockRenderer;
+import net.foxolli3.yahaha.item.client.KorokWandFireModel;
 import net.foxolli3.yahaha.item.client.KorokWandFireRenderer;
-import net.foxolli3.yahaha.sound.ModSounds;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -29,6 +21,7 @@ import java.util.function.Consumer;
 
 public class KorokWandFire extends Item implements GeoItem {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private KorokWandFireModel korokWandFireModel;
 
     public KorokWandFire(Properties pProperties) {
         super(pProperties);
@@ -62,27 +55,11 @@ public class KorokWandFire extends Item implements GeoItem {
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 if(this.renderer == null) {
-                    renderer = new KorokWandFireRenderer();
+                    renderer = new KorokWandFireRenderer(korokWandFireModel);
                 }
 
                 return this.renderer;
             }
         });
-    }
-
-    private int tickCounter = 0; // Counter to track frames
-
-    @Override
-    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-        if (pIsSelected || pSlotId == -106) {
-            if (!pLevel.isClientSide && pLevel instanceof ServerLevel _level) {
-                tickCounter++; // Increment the counter every frame
-                if (tickCounter >= 20) { // Check if 10 frames have passed
-                    _level.sendParticles(ParticleTypes.FLAME, pEntity.getX(), pEntity.getY() + 1, pEntity.getZ(), 1, 0, 0, 0, 0);
-                    tickCounter = 0; // Reset the counter
-                }
-            }
-        }
-        super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
     }
 }
