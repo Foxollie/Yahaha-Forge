@@ -88,9 +88,6 @@ public class Moditems {
             () -> new KorokWandPuffshroom(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> KOROK_WAND_FROND = ITEMS.register("korok_wand_frond",
             () -> new KorokWandFrond(new Item.Properties().stacksTo(1)));
-
-    public static final RegistryObject<Item> FREDRICK_WAND_SCHEMATIC = ITEMS.register("fredrick_wand_schematic",
-            () -> new KorokSeedItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> FREDRICK_SPAWN_EGG = ITEMS.register("fredrick_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.FREDRICK, 0x7E864D,0x4d3d20,
                     new Item.Properties()));

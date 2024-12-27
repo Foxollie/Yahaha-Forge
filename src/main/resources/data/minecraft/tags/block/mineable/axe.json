@@ -1,5 +1,9 @@
 {
   "values": [
-    "yahaha:wand_construction_table"
+    "yahaha:wand_construction_table",
+    "yahaha:icy_korok_block",
+    "yahaha:fiery_korok_block",
+    "yahaha:watery_korok_block",
+    "yahaha:electric_korok_block"
   ]
 }

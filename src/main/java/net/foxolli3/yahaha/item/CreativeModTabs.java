@@ -49,7 +49,6 @@ public class CreativeModTabs {
                         pOutput.accept(Moditems.YELLOW_CHUCHU_SPAWN_EGG.get());
                         pOutput.accept(Moditems.RED_CHUCHU_SPAWN_EGG.get());
                         pOutput.accept(Moditems.WHITE_CHUCHU_SPAWN_EGG.get());
-                        pOutput.accept(Moditems.FREDRICK_WAND_SCHEMATIC.get());
                         pOutput.accept(Moditems.PUFFSHROOM.get());
                         pOutput.accept(Moditems.BLUE_CHUCHU_JELLY.get());
                         pOutput.accept(Moditems.RED_CHUCHU_JELLY.get());

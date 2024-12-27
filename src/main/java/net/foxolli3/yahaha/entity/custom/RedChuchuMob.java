@@ -156,7 +156,7 @@ public class RedChuchuMob extends Monster implements GeoEntity {
                     double x = this.getX();
                     double y = this.getY();
                     double z = this.getZ();
-                    _level.sendParticles(ModParticles.WHITE_CHUCHU_BURST_PARTICLES.get(), x, y, z, 5, 0.2, 0.2, 0.2, 0.05f);
+                    _level.sendParticles(ModParticles.RED_CHUCHU_BURST_PARTICLES.get(), x, y, z, 5, 0.2, 0.2, 0.2, 0.05f);
                     _level.playSeededSound(null, x, y, z, ModSounds.CHUCHU_SPAWN.get(), SoundSource.HOSTILE, 1f, 1f, 0);
                 }
             } else {
@@ -222,7 +222,7 @@ public class RedChuchuMob extends Monster implements GeoEntity {
             double x = this.getX();
             double y = this.getY();
             double z = this.getZ();
-            _level.playSeededSound(null, x, y, z, ModSounds.CHUCHU_ATTACK.get(), SoundSource.HOSTILE, 1f, 1f, 0);
+            _level.playSeededSound(null, x, y, z, ModSounds.CHUCHU_SPAWN.get(), SoundSource.HOSTILE, 1f, 1f, 0);
         }
         if (flag) {
             shouldPlayAttackAnimation = true;

@@ -13,6 +13,7 @@ public class ModEventBusEvents {
 
     @SubscribeEvent
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(ModParticles.BLUE_CHUCHU_BURST_PARTICLES.get(), BlueChuchuParticles.Provider::new);
         event.registerSpriteSet(ModParticles.RED_CHUCHU_BURST_PARTICLES.get(), RedChuchuParticles.Provider::new);
         event.registerSpriteSet(ModParticles.RED_CHUCHU_BURST_PARTICLES_SMALL.get(), RedChuchuParticlesSmall.Provider::new);
         event.registerSpriteSet(ModParticles.WHITE_CHUCHU_BURST_PARTICLES.get(), WhiteChuchuParticles.Provider::new);

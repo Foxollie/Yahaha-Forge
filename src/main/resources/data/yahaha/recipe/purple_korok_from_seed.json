@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "yahaha:korok_seed"
+    },
+    "G": {
+      "item": "minecraft:amethyst_block"
+    }
+  },
+  "pattern": [
+    "###",
+    "#G#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "id": "yahaha:purple_korok_seed"
+  }
+}

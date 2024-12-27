@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "yahaha:icy_korok_block"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "yahaha:blocks/icy_korok_block"
+}

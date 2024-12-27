@@ -416,18 +416,7 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
                     player.sendSystemMessage(Component.literal("Luck is at Max Value"));
                 }
             } else if (item == Moditems.RED_KOROK_SEED.get()&&!this.level().isClientSide) {
-                if (this.getAttribute(Attributes.BURNING_TIME) != null) {
-                    double current = this.getAttribute(Attributes.BURNING_TIME).getBaseValue();
-                    if (current > 0) {
-                        this.getAttribute(Attributes.BURNING_TIME).setBaseValue(current - 0.1);
-                        current = this.getAttribute(Attributes.BURNING_TIME).getBaseValue();
-                        player.sendSystemMessage(Component.literal("Burn Time Reduced to " + decimalFormat.format(current)));
-                        itemstack.shrink(1);
-                    } else{
-                        player.sendSystemMessage(Component.literal("Burn Time is at Minimum Value!"));
-                        this.getAttribute(Attributes.BURNING_TIME).setBaseValue(0);
-                    }
-                }
+                player.sendSystemMessage(Component.literal("Burning Time Reduction is not Applicable to Pyro Fredrick"));
             } else if (item == Moditems.BLACK_KOROK_SEED.get()&&!this.level().isClientSide) {
                 if (this.getAttribute(Attributes.ATTACK_SPEED) != null) {
                     if (effectLevel() < 3) {
@@ -464,16 +453,25 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
                 }
             } else if ((item == Items.IRON_NUGGET)){
                 if (this.getHealth() < this.getMaxHealth()) {
+                    if(!player.getAbilities().instabuild){
+                        itemstack.shrink(1);
+                    }
                     this.setHealth(this.getHealth() + 2);
                     this.spawnTamingParticles(true);
                 }
             } else if ((item == Items.GOLD_NUGGET)){
                 if (this.getHealth() < this.getMaxHealth()) {
+                    if(!player.getAbilities().instabuild){
+                        itemstack.shrink(1);
+                    }
                     this.setHealth(this.getHealth() + 6);
                     this.spawnTamingParticles(true);
                 }
             } else if ((item == Items.DIAMOND)){
                 if (this.getHealth() < this.getMaxHealth()) {
+                    if(!player.getAbilities().instabuild){
+                        itemstack.shrink(1);
+                    }
                     this.setHealth(this.getMaxHealth());
                     this.spawnTamingParticles(true);
                 }
@@ -579,7 +577,10 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
 
             if (distance <= radius) {
                 if (entity == tamePlayer) {
-                    entity.addEffect((new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 80, effectLevel()-1)));
+                    entity.addEffect((new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 80, 0)));
+                    if (effectLevel() > 1){
+                        entity.addEffect((new MobEffectInstance(MobEffects.SATURATION, 85, effectLevel()-2)));
+                    }
                 }
             }
         }

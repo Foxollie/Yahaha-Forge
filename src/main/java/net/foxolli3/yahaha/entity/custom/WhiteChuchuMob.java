@@ -222,7 +222,7 @@ public class WhiteChuchuMob extends Monster implements GeoEntity {
             double x = this.getX();
             double y = this.getY();
             double z = this.getZ();
-            _level.playSeededSound(null, x, y, z, ModSounds.CHUCHU_ATTACK.get(), SoundSource.HOSTILE, 1f, 1f, 0);
+            _level.playSeededSound(null, x, y, z, ModSounds.CHUCHU_SPAWN.get(), SoundSource.HOSTILE, 1f, 1f, 0);
         }
         if (flag) {
             shouldPlayAttackAnimation = true;

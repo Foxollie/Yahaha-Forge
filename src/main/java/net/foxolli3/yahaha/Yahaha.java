@@ -61,7 +61,7 @@ public class Yahaha {
         modEventBus.addListener(this::commonSetup);
     
         MinecraftForge.EVENT_BUS.register(this);
-        modEventBus.addListener(this::addCreative);
+       // modEventBus.addListener(this::addCreative);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -69,13 +69,13 @@ public class Yahaha {
     }
 
     // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+   /* private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Moditems.KOROK_SEED);
             event.accept(ModBlocks.KOROK_SEED_INFUSED_DIRT);
             event.accept(ModBlocks.KOROK_SEED_INFUSED_GRAVEL);
         }
-    }
+    }*/
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
