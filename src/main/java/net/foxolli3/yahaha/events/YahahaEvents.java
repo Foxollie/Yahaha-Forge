@@ -25,10 +25,21 @@ public class YahahaEvents {
         event.put(ModEntities.HYDRO_FREDRICK.get(), HydroFredrickMob.setAttributes());
         event.put(ModEntities.BLUE_CHUCHU.get(), BlueChuchuMob.setAttributes());
         event.put(ModEntities.YELLOW_CHUCHU.get(), YellowChuchuMob.setAttributes());
+        event.put(ModEntities.RED_CHUCHU.get(), RedChuchuMob.setAttributes());
+        event.put(ModEntities.WHITE_CHUCHU.get(), WhiteChuchuMob.setAttributes());
     }
     @SubscribeEvent
     public static void entitySpawnRestriction(SpawnPlacementRegisterEvent event) {
         event.register(ModEntities.BLUE_CHUCHU.get(), SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Monster::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(ModEntities.RED_CHUCHU.get(), SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Monster::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(ModEntities.YELLOW_CHUCHU.get(), SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Monster::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(ModEntities.WHITE_CHUCHU.get(), SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Monster::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
     }

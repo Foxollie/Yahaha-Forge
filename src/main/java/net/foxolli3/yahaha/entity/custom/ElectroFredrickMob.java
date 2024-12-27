@@ -6,11 +6,15 @@ import net.foxolli3.yahaha.particle.ModParticles;
 import net.foxolli3.yahaha.sound.ModSounds;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -20,10 +24,10 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -34,6 +38,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -49,6 +55,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.animation.AnimationState;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -56,6 +63,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    Player tamePlayer;
 
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -167,6 +175,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
     private boolean isTrading = false;
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack tradeItemStack;
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
         Item itemForTaming = Moditems.KOROK_SEED_POWDER.get();
@@ -186,6 +195,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
                     if (!ForgeEventFactory.onAnimalTame(this, player)) {
                         if (!this.level().isClientSide) {
                             super.tame(player);
+                            tamePlayer = player;
                             this.navigation.recomputePath();
                             this.setTarget(null);
                             this.level().broadcastEntityEvent(this, (byte) 7);
@@ -209,16 +219,18 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
                 int randomTradeInt = randomTrade();
                 int tradeAmount = 1;
                 if (randomTradeInt >= 0 && randomTradeInt <= 5) {
-                    tradeOutcome = Items.EMERALD;
+                    tradeAmount = random.nextInt(1,8);
+                    tradeOutcome = Items.COPPER_INGOT;
                 }
                 if (randomTradeInt >= 6 && randomTradeInt <= 10) {
-                    tradeOutcome = Items.CHORUS_FRUIT;
-                    tradeAmount = 3;
+                    tradeOutcome = Items.JUNGLE_LOG;
+                    tradeAmount = random.nextInt(1,12);
                 }
                 if (randomTradeInt >= 11 && randomTradeInt <= 13) {
                     tradeOutcome = Moditems.KOROK_WAND_EMPTY.get();
                 }
                 if (randomTradeInt >= 14 && randomTradeInt <= 18) {
+                    tradeAmount = random.nextInt(1,16);
                     tradeOutcome = Items.GOLD_INGOT;
                 }
                 if (randomTradeInt >= 19 && randomTradeInt <= 20) {
@@ -231,37 +243,64 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
                     tradeOutcome = Moditems.SUIKA_GAME_THEME_KAZOO_COVER_MUSIC_DISC.get();
                 }
                 if (randomTradeInt >= 29 && randomTradeInt <= 32) {
-                    tradeOutcome = Items.DIAMOND;
+                    tradeAmount = random.nextInt(1,4);
+                    tradeOutcome = Items.HONEYCOMB;
                 }
                 if (randomTradeInt >= 33 && randomTradeInt <= 35) {
-                    tradeOutcome = Items.ALLIUM;
+                    tradeAmount = random.nextInt(1,4);
+                    tradeOutcome = Items.AZALEA;
                 }
                 if (randomTradeInt >= 36 && randomTradeInt <= 38) {
-                    tradeOutcome = Items.GLOW_INK_SAC;
-                    tradeAmount = 2;
+                    tradeOutcome = Items.WIND_CHARGE;
                 }
                 if (randomTradeInt >= 39 && randomTradeInt <= 41) {
-                    tradeOutcome = Items.BLAZE_POWDER;
+                    tradeAmount = random.nextInt(1,2);
+                    tradeOutcome = Items.TURTLE_SCUTE;
                 }
                 if (randomTradeInt >= 42 && randomTradeInt <= 45) {
-                    tradeOutcome = Items.GUNPOWDER;
+                    tradeAmount = random.nextInt(1,3);
+                    tradeOutcome = Items.BONE_MEAL;
                 }
                 if (randomTradeInt >= 46 && randomTradeInt <= 50) {
-                    tradeOutcome = Items.SALMON;
+                    tradeAmount = random.nextInt(1,4);
+                    tradeOutcome = Items.GOLDEN_CARROT;
                 }
                 if (randomTradeInt >= 50 && randomTradeInt <= 53) {
-                    tradeOutcome = Items.COD;
+                    tradeAmount = random.nextInt(1,12);
+                    tradeOutcome = Items.CARROT;
                 }
                 if (randomTradeInt >= 54 && randomTradeInt <= 55) {
-                    tradeOutcome = Items.NETHER_BRICK;
-                    tradeAmount = 3;
+                    tradeOutcome = Items.MOSS_BLOCK;
+                    tradeAmount = random.nextInt(1,12);
                 }
                 if (randomTradeInt >= 56 && randomTradeInt <= 57) {
                     tradeOutcome = Moditems.KOROK_FROND.get();
                 }
                 if (randomTradeInt >= 21 && randomTradeInt <= 22) {
-                    tradeOutcome = Items.BAMBOO;
-                    tradeAmount = 12;
+                    tradeOutcome = Moditems.YELLOW_CHUCHU_JELLY.get();
+                    tradeAmount = random.nextInt(1,3);
+                }
+                if (randomTradeInt >= 58 && randomTradeInt <= 63) {
+                    tradeOutcome = Items.ACACIA_LOG;
+                    tradeAmount = random.nextInt(1,12);
+                }
+                if (randomTradeInt >= 64 && randomTradeInt <= 77) {
+                    tradeOutcome = Moditems.YELLOW_CHUCHU_JELLY.get();
+                    tradeAmount = random.nextInt(1,3);
+                }
+                if (randomTradeInt >= 64 && randomTradeInt <= 77) {
+                    tradeOutcome = Items.TRIDENT;
+                }
+                tradeItemStack = new ItemStack(tradeOutcome, tradeAmount);
+                if (tradeOutcome == Items.TRIDENT) {
+                    HolderLookup<Enchantment> enchantmentLookup = this.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+                    Holder<Enchantment> thunder = enchantmentLookup.getOrThrow(Enchantments.CHANNELING);
+                    int maxDurability = tradeItemStack.getMaxDamage();
+                    int randomDurability = random.nextInt(maxDurability / 2, maxDurability); //between half and full durability
+                    tradeItemStack.setDamageValue(maxDurability - randomDurability);
+                    if (!this.level().isClientSide) {
+                        tradeItemStack.enchant(thunder,1);
+                    }
                 }
                     ItemEntity itementity = new ItemEntity(level, (double) this.getX() , (double) (this.getY() + 1D), (double) this.getZ(), new ItemStack(tradeOutcome, tradeAmount));
                     for (int i = 0; i < 12; i++){
@@ -279,7 +318,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
         return super.mobInteract(player, hand);
     }
     private int randomTrade() {
-        return RandomSource.createNewThreadLocalInstance().nextInt(58);
+        return RandomSource.createNewThreadLocalInstance().nextInt(67);
     }
     protected SoundEvent getAmbientSound() {
         int randomSoundInt = randomSound();
@@ -311,8 +350,9 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
 
     @Override
     public void tick() {
+        buffInRadius(this.level(), this.getX(), this.getY(), this.getZ(), 8);
         tickCounter++;
-        // Get the current position of the entityzzzz
+        // Get the current position of the entity
         int x = (int) this.getX();
         int y = (int) this.getY();
         int z = (int) this.getZ();
@@ -393,7 +433,48 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
 
     @Override
     public void playerTouch(Player pPlayer) {
-        pPlayer.hurt(pPlayer.damageSources().mobAttack(this), 2);
+        if (pPlayer != tamePlayer) {
+            pPlayer.hurt(pPlayer.damageSources().mobAttack(this), 2);
+            for (int i = 0; i <= 64; i++) {
+                if (i % 8 == 0) {
+                    if (this.level() instanceof ServerLevel _level) {
+
+                        double radius = 1.5; // Radius of the sphere
+                        int increment = 30; // Angle increment in degrees
+
+                        for (int theta = 0; theta < 360; theta += increment) { // Horizontal angle (longitude)
+                            for (int phi = 0; phi <= 180; phi += increment) { // Vertical angle (latitude)
+                                double radTheta = Math.toRadians(theta);
+                                double radPhi = Math.toRadians(phi);
+
+                                // Spherical to Cartesian conversion
+                                double xOffset = radius * Math.sin(radPhi) * Math.cos(radTheta);
+                                double yOffset = radius * Math.cos(radPhi);
+                                double zOffset = radius * Math.sin(radPhi) * Math.sin(radTheta);
+
+                                // Calculate a random delay (up to 3 seconds)
+                                int delay = random.nextInt(4);
+                                int particleType = random.nextInt(4);
+                                // Schedule particle spawning
+                                if (delay == 2) {
+                                    _level.sendParticles(
+                                            ModParticles.YELLOW_CHUCHU_BURST_PARTICLES_SMALL.get(),
+                                            pPlayer.getX() + xOffset,
+                                            (pPlayer.getY() + 0.3) + yOffset,
+                                            pPlayer.getZ() + zOffset,
+                                            1,  // Number of particles
+                                            0,  // X random offset
+                                            0,  // Y random offset
+                                            0,   // Z random offset
+                                            0.01
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         super.playerTouch(pPlayer);
     }
 
@@ -405,6 +486,10 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
                 || block == Blocks.DAMAGED_ANVIL || block == Blocks.IRON_DOOR
                 || block == Blocks.IRON_TRAPDOOR || block == Blocks.EXPOSED_COPPER || block == Blocks.WEATHERED_COPPER || block == Blocks.OXIDIZED_COPPER
                 || block == Blocks.WAXED_EXPOSED_COPPER
+                || block == Blocks.RAW_COPPER_BLOCK
+                || block == Blocks.RAW_IRON_BLOCK
+                || block == Blocks.DEEPSLATE_IRON_ORE
+                || block == Blocks.DEEPSLATE_COPPER_ORE
                 || block == Blocks.WAXED_WEATHERED_COPPER || block == Blocks.WAXED_OXIDIZED_COPPER
                 || block == Blocks.CUT_COPPER || block == Blocks.EXPOSED_CUT_COPPER || block == Blocks.WEATHERED_CUT_COPPER
                 || block == Blocks.OXIDIZED_CUT_COPPER || block == Blocks.WAXED_CUT_COPPER || block == Blocks.WAXED_EXPOSED_CUT_COPPER
@@ -424,7 +509,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
         return (blockState.hasProperty(BlockStateProperties.WATERLOGGED) && blockState.getValue(BlockStateProperties.WATERLOGGED)||blockState.getBlock() == Blocks.WATER);
     }
     private void supercharge(){
-        hurtInRadius(this.level(), this.getX(), this.getY(), this.getZ(), 2.1, 2.0f);
+        hurtInRadius(this.level(), this.getX(), this.getY(), this.getZ(), 3, 3f);
         if (superTickCounter % 8 == 0 || superTickCounter == 0) {
             if (this.level() instanceof ServerLevel _level) {
 
@@ -475,7 +560,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
         // Iterate through all living entities in the level
         for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class, new net.minecraft.world.phys.AABB(x - radius, y - radius, z - radius, x + radius, y + radius, z + radius))) {
             // Check if the entity is a player
-            if(entity.getType() != ModEntities.ELECTRO_FREDRICK.get()) {
+            if(entity.getType() != ModEntities.ELECTRO_FREDRICK.get() && entity.getType() != ModEntities.YELLOW_CHUCHU.get()) {
                 // Calculate the distance between the player and the center point
                 double distance = entity.position().distanceTo(center);
 
@@ -485,6 +570,61 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity {
                     entity.hurt(entity.damageSources().mobAttack(this), damage);
                 }
             }
+            for (int i = 0; i <= 64; i++) {
+                if (i % 8 == 0) {
+                    if (this.level() instanceof ServerLevel _level) {
+
+                        double particleRadius = 1.5; // Radius of the sphere
+                        int increment = 30; // Angle increment in degrees
+
+                        for (int theta = 0; theta < 360; theta += increment) { // Horizontal angle (longitude)
+                            for (int phi = 0; phi <= 180; phi += increment) { // Vertical angle (latitude)
+                                double radTheta = Math.toRadians(theta);
+                                double radPhi = Math.toRadians(phi);
+
+                                // Spherical to Cartesian conversion
+                                double xOffset = particleRadius * Math.sin(radPhi) * Math.cos(radTheta);
+                                double yOffset = particleRadius * Math.cos(radPhi);
+                                double zOffset = particleRadius * Math.sin(radPhi) * Math.sin(radTheta);
+
+                                // Calculate a random delay (up to 3 seconds)
+                                int delay = random.nextInt(4);
+                                int particleType = random.nextInt(4);
+                                // Schedule particle spawning
+                                if (delay == 2) {
+                                    _level.sendParticles(
+                                            ModParticles.YELLOW_CHUCHU_BURST_PARTICLES_SMALL.get(),
+                                            entity.getX() + xOffset,
+                                            (entity.getY() + 0.3) + yOffset,
+                                            entity.getZ() + zOffset,
+                                            1,  // Number of particles
+                                            0,  // X random offset
+                                            0,  // Y random offset
+                                            0,   // Z random offset
+                                            0.01
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
+
+    public void buffInRadius(Level level, double x, double y, double z, double radius) {
+        Vec3 center = new Vec3(x, y, z);
+        //iterate through all players
+        for (Player entity : level.getEntitiesOfClass(Player.class, new net.minecraft.world.phys.AABB(x - radius, y - radius, z - radius, x + radius, y + radius, z + radius))) {
+                double distance = entity.position().distanceTo(center);
+
+                if (distance <= radius) {
+                    if (entity == tamePlayer) {
+                        entity.addEffect((new MobEffectInstance(MobEffects.DIG_SPEED, 80, 0)));
+                        entity.addEffect((new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 80, 0)));
+                    }
+                }
+        }
+    }
+
 }

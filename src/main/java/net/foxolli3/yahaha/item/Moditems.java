@@ -16,6 +16,24 @@ public class Moditems {
             DeferredRegister.create(ForgeRegistries.ITEMS, Yahaha.MOD_ID);
     public static final RegistryObject<Item> KOROK_SEED = ITEMS.register("korok_seed",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> BLUE_KOROK_SEED = ITEMS.register("blue_korok_seed",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> RED_KOROK_SEED = ITEMS.register("red_korok_seed",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ORANGE_KOROK_SEED = ITEMS.register("orange_korok_seed",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> GREEN_KOROK_SEED = ITEMS.register("green_korok_seed",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> DARK_BLUE_KOROK_SEED = ITEMS.register("dark_blue_korok_seed",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> OBSIDIAN_KOROK_SEED = ITEMS.register("obsidian_korok_seed",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> WHITE_KOROK_SEED = ITEMS.register("white_korok_seed",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> BLACK_KOROK_SEED = ITEMS.register("black_korok_seed",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PURPLE_KOROK_SEED = ITEMS.register("purple_korok_seed",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> KOROK_SEED_POWDER = ITEMS.register("korok_seed_powder",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> KAZOO_VIEW_HIGHWAY_DISC = ITEMS.register("kazoo_view_highway_music_disc",
@@ -49,12 +67,12 @@ public class Moditems {
     public static final RegistryObject<Item> KOROK_WAND_BLOCK = ITEMS.register("korok_wand_block",
             () -> new KorokWandBlock(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> KOROK_WAND_FIRE = ITEMS.register("korok_wand_fire",
-            () -> new KorokWandIce(new Item.Properties().stacksTo(1)));
+            () -> new KorokWandFire(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> KOROK_WAND_FIRE_FULL = ITEMS.register("korok_wand_fire_full",
             () -> new KorokWandFireFull(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> KOROK_WAND_ICE = ITEMS.register("korok_wand_ice",
-            () -> new KorokWandFire(new Item.Properties().stacksTo(1)));
+            () -> new KorokWandIce(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> KOROK_WAND_ICE_FULL = ITEMS.register("korok_wand_ice_full",
             () -> new KorokWandIceFull(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> KOROK_WAND_THUNDER = ITEMS.register("korok_wand_thunder",
@@ -74,20 +92,20 @@ public class Moditems {
     public static final RegistryObject<Item> FREDRICK_WAND_SCHEMATIC = ITEMS.register("fredrick_wand_schematic",
             () -> new KorokSeedItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> FREDRICK_SPAWN_EGG = ITEMS.register("fredrick_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.FREDRICK, 0x4d3d20,0x7E864D,
+            () -> new ForgeSpawnEggItem(ModEntities.FREDRICK, 0x7E864D,0x4d3d20,
                     new Item.Properties()));
     public static final RegistryObject<Item> CRYO_FREDRICK_SPAWN_EGG = ITEMS.register("cryo_fredrick_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.CRYO_FREDRICK, 0xd6f4f9,0x91b3f1,
+            () -> new ForgeSpawnEggItem(ModEntities.CRYO_FREDRICK, 0x7E864D,0xd6f4f9,
                     new Item.Properties()));
     public static final RegistryObject<Item> PYRO_FREDRICK_SPAWN_EGG = ITEMS.register("pyro_fredrick_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.PYRO_FREDRICK, 0xf25309,0x871306,
+            () -> new ForgeSpawnEggItem(ModEntities.PYRO_FREDRICK, 0x7E864D,0xff8b00,
                     new Item.Properties()));
     public static final RegistryObject<Item> ELECTRO_FREDRICK_SPAWN_EGG = ITEMS.register("electro_fredrick_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.ELECTRO_FREDRICK, 0x91fc00,0xd9ff05,
+            () -> new ForgeSpawnEggItem(ModEntities.ELECTRO_FREDRICK, 0x7E864D,0xc4f705,
                     new Item.Properties()));
 
     public static final RegistryObject<Item> HYDRO_FREDRICK_SPAWN_EGG = ITEMS.register("hydro_fredrick_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.HYDRO_FREDRICK, 0x079cc4,0x00f5f9,
+            () -> new ForgeSpawnEggItem(ModEntities.HYDRO_FREDRICK, 0x7E864D,0x00f5f9,
                     new Item.Properties()));
 
     public static final RegistryObject<Item> BLUE_CHUCHU_SPAWN_EGG = ITEMS.register("blue_chuchu_spawn_egg",
@@ -95,6 +113,12 @@ public class Moditems {
                     new Item.Properties()));
     public static final RegistryObject<Item> YELLOW_CHUCHU_SPAWN_EGG = ITEMS.register("yellow_chuchu_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.YELLOW_CHUCHU, 0xc4f705,0x61b705,
+                    new Item.Properties()));
+    public static final RegistryObject<Item> RED_CHUCHU_SPAWN_EGG = ITEMS.register("red_chuchu_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.RED_CHUCHU, 0xff8b00,0xdc7633,
+                    new Item.Properties()));
+    public static final RegistryObject<Item> WHITE_CHUCHU_SPAWN_EGG = ITEMS.register("white_chuchu_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.WHITE_CHUCHU, 0xd6f4f9,0xfb9d02,
                     new Item.Properties()));
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

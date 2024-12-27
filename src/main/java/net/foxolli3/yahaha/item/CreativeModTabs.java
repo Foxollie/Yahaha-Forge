@@ -16,7 +16,7 @@ public class CreativeModTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Yahaha.MOD_ID);
 
-    public static final RegistryObject<CreativeModeTab> TUTORIAL_TAB = CREATIVE_MODE_TABS.register("yahaha_tab",
+    public static final RegistryObject<CreativeModeTab> YAHAHA_TAB = CREATIVE_MODE_TABS.register("yahaha_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(Moditems.KOROK_SEED.get()))
                     .title(Component.translatable("creativetab.yahaha_tab"))
                     .displayItems((pParameters, pOutput) -> {
@@ -47,6 +47,8 @@ public class CreativeModTabs {
                         pOutput.accept(Moditems.HYDRO_FREDRICK_SPAWN_EGG.get());
                         pOutput.accept(Moditems.BLUE_CHUCHU_SPAWN_EGG.get());
                         pOutput.accept(Moditems.YELLOW_CHUCHU_SPAWN_EGG.get());
+                        pOutput.accept(Moditems.RED_CHUCHU_SPAWN_EGG.get());
+                        pOutput.accept(Moditems.WHITE_CHUCHU_SPAWN_EGG.get());
                         pOutput.accept(Moditems.FREDRICK_WAND_SCHEMATIC.get());
                         pOutput.accept(Moditems.PUFFSHROOM.get());
                         pOutput.accept(Moditems.BLUE_CHUCHU_JELLY.get());
@@ -64,6 +66,17 @@ public class CreativeModTabs {
                         pOutput.accept(ModBlocks.ICY_KOROK_BLOCK.get());
                         pOutput.accept(ModBlocks.ELECTRIC_KOROK_BLOCK.get());
                         pOutput.accept(ModBlocks.WATERY_KOROK_BLOCK.get());
+
+                        pOutput.accept(Moditems.BLUE_KOROK_SEED.get());
+                        pOutput.accept(Moditems.RED_KOROK_SEED.get());
+                        pOutput.accept(Moditems.ORANGE_KOROK_SEED.get());
+                        pOutput.accept(Moditems.GREEN_KOROK_SEED.get());
+                        pOutput.accept(Moditems.DARK_BLUE_KOROK_SEED.get());
+                        pOutput.accept(Moditems.WHITE_KOROK_SEED.get());
+                        pOutput.accept(Moditems.BLACK_KOROK_SEED.get());
+                        pOutput.accept(Moditems.PURPLE_KOROK_SEED.get());
+                        pOutput.accept(Moditems.OBSIDIAN_KOROK_SEED.get());
+
                         pOutput.accept(ModBlocks.WAND_CONSTRUCTION_TABLE.get());
 
                     })

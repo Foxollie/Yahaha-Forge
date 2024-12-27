@@ -18,7 +18,11 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -40,7 +44,7 @@ public class Yahaha {
 
     public Yahaha() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
+    
         Moditems.register(modEventBus);
         ModBlocks.register(modEventBus);
         CreativeModTabs.register(modEventBus);
@@ -49,13 +53,13 @@ public class Yahaha {
         ModSounds.register(modEventBus);
         ModEntities.register(modEventBus);
         ModLootModifier.register(modEventBus);
-
+    
         ModDataComponentTypes.register(modEventBus);
-
-        ModParticles.register(FMLJavaModLoadingContext.get().getModEventBus());
-
+    
+        ModParticles.register(modEventBus);
+    
         modEventBus.addListener(this::commonSetup);
-
+    
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
     }
@@ -94,6 +98,8 @@ public class Yahaha {
             EntityRenderers.register(ModEntities.HYDRO_FREDRICK.get(), HydroFredrickRenderer::new);
             EntityRenderers.register(ModEntities.BLUE_CHUCHU.get(), BlueChuChuRenderer::new);
             EntityRenderers.register(ModEntities.YELLOW_CHUCHU.get(), YellowChuChuRenderer::new);
+            EntityRenderers.register(ModEntities.RED_CHUCHU.get(), RedChuChuRenderer::new);
+            EntityRenderers.register(ModEntities.WHITE_CHUCHU.get(), WhiteChuChuRenderer::new);
 
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.FIERY_KOROK_BLOCK.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.ICY_KOROK_BLOCK.get(), RenderType.translucent());

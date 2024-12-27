@@ -160,6 +160,7 @@ public class KorokWandFull extends Item implements GeoItem {
         FredrickMob fredrickMob = ModEntities.FREDRICK.get().create(level);
         if (fredrickMob != null) {
             spawnParticles(level, pos);
+            fredrickMob.tamePlayer = player;
             fredrickMob.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.0f, 0.0F);
             fredrickMob.tame(player);
             level.addFreshEntity(fredrickMob);

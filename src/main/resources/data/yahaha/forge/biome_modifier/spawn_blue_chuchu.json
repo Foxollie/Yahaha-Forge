@@ -1,10 +1,25 @@
 {
   "type": "forge:add_spawns",
-  "biomes": "#yahaha:has_mob/blue_chuchu",
+  "biomes": [
+    "minecraft:forest",
+    "minecraft:flower_forest",
+    "minecraft:birch_forest",
+    "minecraft:dark_forest",
+    "minecraft:windswept_forest",
+    "minecraft:taiga",
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:old_growth_spruce_taiga",
+    "minecraft:plains",
+    "minecraft:snowy_plains",
+    "minecraft:sunflower_plains",
+    "minecraft:savanna",
+    "minecraft:savanna_plateau",
+    "minecraft:windswept_savanna"
+  ],
   "spawners": {
     "type": "yahaha:blue_chuchu",
-    "weight": 20,
-    "minCount": 1,
+    "weight": 50,
+    "minCount": 2,
     "maxCount": 3
   }
 }

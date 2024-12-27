@@ -125,7 +125,7 @@ public class KorokWandIceFull extends Item implements GeoItem {
                 } else if (attempts == 13) {
                     player.sendSystemMessage(Component.literal("go ahead"));
                 } else if (attempts == 14) {
-                    player.sendSystemMessage(Component.literal("you happy?"));
+                    player.sendSystemMessage(Component.literal("yahaha?"));
                     spawnFredrick(clickedPos, _level, player, hand); // Force spawn Fredrick
                     spawnAttemptTracker.remove(clickedPos); // Reset tracker for this position
                 }

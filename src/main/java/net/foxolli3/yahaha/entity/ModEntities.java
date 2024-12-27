@@ -58,6 +58,14 @@ public class ModEntities<T extends Entity>{
             ENTITY_TYPES.register("yellow_chuchu",() -> EntityType.Builder.of(YellowChuchuMob::new, MobCategory.MONSTER)
                     .sized(0.75f,0.75f)
                     .build(ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "yellow_chuchu").toString()));
+public static final RegistryObject<EntityType<RedChuchuMob>> RED_CHUCHU =
+            ENTITY_TYPES.register("red_chuchu",() -> EntityType.Builder.of(RedChuchuMob::new, MobCategory.MONSTER)
+                    .sized(0.75f,0.75f)
+                    .build(ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "red_chuchu").toString()));
+public static final RegistryObject<EntityType<WhiteChuchuMob>> WHITE_CHUCHU =
+            ENTITY_TYPES.register("white_chuchu",() -> EntityType.Builder.of(WhiteChuchuMob::new, MobCategory.MONSTER)
+                    .sized(0.75f,0.75f)
+                    .build(ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "white_chuchu").toString()));
 
     public static void register(IEventBus eventBus) {
     ENTITY_TYPES.register(eventBus);

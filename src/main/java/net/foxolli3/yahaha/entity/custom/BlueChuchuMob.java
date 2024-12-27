@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -20,14 +19,10 @@ import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.PlayerTeam;
-import net.minecraft.world.scores.Team;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -43,19 +38,22 @@ import java.util.concurrent.ScheduledExecutorService;
 public class BlueChuchuMob extends Monster implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private final SimpleContainer inventory = new SimpleContainer(27);
-
     private boolean shouldPlaySpawnAnimation = false;
     private boolean shouldPlayAttackAnimation = false;
     private boolean isVisible = false;
     private Instant lastSeenTime = Instant.now();
-
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public BlueChuchuMob(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
-        this.hasBecomeVisible = false;
-        this.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, Integer.MAX_VALUE, 0, false, false)); // Start invisible
+        //this.hasBecomeVisible = false;
+        if(!isVisible) {
+            this.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, Integer.MAX_VALUE, 0, false, false));
+        } else {
+            this.removeEffect(MobEffects.INVISIBILITY);
+        }
     }
+
 
     private boolean hasBecomeVisible;
 
@@ -109,13 +107,13 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
         controllerRegistrar.add(new AnimationController<>(this, "spawnController", 0, this::spawnPredicate));
     }
 
-    private PlayState spawnPredicate(AnimationState<BlueChuchuMob> blueChuchuMobAnimationState) {
+    private PlayState spawnPredicate(AnimationState<BlueChuchuMob> BlueChuchuMobAnimationState) {
         if (shouldPlaySpawnAnimation) {
-            blueChuchuMobAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blue_chuchu.spawn", Animation.LoopType.PLAY_ONCE));
+            BlueChuchuMobAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blue_chuchu.spawn", Animation.LoopType.PLAY_ONCE));
             shouldPlaySpawnAnimation = false;
         }
         if (shouldPlayAttackAnimation) {
-            blueChuchuMobAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blue_chuchu.attack", Animation.LoopType.PLAY_ONCE));
+            BlueChuchuMobAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blue_chuchu.attack", Animation.LoopType.PLAY_ONCE));
             shouldPlayAttackAnimation = false;
             return PlayState.CONTINUE;
         }
@@ -151,6 +149,7 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
             if (!isVisible) {
                 this.push(0, 0.5, 0);
                 isVisible = true;
+                shouldPlaySpawnAnimation = true;
                 if (this.level() instanceof ServerLevel _level) {
                     double x = this.getX();
                     double y = this.getY();
@@ -158,10 +157,11 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
                     _level.sendParticles(ModParticles.WHITE_CHUCHU_BURST_PARTICLES.get(), x, y, z, 5, 0.2, 0.2, 0.2, 0.05f);
                     _level.playSeededSound(null, x, y, z, ModSounds.CHUCHU_SPAWN.get(), SoundSource.HOSTILE, 1f, 1f, 0);
                 }
+            } else {
+                lastSeenTime = Instant.now();
             }
-            lastSeenTime = Instant.now();
-            shouldPlaySpawnAnimation = true;
-        } else {
+
+        } else if(!isPlayerNearby(64)) {
             Duration timeSinceLastSeen = Duration.between(lastSeenTime, Instant.now());
 
             if (isVisible && timeSinceLastSeen.toSeconds() >= 60) {
@@ -187,14 +187,17 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         // Read visibility state
-        if (tag.contains("IsVisible", Tag.TAG_INT)) {
-            isVisible = tag.getBoolean("IsVisible");
-        }
+        isVisible = tag.getBoolean("IsVisible");
+
         // Read last seen time
-        if (tag.contains("LastSeenTime", Tag.TAG_LONG)) {
-            long timestamp = tag.getLong("LastSeenTime");
-            lastSeenTime = Instant.ofEpochMilli(timestamp);
+        long timestamp = tag.getLong("LastSeenTime");
+        lastSeenTime = Instant.ofEpochMilli(timestamp);
+        if(!isVisible) {
+            this.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, Integer.MAX_VALUE, 0, false, false));
+        } else {
+            this.removeEffect(MobEffects.INVISIBILITY);
         }
+
     }
 
     @Override
@@ -224,5 +227,53 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
         }
         return flag;
     }
+    int tickCounter = 0;
+    @Override
+    public void tick() {
+        if(isVisible) {
+            if (tickCounter % 8 == 0) {
+                if (this.level() instanceof ServerLevel _level) {
 
+                    double radius = 1; // Radius of the sphere
+                    int increment = 40; // Angle increment in degrees
+
+                    for (int theta = 0; theta < 360; theta += increment) { // Horizontal angle (longitude)
+                        for (int phi = 0; phi <= 180; phi += increment) { // Vertical angle (latitude)
+                            double radTheta = Math.toRadians(theta);
+                            double radPhi = Math.toRadians(phi);
+
+                            // Spherical to Cartesian conversion
+                            double xOffset = radius * Math.sin(radPhi) * Math.cos(radTheta);
+                            double yOffset = radius * Math.cos(radPhi);
+                            double zOffset = radius * Math.sin(radPhi) * Math.sin(radTheta);
+
+                            // Calculate a random delay (up to 3 seconds)
+                            int delay = random.nextInt(4);
+                            int particleType = random.nextInt(4);
+                            // Schedule particle spawning
+                            if (delay == 2) {
+                                /*_level.sendParticles(
+                                        ModParticles.Blue_CHUCHU_BURST_PARTICLES_SMALL.get(),
+                                        this.getX() + xOffset,
+                                        (this.getY() + 0.2) + yOffset,
+                                        this.getZ() + zOffset,
+                                        1,  // Number of particles
+                                        0,  // X random offset
+                                        0,  // Y random offset
+                                        0,   // Z random offset
+                                        0.01
+                                );*/
+                            }
+                        }
+                    }
+                }
+            }
+            if (tickCounter % 8 == 0) {
+                if (this.level() instanceof ServerLevel _level) {
+
+                }
+            }
+        }
+        super.tick();
+    }
 }
