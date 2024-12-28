@@ -4,13 +4,18 @@ import net.foxolli3.yahaha.Yahaha;
 import net.foxolli3.yahaha.entity.ModEntities;
 import net.foxolli3.yahaha.item.custom.*;
 import net.foxolli3.yahaha.sound.ModSounds;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.nio.file.Paths;
+
 public class Moditems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Yahaha.MOD_ID);
