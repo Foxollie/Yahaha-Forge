@@ -279,7 +279,7 @@ public class YellowChuchuMob extends Monster implements GeoEntity {
 
                         // Check if the block is metallic
                         if (isMetallicBlock(block) || isBlockWaterlogged(blockState)) {
-                            supercharge();
+                            //supercharge();
                             foundMetallic = true;
                             break; // Exit the loop once a metallic block is found
                         }
