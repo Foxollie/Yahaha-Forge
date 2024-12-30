@@ -1,8 +1,8 @@
 {
   "type": "forge:add_spawns",
-  "biomes": "#forge:is_snowy",
+  "biomes": "#forge:is_forest",
   "spawners": {
-    "type": "yahaha:white_chuchu",
+    "type": "yahaha:blue_chuchu",
     "maxCount": 6,
     "minCount": 3,
     "weight": 50

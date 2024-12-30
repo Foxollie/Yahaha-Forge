@@ -79,8 +79,7 @@ public class CreativeModTabs {
 
                         pOutput.accept(Moditems.CHUCHU_UNEARTHER.get());
 
-                    })
-                    .build());
+                    }).build());
 
 
     public static void register(IEventBus eventBus) {
