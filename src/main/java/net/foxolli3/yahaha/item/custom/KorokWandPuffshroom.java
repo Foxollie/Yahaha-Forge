@@ -7,10 +7,12 @@ import net.foxolli3.yahaha.item.client.KorokWandPuffshroomRenderer;
 import net.foxolli3.yahaha.sound.ModSounds;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -20,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -47,6 +50,10 @@ public class KorokWandPuffshroom extends Item implements GeoItem {
     private PlayState predicate(AnimationState animationState) {
         animationState.getController().setAnimation(RawAnimation.begin().then("animation.korok_wand_block.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
+    }
+    @Override
+    public boolean canAttackBlock(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
+        return !pPlayer.isCreative();
     }
 
     @Override
@@ -86,7 +93,6 @@ public class KorokWandPuffshroom extends Item implements GeoItem {
                 stack.set(ModDataComponentTypes.PUFFSHROOM_USES.get(), 1);
             }
             Player player = (Player) entity;
-            ItemStack currentItemStack = player.getItemInHand(player.getUsedItemHand());
 
             // Create a new ItemStack for the iron sword
             ItemStack newItemStack = new ItemStack(Moditems.KOROK_WAND_EMPTY.get(), 1);
@@ -100,7 +106,9 @@ public class KorokWandPuffshroom extends Item implements GeoItem {
                 player.getCooldowns().addCooldown(this, 200);
                 Level level = player.level();
                 if (currentUses == 1) {
-                    player.setItemInHand(player.getUsedItemHand(), newItemStack);
+                    if (player.getMainHandItem().getItem() == Moditems.KOROK_WAND_PUFFSHROOM.get()) {
+                        player.setItemInHand(InteractionHand.MAIN_HAND, newItemStack);
+                    }
                 }
                 if (!level.isClientSide) {
                     for (Mob mob : level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(RADIUS))) {

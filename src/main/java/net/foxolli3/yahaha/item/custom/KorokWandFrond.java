@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -56,6 +57,10 @@ public class KorokWandFrond extends Item implements GeoItem {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 0, this::predicate));
+    }
+    @Override
+    public boolean canAttackBlock(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
+        return !pPlayer.isCreative();
     }
 
     @Override
@@ -91,39 +96,39 @@ public class KorokWandFrond extends Item implements GeoItem {
             stack.set(ModDataComponentTypes.FROND_USES.get(), 1);
         }
         Player player = (Player) entity;
-        ItemStack currentItemStack = player.getItemInHand(player.getUsedItemHand());
 
         // Create a new ItemStack for the iron sword
         ItemStack newItemStack = new ItemStack(Moditems.KOROK_WAND_EMPTY.get(), 1);
 
         int currentUses = stack.get(ModDataComponentTypes.FROND_USES.get());
 
-
             if (!player.getCooldowns().isOnCooldown(Moditems.KOROK_WAND_FROND.get())) {
                 player.getCooldowns().addCooldown(this, 8);
                 Level level = player.level();
                 if (currentUses == 1) {
-                    player.setItemInHand(player.getUsedItemHand(), newItemStack);
+                    if (player.getMainHandItem().getItem() == Moditems.KOROK_WAND_FROND.get()) {
+                        player.setItemInHand(InteractionHand.MAIN_HAND, newItemStack);
+                    }
                 }
                 stack.set(ModDataComponentTypes.FROND_USES.get(), Math.max(0, currentUses - 1));
                 if (!level.isClientSide) {
-                    for (Mob mob : level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(KNOCKBACK_RADIUS))) {
-                        double d0 = mob.getX() - player.getX();
-                        double d1 = mob.getZ() - player.getZ();
+                    for (Mob mob : level.getEntitiesOfClass(Mob.class, entity.getBoundingBox().inflate(KNOCKBACK_RADIUS))) {
+                        double d0 = mob.getX() - entity.getX();
+                        double d1 = mob.getZ() - entity.getZ();
                         double pushFactor = 1.4 / Math.sqrt(d0 * d0 + d1 * d1);
                         mob.push(d0 * pushFactor, 0.7, d1 * pushFactor);
                     }
                 }
-                if (player.isOnFire()) {
+                if (entity.isOnFire()) {
                     player.clearFire();
                 }
-                if (player.fallDistance > 0) {
-                    player.push(0, 1, 0);
+                if (entity.fallDistance > 0) {
+                    entity.push(0, 1, 0);
                 }
 
-                player.resetFallDistance();
+                entity.resetFallDistance();
 
-                if (player.level() instanceof ServerLevel _level) {
+                if (entity.level() instanceof ServerLevel _level) {
                     double x = player.getX();
                     double y = player.getY();
                     double z = player.getZ();

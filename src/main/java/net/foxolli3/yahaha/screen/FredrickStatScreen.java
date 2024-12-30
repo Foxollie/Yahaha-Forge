@@ -1,7 +1,5 @@
 package net.foxolli3.yahaha.screen;
 
-import com.electronwill.nightconfig.core.Config;
-import com.eliotlash.mclib.math.functions.classic.Mod;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.foxolli3.yahaha.Yahaha;
 import net.foxolli3.yahaha.entity.ModEntities;
