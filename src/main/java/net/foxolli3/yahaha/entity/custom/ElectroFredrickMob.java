@@ -729,7 +729,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                         // Schedule particle spawning
                         if (delay == 2) {
                             _level.sendParticles(
-                                    ModParticles.YELLOW_CHUCHU_BURST_PARTICLES_BIG.get(),
+                                    ModParticles.YELLOW_CHUCHU_BURST_PARTICLES_SMALL.get(),
                                     this.getX() + xOffset,
                                     (this.getY() + 0.3) + yOffset,
                                     this.getZ() + zOffset,
@@ -746,7 +746,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
         }
         if (tickCounter % 8 == 0) {
             if (this.level() instanceof ServerLevel _level) {
-                _level.sendParticles(ModParticles.YELLOW_CHUCHU_BURST_PARTICLES_AIR_BIG.get(), this.getX(), this.getY() + 0.2, this.getZ(), 1, 0, 0, 0., 0);
+                _level.sendParticles(ModParticles.YELLOW_CHUCHU_BURST_PARTICLES.get(), this.getX(), this.getY() + 0.2, this.getZ(), 1, 0, 0, 0., 0);
             }
         }
     }
