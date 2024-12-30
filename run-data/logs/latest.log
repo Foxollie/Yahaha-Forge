@@ -1,24 +1,19 @@
-[27Dec2024 22:17:46.046] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forge_userdev_data, --assetIndex, 17, --assetsDir, C:\Users\Foxol\.gradle\caches\forge_gradle\assets, --gameDir, ., --mod, yahaha, --all, --output, C:\ModdingMinecraft\Yahaha-Forge-1.20.1-master\Yahaha-Forge-1.20.1-master\src\generated\resources, --existing, C:\ModdingMinecraft\Yahaha-Forge-1.20.1-master\Yahaha-Forge-1.20.1-master\src\main\resources]
-[27Dec2024 22:17:46.049] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 21.0.5+11-LTS
-[27Dec2024 22:17:46.051] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.2.2 starting: java version 21.0.5 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
-[27Dec2024 22:17:46.163] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forge_userdev_data
-[27Dec2024 22:17:46.278] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=jar:file:///C:/Users/Foxol/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.7/8ab114ac385e6dbdad5efafe28aba4df8120915f/mixin-0.8.7.jar!/ Service=ModLauncher Env=UNKNOWN
-[27Dec2024 22:17:47.548] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 5 dependencies adding them to mods collection
-[27Dec2024 22:17:48.366] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[27Dec2024 22:17:48.370] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forge_userdev_data' with arguments [--gameDir, ., --assetsDir, C:\Users\Foxol\.gradle\caches\forge_gradle\assets, --assetIndex, 17, --mod, yahaha, --all, --output, C:\ModdingMinecraft\Yahaha-Forge-1.20.1-master\Yahaha-Forge-1.20.1-master\src\generated\resources, --existing, C:\ModdingMinecraft\Yahaha-Forge-1.20.1-master\Yahaha-Forge-1.20.1-master\src\main\resources]
-[27Dec2024 22:17:48.465] [main/WARN] [mixin/]: Reference map 'geckolib.refmap.json' for geckolib.mixins.json could not be read. If this is a development environment you can ignore this message
-[27Dec2024 22:17:48.465] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
-[27Dec2024 22:17:48.466] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
-[27Dec2024 22:17:54.365] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 52.0.28, for MC 1.21.1 with MCP 20240808.132146
-[27Dec2024 22:17:54.365] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v52.0.28 Initialized
-[27Dec2024 22:17:54.406] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Opening jdk.naming.dns/com.sun.jndi.dns to java.naming
-[27Dec2024 22:17:55.155] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [yahaha]
-[27Dec2024 22:17:55.212] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Foxol/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.1-52.0.28_mapped_parchment_2024.11.17-1.21.1/forge-1.21.1-52.0.28_mapped_parchment_2024.11.17-1.21.1-recomp.jar%230!/assets/.mcassetsroot' uses unexpected schema
-[27Dec2024 22:17:55.212] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Foxol/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.1-52.0.28_mapped_parchment_2024.11.17-1.21.1/forge-1.21.1-52.0.28_mapped_parchment_2024.11.17-1.21.1-recomp.jar%230!/data/.mcassetsroot' uses unexpected schema
-[27Dec2024 22:17:55.399] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Books: yahaha
-[27Dec2024 22:17:55.679] [main/INFO] [net.minecraft.data.DataGenerator/]: Books: yahaha finished after 279 ms
-[27Dec2024 22:17:55.680] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Languages: en_us
-[27Dec2024 22:17:55.684] [main/INFO] [net.minecraft.data.DataGenerator/]: Languages: en_us finished after 3 ms
-[27Dec2024 22:17:55.684] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Multiblocks: modonomicon
-[27Dec2024 22:17:55.691] [main/INFO] [net.minecraft.data.DataGenerator/]: Multiblocks: modonomicon finished after 6 ms
-[27Dec2024 22:17:55.691] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: yahaha
+[28Dec2024 18:07:59.058] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forge_userdev_data, --assetIndex, 17, --assetsDir, C:\Users\Foxol\.gradle\caches\forge_gradle\assets, --gameDir, ., --mod, yahaha, --all, --output, C:\ModdingMinecraft\Yahaha-Forge-1.20.1-master\Yahaha-Forge-1.20.1-master\src\generated\resources, --existing, C:\ModdingMinecraft\Yahaha-Forge-1.20.1-master\Yahaha-Forge-1.20.1-master\src\main\resources]
+[28Dec2024 18:07:59.061] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 21.0.5+11-LTS
+[28Dec2024 18:07:59.062] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.2.2 starting: java version 21.0.5 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[28Dec2024 18:07:59.208] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forge_userdev_data
+[28Dec2024 18:07:59.343] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=jar:file:///C:/Users/Foxol/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.7/8ab114ac385e6dbdad5efafe28aba4df8120915f/mixin-0.8.7.jar!/ Service=ModLauncher Env=UNKNOWN
+[28Dec2024 18:08:00.563] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 2 dependencies adding them to mods collection
+[28Dec2024 18:08:01.493] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[28Dec2024 18:08:01.496] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forge_userdev_data' with arguments [--gameDir, ., --assetsDir, C:\Users\Foxol\.gradle\caches\forge_gradle\assets, --assetIndex, 17, --mod, yahaha, --all, --output, C:\ModdingMinecraft\Yahaha-Forge-1.20.1-master\Yahaha-Forge-1.20.1-master\src\generated\resources, --existing, C:\ModdingMinecraft\Yahaha-Forge-1.20.1-master\Yahaha-Forge-1.20.1-master\src\main\resources]
+[28Dec2024 18:08:01.609] [main/WARN] [mixin/]: Reference map 'geckolib.refmap.json' for geckolib.mixins.json could not be read. If this is a development environment you can ignore this message
+[28Dec2024 18:08:01.609] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
+[28Dec2024 18:08:01.609] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
+[28Dec2024 18:08:07.088] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 52.0.28, for MC 1.21.1 with MCP 20240808.132146
+[28Dec2024 18:08:07.088] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v52.0.28 Initialized
+[28Dec2024 18:08:07.137] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Opening jdk.naming.dns/com.sun.jndi.dns to java.naming
+[28Dec2024 18:08:07.898] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [yahaha]
+[28Dec2024 18:08:07.982] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Foxol/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.1-52.0.28_mapped_parchment_2024.11.17-1.21.1/forge-1.21.1-52.0.28_mapped_parchment_2024.11.17-1.21.1-recomp.jar%230!/assets/.mcassetsroot' uses unexpected schema
+[28Dec2024 18:08:07.983] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Foxol/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.1-52.0.28_mapped_parchment_2024.11.17-1.21.1/forge-1.21.1-52.0.28_mapped_parchment_2024.11.17-1.21.1-recomp.jar%230!/data/.mcassetsroot' uses unexpected schema
+[28Dec2024 18:08:08.177] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 0 ms
+[28Dec2024 18:08:08.184] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 0, old count: 0, new count: 1, removed stale: 0, written: 0

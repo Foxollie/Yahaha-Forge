@@ -20,27 +20,25 @@ public class Moditems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Yahaha.MOD_ID);
     public static final RegistryObject<Item> KOROK_SEED = ITEMS.register("korok_seed",
-            () -> new Item(new Item.Properties()));
+            () -> new TooltipItem(new Item.Properties(),"Trade With Fredrick"));
     public static final RegistryObject<Item> BLUE_KOROK_SEED = ITEMS.register("blue_korok_seed",
-            () -> new Item(new Item.Properties()));
+            () -> new TooltipItem(new Item.Properties(),"Upgrade Fredrick's Effect Radius"));
     public static final RegistryObject<Item> RED_KOROK_SEED = ITEMS.register("red_korok_seed",
-            () -> new Item(new Item.Properties()));
+            () -> new TooltipItem(new Item.Properties(),"Upgrade Fredrick's Burn Resistance"));
     public static final RegistryObject<Item> ORANGE_KOROK_SEED = ITEMS.register("orange_korok_seed",
-            () -> new Item(new Item.Properties()));
+            () -> new TooltipItem(new Item.Properties(),"Upgrade Fredrick's Speed"));
     public static final RegistryObject<Item> GREEN_KOROK_SEED = ITEMS.register("green_korok_seed",
-            () -> new Item(new Item.Properties()));
+            () -> new TooltipItem(new Item.Properties(),"Upgrade Fredrick's Trade Luck"));
     public static final RegistryObject<Item> DARK_BLUE_KOROK_SEED = ITEMS.register("dark_blue_korok_seed",
-            () -> new Item(new Item.Properties()));
+            () -> new TooltipItem(new Item.Properties(),"Upgrade Fredrick's Size"));
     public static final RegistryObject<Item> OBSIDIAN_KOROK_SEED = ITEMS.register("obsidian_korok_seed",
-            () -> new Item(new Item.Properties()));
+            () -> new TooltipItem(new Item.Properties(),"Upgrade Fredrick's Resistance"));
     public static final RegistryObject<Item> WHITE_KOROK_SEED = ITEMS.register("white_korok_seed",
-            () -> new Item(new Item.Properties()));
+            () -> new TooltipItem(new Item.Properties(),"Upgrade Fredrick's Attack Damage"));
     public static final RegistryObject<Item> BLACK_KOROK_SEED = ITEMS.register("black_korok_seed",
-            () -> new Item(new Item.Properties()));
+            () -> new TooltipItem(new Item.Properties(),"Upgrade Fredrick's Effect Level"));
     public static final RegistryObject<Item> PURPLE_KOROK_SEED = ITEMS.register("purple_korok_seed",
-            () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> KOROK_SEED_POWDER = ITEMS.register("korok_seed_powder",
-            () -> new Item(new Item.Properties()));
+            () -> new TooltipItem(new Item.Properties(),"Upgrade Fredrick's Max Health"));
     public static final RegistryObject<Item> KAZOO_VIEW_HIGHWAY_DISC = ITEMS.register("kazoo_view_highway_music_disc",
             () -> new Item(new Item.Properties().jukeboxPlayable(ModSounds.KAZOO_VIEW_HIGHWAY_KEY).stacksTo(1)));
     public static final RegistryObject<Item> PIRANHA_PLANTS_ON_PARADE_KAZOO_COVER_MUSIC_DISC = ITEMS.register("piranha_plants_on_parade_kazoo_cover_music_disc",
@@ -62,9 +60,6 @@ public class Moditems {
             () -> new WhiteChuchuJellyItem(new Item.Properties()));
     public static final RegistryObject<Item> YELLOW_CHUCHU_JELLY = ITEMS.register("yellow_chuchu_jelly",
             () -> new YellowChuchuJellyItem(new Item.Properties()));
-
-    public static final RegistryObject<Item> PUFFSHROOM_SWORD = ITEMS.register("puffshroom_sword",
-            () -> new PuffshroomItem(Tiers.WOOD, new Item.Properties()));
     public static final RegistryObject<Item> KOROK_WAND_EMPTY = ITEMS.register("korok_wand_empty",
             () -> new KorokWandEmpty(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> KOROK_WAND_FULL = ITEMS.register("korok_wand_full",
@@ -88,7 +83,8 @@ public class Moditems {
             () -> new KorokWandWater(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> KOROK_WAND_WATER_FULL = ITEMS.register("korok_wand_water_full",
             () -> new KorokWandWaterFull(new Item.Properties().stacksTo(1)));
-
+    public static final RegistryObject<Item> CHUCHU_UNEARTHER = ITEMS.register("chuchu_unearther",
+            () -> new ChuchuFinder(new Item.Properties()));
     public static final RegistryObject<Item> KOROK_WAND_PUFFSHROOM = ITEMS.register("korok_wand_puffshroom",
             () -> new KorokWandPuffshroom(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> KOROK_WAND_FROND = ITEMS.register("korok_wand_frond",

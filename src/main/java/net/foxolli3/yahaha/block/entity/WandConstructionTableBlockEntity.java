@@ -12,6 +12,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -201,6 +202,9 @@ public class WandConstructionTableBlockEntity extends BlockEntity implements Men
             if (result.has(ModDataComponentTypes.FROND_USES.get())) {
                 outputStack.set(ModDataComponentTypes.FROND_USES.get(), result.get(ModDataComponentTypes.FROND_USES.get()));
             }
+            if (result.has(ModDataComponentTypes.PUFFSHROOM_USES.get())) {
+                outputStack.set(ModDataComponentTypes.PUFFSHROOM_USES.get(), result.get(ModDataComponentTypes.PUFFSHROOM_USES.get()));
+            }
 
         this.itemHandler.setStackInSlot(OUTPUT_SLOT, outputStack);
 
@@ -214,39 +218,39 @@ public class WandConstructionTableBlockEntity extends BlockEntity implements Men
     private boolean hasRecipe() {
         boolean hasCraftingItem1 = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top left
                 this.itemHandler.getStackInSlot(INPUT_SLOT_2).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top right
-                this.itemHandler.getStackInSlot(INPUT_SLOT_3).getItem() == Blocks.OAK_LOG.asItem() && //bottom right
+                this.itemHandler.getStackInSlot(INPUT_SLOT_3).is(ItemTags.LOGS) && //bottom right
                 this.itemHandler.getStackInSlot(INPUT_SLOT_4).getItem() == Moditems.KOROK_FROND.get() && //top center
                 this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_BLOCK.get() && //middle
                 this.itemHandler.getStackInSlot(INPUT_SLOT_6).getItem() == Items.COOKED_BEEF && //bottom
-                this.itemHandler.getStackInSlot(INPUT_SLOT_7).getItem() == Blocks.OAK_LOG.asItem(); //bottom left
+                this.itemHandler.getStackInSlot(INPUT_SLOT_7).is(ItemTags.LOGS); //bottom left
         boolean hasCraftingItem2 = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top left
                 this.itemHandler.getStackInSlot(INPUT_SLOT_2).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top right
-                this.itemHandler.getStackInSlot(INPUT_SLOT_3).getItem() == Blocks.OAK_LOG.asItem() && //bottom right
+                this.itemHandler.getStackInSlot(INPUT_SLOT_3).is(ItemTags.LOGS) && //bottom right
                 this.itemHandler.getStackInSlot(INPUT_SLOT_4).getItem() == Moditems.KOROK_FROND.get() && //top center
                 this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_FIRE.get() && //middle
                 this.itemHandler.getStackInSlot(INPUT_SLOT_6).getItem() == Items.COOKED_BEEF && //bottom
-                this.itemHandler.getStackInSlot(INPUT_SLOT_7).getItem() == Blocks.OAK_LOG.asItem(); //bottom left
+                this.itemHandler.getStackInSlot(INPUT_SLOT_7).is(ItemTags.LOGS); //bottom left
         boolean hasCraftingItem3 = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top left
                 this.itemHandler.getStackInSlot(INPUT_SLOT_2).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top right
-                this.itemHandler.getStackInSlot(INPUT_SLOT_3).getItem() == Blocks.OAK_LOG.asItem() && //bottom right
+                this.itemHandler.getStackInSlot(INPUT_SLOT_3).is(ItemTags.LOGS) && //bottom right
                 this.itemHandler.getStackInSlot(INPUT_SLOT_4).getItem() == Moditems.KOROK_FROND.get() && //top center
                 this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_ICE.get() && //middle
                 this.itemHandler.getStackInSlot(INPUT_SLOT_6).getItem() == Items.COOKED_BEEF && //bottom
-                this.itemHandler.getStackInSlot(INPUT_SLOT_7).getItem() == Blocks.OAK_LOG.asItem(); //bottom left
+                this.itemHandler.getStackInSlot(INPUT_SLOT_7).is(ItemTags.LOGS); //bottom left
         boolean hasCraftingItem4 = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top left
                 this.itemHandler.getStackInSlot(INPUT_SLOT_2).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top right
-                this.itemHandler.getStackInSlot(INPUT_SLOT_3).getItem() == Blocks.OAK_LOG.asItem() && //bottom right
+                this.itemHandler.getStackInSlot(INPUT_SLOT_3).is(ItemTags.LOGS) && //bottom right
                 this.itemHandler.getStackInSlot(INPUT_SLOT_4).getItem() == Moditems.KOROK_FROND.get() && //top center
                 this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_THUNDER.get() && //middle
                 this.itemHandler.getStackInSlot(INPUT_SLOT_6).getItem() == Items.COOKED_BEEF && //bottom
-                this.itemHandler.getStackInSlot(INPUT_SLOT_7).getItem() == Blocks.OAK_LOG.asItem(); //bottom left
+                this.itemHandler.getStackInSlot(INPUT_SLOT_7).is(ItemTags.LOGS); //bottom left
         boolean hasCraftingItem5 = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top left
                 this.itemHandler.getStackInSlot(INPUT_SLOT_2).getItem() == Moditems.OCTOROK_EYEBALL.get() && //top right
-                this.itemHandler.getStackInSlot(INPUT_SLOT_3).getItem() == Blocks.OAK_LOG.asItem() && //bottom right
+                this.itemHandler.getStackInSlot(INPUT_SLOT_3).is(ItemTags.LOGS) && //bottom right
                 this.itemHandler.getStackInSlot(INPUT_SLOT_4).getItem() == Moditems.KOROK_FROND.get() && //top center
                 this.itemHandler.getStackInSlot(INPUT_SLOT_5).getItem() == Moditems.KOROK_WAND_WATER.get() && //middle
                 this.itemHandler.getStackInSlot(INPUT_SLOT_6).getItem() == Items.COOKED_BEEF && //bottom
-                this.itemHandler.getStackInSlot(INPUT_SLOT_7).getItem() == Blocks.OAK_LOG.asItem(); //bottom left
+                this.itemHandler.getStackInSlot(INPUT_SLOT_7).is(ItemTags.LOGS); //bottom left
         if (hasCraftingItem1) {
             result = new ItemStack(Moditems.KOROK_WAND_FULL.get());
             return canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());

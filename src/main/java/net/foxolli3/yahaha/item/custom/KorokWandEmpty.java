@@ -2,6 +2,7 @@ package net.foxolli3.yahaha.item.custom;
 
 import net.foxolli3.yahaha.block.ModBlocks;
 import net.foxolli3.yahaha.item.Moditems;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -84,8 +85,14 @@ public class KorokWandEmpty extends Item {
         }
         return InteractionResult.FAIL;
     }
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(Component.translatable("tooltip.yahaha.korok_wand_empty"));
-        super.appendHoverText(pStack, (TooltipContext) pLevel, pTooltipComponents, pIsAdvanced);
+    @Override
+    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+        if(Screen.hasShiftDown()) {
+            pTooltipComponents.add(Component.translatable("tooltip.yahaha.korok_wand_empty"));
+        } else {
+            pTooltipComponents.add(Component.translatable("tooltip.yahaha.chuchu_jelly"));
+        }
+        pTooltipComponents.add(Component.literal("§3EMPTY"));
+        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 }

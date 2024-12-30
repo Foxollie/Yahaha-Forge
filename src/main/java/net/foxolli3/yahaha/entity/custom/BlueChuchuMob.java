@@ -4,6 +4,8 @@ import net.foxolli3.yahaha.particle.ModParticles;
 import net.foxolli3.yahaha.sound.ModSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -40,18 +42,60 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
     private final SimpleContainer inventory = new SimpleContainer(27);
     private boolean shouldPlaySpawnAnimation = false;
     private boolean shouldPlayAttackAnimation = false;
-    private boolean isVisible = false;
     private Instant lastSeenTime = Instant.now();
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public BlueChuchuMob(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         //this.hasBecomeVisible = false;
-        if(!isVisible) {
+        if(!isVisible()) {
             this.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, Integer.MAX_VALUE, 0, false, false));
         } else {
             this.removeEffect(MobEffects.INVISIBILITY);
         }
+    }
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        pBuilder.define(IS_VISIBLE, false);
+        super.defineSynchedData(pBuilder);
+    }
+    public void setVisible(boolean visible) {
+        this.entityData.set(IS_VISIBLE, visible);
+        if (isVisible()){
+            this.removeEffect((MobEffects.INVISIBILITY));
+        } else{
+            this.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, Integer.MAX_VALUE, 0, false, false));
+        }
+    }
+    public boolean isVisible() {
+        return this.entityData.get(IS_VISIBLE);
+    }
+
+    private static final EntityDataAccessor<Boolean> IS_VISIBLE =
+            SynchedEntityData.defineId(BlueChuchuMob.class, EntityDataSerializers.BOOLEAN);
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+
+        setVisible(tag.getBoolean("IsVisible"));
+
+        long timestamp = tag.getLong("LastSeenTime");
+        lastSeenTime = Instant.ofEpochMilli(timestamp);
+        if(!isVisible()) {
+            this.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, Integer.MAX_VALUE, 0, false, false));
+        } else {
+            this.removeEffect(MobEffects.INVISIBILITY);
+        }
+
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        // Save visibility state
+        tag.putBoolean("IsVisible", isVisible());
+        // Save last seen time
+        tag.putLong("LastSeenTime", lastSeenTime.toEpochMilli());
     }
 
 
@@ -65,10 +109,6 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
                 .add(Attributes.MOVEMENT_SPEED, 0.2f).build();
     }
 
-    @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
-        super.defineSynchedData(pBuilder);
-    }
 
     @Override
     protected void registerGoals() {
@@ -77,26 +117,26 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
         this.goalSelector.addGoal(3, new MeleeAttackGoal(this,1.0f,false) {
             @Override
             public boolean canUse() {
-                return isVisible && super.canUse();
+                return isVisible() && super.canUse();
             }
         });
         this.goalSelector.addGoal(2, new LeapAtTargetGoal(this,0.2f) {
             @Override
             public boolean canUse() {
-                return isVisible && super.canUse();
+                return isVisible() && super.canUse();
             }
         });
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.2D) {
             @Override
             public boolean canUse() {
-                return isVisible && super.canUse();
+                return isVisible() && super.canUse();
             }
         });
 
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, true) {
             @Override
             public boolean canUse() {
-                return isVisible && super.canUse();
+                return isVisible() && super.canUse();
             }
         });
     }
@@ -146,9 +186,9 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
             if (this.hasEffect(MobEffects.INVISIBILITY)) {
                 this.removeEffect(MobEffects.INVISIBILITY);
             }
-            if (!isVisible) {
+            if (!isVisible()) {
                 this.push(0, 0.5, 0);
-                isVisible = true;
+                setVisible(true);
                 shouldPlaySpawnAnimation = true;
                 if (this.level() instanceof ServerLevel _level) {
                     double x = this.getX();
@@ -164,11 +204,11 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
         } else if(!isPlayerNearby(64)) {
             Duration timeSinceLastSeen = Duration.between(lastSeenTime, Instant.now());
 
-            if (isVisible && timeSinceLastSeen.toSeconds() >= 60) {
+            if (isVisible() && timeSinceLastSeen.toSeconds() >= 60) {
                 if (!this.hasEffect(MobEffects.INVISIBILITY)) {
                     this.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, Integer.MAX_VALUE, 0, false, false));
                 }
-                isVisible = false; // Set the visibility flag to false
+                setVisible(false); // Set the visibility flag to false
             }
         }
     }
@@ -183,31 +223,7 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
         return super.getTeam();
     }
 
-    @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        // Read visibility state
-        isVisible = tag.getBoolean("IsVisible");
 
-        // Read last seen time
-        long timestamp = tag.getLong("LastSeenTime");
-        lastSeenTime = Instant.ofEpochMilli(timestamp);
-        if(!isVisible) {
-            this.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, Integer.MAX_VALUE, 0, false, false));
-        } else {
-            this.removeEffect(MobEffects.INVISIBILITY);
-        }
-
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        // Save visibility state
-        tag.putBoolean("IsVisible", isVisible);
-        // Save last seen time
-        tag.putLong("LastSeenTime", lastSeenTime.toEpochMilli());
-    }
 
     public SimpleContainer getInventory() {
         return this.inventory;
@@ -230,7 +246,7 @@ public class BlueChuchuMob extends Monster implements GeoEntity {
     int tickCounter = 0;
     @Override
     public void tick() {
-        if(isVisible) {
+        if(isVisible()) {
             if (tickCounter % 8 == 0) {
                 if (this.level() instanceof ServerLevel _level) {
 

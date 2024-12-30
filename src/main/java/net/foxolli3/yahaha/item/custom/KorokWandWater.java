@@ -2,8 +2,12 @@ package net.foxolli3.yahaha.item.custom;
 
 import net.foxolli3.yahaha.item.client.KorokWandWaterModel;
 import net.foxolli3.yahaha.item.client.KorokWandWaterRenderer;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -12,6 +16,7 @@ import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceC
 import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.RenderUtil;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class KorokWandWater extends Item implements GeoItem {
@@ -56,5 +61,15 @@ public class KorokWandWater extends Item implements GeoItem {
                 return this.renderer;
             }
         });
+    }
+    @Override
+    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+        if(Screen.hasShiftDown()) {
+            pTooltipComponents.add(Component.translatable("tooltip.yahaha.korok_wand_water"));
+        } else {
+            pTooltipComponents.add(Component.translatable("tooltip.yahaha.chuchu_jelly"));
+        }
+        pTooltipComponents.add(Component.literal("§bWATERY KOROK BLOCK§r"));
+        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 }

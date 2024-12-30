@@ -1,10 +1,14 @@
 package net.foxolli3.yahaha.entity.custom;
 
 import net.foxolli3.yahaha.block.ModBlocks;
+import net.foxolli3.yahaha.block.custom.WandConstructionTable;
 import net.foxolli3.yahaha.entity.ModEntities;
 import net.foxolli3.yahaha.item.Moditems;
 import net.foxolli3.yahaha.particle.ModParticles;
 import net.foxolli3.yahaha.screen.FredrickStatScreen;
+import net.foxolli3.yahaha.screen.FredrickWandSchematicScreen;
+import net.foxolli3.yahaha.screen.ModMenuTypes;
+import net.foxolli3.yahaha.screen.WandConstructionTableScreen;
 import net.foxolli3.yahaha.sound.ModSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
@@ -21,6 +25,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -40,9 +45,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
@@ -219,6 +227,9 @@ public class CryoFredrickMob extends TamableAnimal implements GeoEntity, Neutral
         setFredrickDamage(tag.getInt("attackDamage"));
         setLuck(tag.getInt("luck"));
     }
+
+
+
     String tAnimationState(String tAnimationState) {
         return this.getAnimatableInstanceCache().toString();
     }
@@ -242,303 +253,315 @@ public class CryoFredrickMob extends TamableAnimal implements GeoEntity, Neutral
 
     private boolean isTrading = false;
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (!this.level().isClientSide) {
+            if (player == tamePlayer) {
+                ItemStack itemstack = player.getItemInHand(hand);
+                ItemStack tradeItemStack;
+                Item item = itemstack.getItem();
+                Item itemForTaming = Items.APPLE;
+                Item tradeOutcome = Items.STICK;
+                Level level = player.level();
 
-        }
-        if (player == tamePlayer) {
-            ItemStack itemstack = player.getItemInHand(hand);
-            ItemStack tradeItemStack;
-            Item item = itemstack.getItem();
-            Item itemForTaming = Moditems.KOROK_SEED_POWDER.get();
-            Item tradeOutcome = Items.STICK;
-            Level level = player.level();
+                if (item == Moditems.KOROK_SEED.get() && !this.level().isClientSide) {
 
-            if (item == Moditems.KOROK_SEED.get()&&!this.level().isClientSide) {
+                    {
+                        if (this.getTeam() != null && !this.getTeam().equals(player.getTeam())) {
+                            return InteractionResult.FAIL;
+                        }
 
-                {
-                    if (this.getTeam() != null && !this.getTeam().equals(player.getTeam())) {
-                        return InteractionResult.FAIL;
-                    }
+                        if (!isTrading) {
+                            for (int o = 0; o < testLuck(luck()); o++) {
+                                itemstack.shrink(1);
+                                int randomTradeInt = randomTrade();
+                                int tradeAmount = 1;
+                                if (randomTradeInt >= 0 && randomTradeInt <= 5) {
+                                    tradeAmount = random.nextInt(1, 6);
+                                    tradeOutcome = Items.IRON_INGOT;
+                                }
+                                if (randomTradeInt >= 6 && randomTradeInt <= 10) {
+                                    tradeOutcome = Items.SPRUCE_LOG;
+                                    tradeAmount = random.nextInt(1, 12);
+                                }
+                                if (randomTradeInt >= 11 && randomTradeInt <= 13) {
+                                    tradeOutcome = Moditems.KOROK_WAND_EMPTY.get();
+                                }
+                                if (randomTradeInt >= 14 && randomTradeInt <= 18) {
+                                    tradeAmount = random.nextInt(1, 5);
+                                    tradeOutcome = Items.EMERALD;
+                                }
+                                if (randomTradeInt >= 19 && randomTradeInt <= 20) {
+                                    tradeOutcome = Moditems.KAZOO_VIEW_HIGHWAY_DISC.get();
+                                }
+                                if (randomTradeInt >= 23 && randomTradeInt <= 24) {
+                                    tradeOutcome = Moditems.PIRANHA_PLANTS_ON_PARADE_KAZOO_COVER_MUSIC_DISC.get();
+                                }
+                                if (randomTradeInt >= 25 && randomTradeInt <= 26) {
+                                    tradeOutcome = Moditems.SUIKA_GAME_THEME_KAZOO_COVER_MUSIC_DISC.get();
+                                }
+                                if (randomTradeInt >= 29 && randomTradeInt <= 32) {
+                                    tradeAmount = random.nextInt(1, 6);
+                                    tradeOutcome = Items.FLINT;
+                                }
+                                if (randomTradeInt >= 33 && randomTradeInt <= 35) {
+                                    tradeAmount = random.nextInt(1, 12);
+                                    tradeOutcome = Items.STONE_BRICKS;
+                                }
+                                if (randomTradeInt >= 36 && randomTradeInt <= 38) {
+                                    tradeAmount = random.nextInt(1, 5);
+                                    tradeOutcome = Items.AMETHYST_BLOCK;
+                                }
+                                if (randomTradeInt >= 39 && randomTradeInt <= 41) {
+                                    tradeOutcome = Items.IRON_BOOTS;
+                                }
+                                if (randomTradeInt >= 42 && randomTradeInt <= 45) {
+                                    tradeAmount = random.nextInt(1, 4);
+                                    tradeOutcome = Items.PUMPKIN;
+                                }
+                                if (randomTradeInt >= 46 && randomTradeInt <= 50) {
+                                    tradeAmount = random.nextInt(1, 12);
+                                    tradeOutcome = Items.BEETROOT;
+                                }
+                                if (randomTradeInt >= 50 && randomTradeInt <= 53) {
+                                    tradeAmount = random.nextInt(1, 3);
+                                    int randLight = random.nextInt(1, 3);
+                                    if (randLight == 1) {
+                                        tradeOutcome = Items.VERDANT_FROGLIGHT;
+                                    } else if (randLight == 2) {
+                                        tradeOutcome = Items.PEARLESCENT_FROGLIGHT;
+                                    } else {
+                                        tradeOutcome = Items.OCHRE_FROGLIGHT;
+                                    }
+                                }
+                                if (randomTradeInt >= 54 && randomTradeInt <= 55) {
+                                    tradeOutcome = Items.BLUE_ICE;
+                                    tradeAmount = random.nextInt(1, 12);
+                                }
+                                if (randomTradeInt >= 56 && randomTradeInt <= 57) {
+                                    tradeOutcome = Moditems.KOROK_FROND.get();
+                                }
+                                if (randomTradeInt >= 21 && randomTradeInt <= 22) {
+                                    tradeOutcome = Moditems.WHITE_CHUCHU_JELLY.get();
+                                    tradeAmount = random.nextInt(1, 3);
+                                }
+                                if (randomTradeInt >= 58 && randomTradeInt <= 63) {
+                                    tradeOutcome = Items.BIRCH_LOG;
+                                    tradeAmount = random.nextInt(1, 12);
 
-                    if (!isTrading) {
-                        for (int o = 0; o < testLuck(luck()); o++) {
-                            itemstack.shrink(1);
-                            int randomTradeInt = randomTrade();
-                            int tradeAmount = 1;
-                            if (randomTradeInt >= 0 && randomTradeInt <= 5) {
-                                tradeAmount = random.nextInt(1, 6);
-                                tradeOutcome = Items.IRON_INGOT;
-                            }
-                            if (randomTradeInt >= 6 && randomTradeInt <= 10) {
-                                tradeOutcome = Items.SPRUCE_LOG;
-                                tradeAmount = random.nextInt(1, 12);
-                            }
-                            if (randomTradeInt >= 11 && randomTradeInt <= 13) {
-                                tradeOutcome = Moditems.KOROK_WAND_EMPTY.get();
-                            }
-                            if (randomTradeInt >= 14 && randomTradeInt <= 18) {
-                                tradeAmount = random.nextInt(1, 16);
-                                tradeOutcome = Items.EMERALD;
-                            }
-                            if (randomTradeInt >= 19 && randomTradeInt <= 20) {
-                                tradeOutcome = Moditems.KAZOO_VIEW_HIGHWAY_DISC.get();
-                            }
-                            if (randomTradeInt >= 23 && randomTradeInt <= 24) {
-                                tradeOutcome = Moditems.PIRANHA_PLANTS_ON_PARADE_KAZOO_COVER_MUSIC_DISC.get();
-                            }
-                            if (randomTradeInt >= 25 && randomTradeInt <= 26) {
-                                tradeOutcome = Moditems.SUIKA_GAME_THEME_KAZOO_COVER_MUSIC_DISC.get();
-                            }
-                            if (randomTradeInt >= 29 && randomTradeInt <= 32) {
-                                tradeAmount = random.nextInt(1, 6);
-                                tradeOutcome = Items.FLINT;
-                            }
-                            if (randomTradeInt >= 33 && randomTradeInt <= 35) {
-                                tradeAmount = random.nextInt(1, 12);
-                                tradeOutcome = Items.STONE_BRICKS;
-                            }
-                            if (randomTradeInt >= 36 && randomTradeInt <= 38) {
-                                tradeAmount = random.nextInt(1, 5);
-                                tradeOutcome = Items.AMETHYST_BLOCK;
-                            }
-                            if (randomTradeInt >= 39 && randomTradeInt <= 41) {
-                                tradeOutcome = Items.IRON_BOOTS;
-                            }
-                            if (randomTradeInt >= 42 && randomTradeInt <= 45) {
-                                tradeAmount = random.nextInt(1, 4);
-                                tradeOutcome = Items.PUMPKIN;
-                            }
-                            if (randomTradeInt >= 46 && randomTradeInt <= 50) {
-                                tradeAmount = random.nextInt(1, 12);
-                                tradeOutcome = Items.BEETROOT;
-                            }
-                            if (randomTradeInt >= 50 && randomTradeInt <= 53) {
-                                tradeAmount = random.nextInt(1, 3);
-                                int randLight = random.nextInt(1, 3);
-                                if (randLight == 1) {
-                                    tradeOutcome = Items.VERDANT_FROGLIGHT;
-                                } else if (randLight == 2) {
-                                    tradeOutcome = Items.PEARLESCENT_FROGLIGHT;
+                                }
+                                if (randomTradeInt >= 64 && randomTradeInt <= 77) {
+                                    tradeOutcome = Moditems.WHITE_CHUCHU_JELLY.get();
+                                    tradeAmount = random.nextInt(1, 3);
+                                }
+                                if (randomTradeInt >= 78 && randomTradeInt <= 79) {
+                                    tradeOutcome = Item.byBlock(ModBlocks.ICY_KOROK_BLOCK.get());
+                                    tradeAmount = random.nextInt(1, 12);
+                                }
+                                if (tradeOutcome == Items.IRON_BOOTS) {
+                                    HolderLookup<Enchantment> enchantmentLookup = this.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+                                    Holder<Enchantment> frost_walker = enchantmentLookup.getOrThrow(Enchantments.FROST_WALKER);
+                                    tradeItemStack = new ItemStack(tradeOutcome, tradeAmount);
+                                    int maxDurability = tradeItemStack.getMaxDamage();
+                                    int randomDurability = random.nextInt(maxDurability / 2, maxDurability); //between half and full durability
+                                    tradeItemStack.setDamageValue(maxDurability - randomDurability);
+                                    if (!this.level().isClientSide) {
+                                        tradeItemStack.enchant(frost_walker, 1);
+                                    }
                                 } else {
-                                    tradeOutcome = Items.OCHRE_FROGLIGHT;
+                                    // Default item stack for other trades
+                                    tradeItemStack = new ItemStack(tradeOutcome, tradeAmount);
                                 }
-                            }
-                            if (randomTradeInt >= 54 && randomTradeInt <= 55) {
-                                tradeOutcome = Items.BLUE_ICE;
-                                tradeAmount = random.nextInt(1, 12);
-                            }
-                            if (randomTradeInt >= 56 && randomTradeInt <= 57) {
-                                tradeOutcome = Moditems.KOROK_FROND.get();
-                            }
-                            if (randomTradeInt >= 21 && randomTradeInt <= 22) {
-                                tradeOutcome = Moditems.WHITE_CHUCHU_JELLY.get();
-                                tradeAmount = random.nextInt(1, 3);
-                            }
-                            if (randomTradeInt >= 58 && randomTradeInt <= 63) {
-                                tradeOutcome = Items.BIRCH_LOG;
-                                tradeAmount = random.nextInt(1, 12);
-
-                            }
-                            if (randomTradeInt >= 64 && randomTradeInt <= 77) {
-                                tradeOutcome = Moditems.WHITE_CHUCHU_JELLY.get();
-                                tradeAmount = random.nextInt(1, 3);
-                            }
-                            if (randomTradeInt >= 78 && randomTradeInt <= 79) {
-                                tradeOutcome = Item.byBlock(ModBlocks.ICY_KOROK_BLOCK.get());
-                                tradeAmount = random.nextInt(1, 12);
-                            }
-                            if (tradeOutcome == Items.IRON_BOOTS) {
-                                HolderLookup<Enchantment> enchantmentLookup = this.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-                                Holder<Enchantment> frost_walker = enchantmentLookup.getOrThrow(Enchantments.FROST_WALKER);
-                                tradeItemStack = new ItemStack(tradeOutcome, tradeAmount);
-                                int maxDurability = tradeItemStack.getMaxDamage();
-                                int randomDurability = random.nextInt(maxDurability / 2, maxDurability); //between half and full durability
-                                tradeItemStack.setDamageValue(maxDurability - randomDurability);
-                                if (!this.level().isClientSide) {
-                                    tradeItemStack.enchant(frost_walker, 1);
+                                ItemEntity itementity = new ItemEntity(level, (double) this.getX(), (double) (this.getY() + 1D), (double) this.getZ(), tradeItemStack);
+                                for (int i = 0; i < 12; i++) {
+                                    if (level() instanceof ServerLevel _level) {
+                                        scheduler.schedule(() -> _level.sendParticles(ParticleTypes.WAX_ON, this.getX(), this.getY(), this.getZ(), 5, -0.5, 0.5, -0.5, 1), i / 4, TimeUnit.SECONDS);
+                                    }
                                 }
-                            } else {
-                                // Default item stack for other trades
-                                tradeItemStack = new ItemStack(tradeOutcome, tradeAmount);
+                                isTrading = true;
+                                scheduler.schedule(() -> itementity.setPickUpDelay(50), 3, TimeUnit.SECONDS);
+                                scheduler.schedule(() -> itementity.setPos(this.getX(), this.getY(), this.getZ()), 3, TimeUnit.SECONDS);
+                                scheduler.schedule(() -> level.addFreshEntity(itementity), 3, TimeUnit.SECONDS);
+                                scheduler.schedule(() -> isTrading = false, 3, TimeUnit.SECONDS);
                             }
-                            ItemEntity itementity = new ItemEntity(level, (double) this.getX(), (double) (this.getY() + 1D), (double) this.getZ(), tradeItemStack);
-                            for (int i = 0; i < 12; i++) {
-                                if (level() instanceof ServerLevel _level) {
-                                    scheduler.schedule(() -> _level.sendParticles(ParticleTypes.WAX_ON, this.getX(), this.getY(), this.getZ(), 5, -0.5, 0.5, -0.5, 1), i / 4, TimeUnit.SECONDS);
-                                }
-                            }
-                            isTrading = true;
-                            scheduler.schedule(() -> itementity.setPickUpDelay(50), 3, TimeUnit.SECONDS);
-                            scheduler.schedule(() -> itementity.setPos(this.getX(), this.getY(), this.getZ()), 3, TimeUnit.SECONDS);
-                            scheduler.schedule(() -> level.addFreshEntity(itementity), 3, TimeUnit.SECONDS);
-                            scheduler.schedule(() -> isTrading = false, 3, TimeUnit.SECONDS);
                         }
                     }
-                }
-            } else if (item == Moditems.ORANGE_KOROK_SEED.get()&&!this.level().isClientSide) {
-                if (this.getAttribute(Attributes.MOVEMENT_SPEED) != null) {
-                    double current = this.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue();
-                    if (current < 0.49) {
-                        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(current + 0.01);
-                        current = this.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue();
-                        player.sendSystemMessage(Component.literal("Movement Speed Increased to " + decimalFormat.format((current*100-20))));
-                        itemstack.shrink(1);
-                    } else{
-                        player.sendSystemMessage(Component.literal("Movement Speed is at Max Value!"));
+                } else if (item == Moditems.ORANGE_KOROK_SEED.get() && !this.level().isClientSide) {
+                    if (this.getAttribute(Attributes.MOVEMENT_SPEED) != null) {
+                        double current = this.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue();
+                        if (current < 0.49) {
+                            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(current + 0.01);
+                            current = this.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue();
+                            player.sendSystemMessage(Component.literal("Movement Speed Increased to " + decimalFormat.format((current * 100 - 20))));
+                            itemstack.shrink(1);
+                        } else {
+                            player.sendSystemMessage(Component.literal("Movement Speed is at Max Value!"));
+                        }
                     }
-                }
-            } else if (item == Moditems.BLUE_KOROK_SEED.get()&&!this.level().isClientSide) {
-                if (buffRadius() < 120) {
-                    this.setBuffRadius(buffRadius() + 10);
-                    player.sendSystemMessage(Component.literal("Effect Area Increased to " + buffRadius()));
-                    itemstack.shrink(1);
-                } else {
-                    player.sendSystemMessage(Component.literal("Effect Area is at Max Value!"));
-                }
-            } else if (item == Moditems.WHITE_KOROK_SEED.get()&&!this.level().isClientSide) {
-                if (this.getAttribute(Attributes.ATTACK_DAMAGE) != null) {
-                    if (fredrick_damage() < 40) {
-                        setFredrickDamage(fredrick_damage()+0.5f);
-                        player.sendSystemMessage(Component.literal("Attack Increased to " + decimalFormat.format((fredrick_damage()))));
+                } else if (item == Moditems.BLUE_KOROK_SEED.get() && !this.level().isClientSide) {
+                    if (buffRadius() < 120) {
+                        this.setBuffRadius(buffRadius() + 10);
+                        player.sendSystemMessage(Component.literal("Effect Area Increased to " + buffRadius()));
                         itemstack.shrink(1);
                     } else {
-                        player.sendSystemMessage(Component.literal("Attack Damage is at Max Value!"));
+                        player.sendSystemMessage(Component.literal("Effect Area is at Max Value!"));
                     }
-                }
-            } else if (item == Moditems.DARK_BLUE_KOROK_SEED.get()&&!this.level().isClientSide) {
-                if (this.getAttribute(Attributes.SCALE) != null) {
-                    double current = this.getAttribute(Attributes.SCALE).getBaseValue();
-                    if (current < 16) {
-                        this.getAttribute(Attributes.SCALE).setBaseValue(current * 1.05);
-                        current = this.getAttribute(Attributes.SCALE).getBaseValue();
-                        player.sendSystemMessage(Component.literal("Size Increased to " + decimalFormat.format(current)));
-                        itemstack.shrink(1);
-                    }else{
-                        player.sendSystemMessage(Component.literal("Size is at Max Value!"));
+                } else if (item == Moditems.WHITE_KOROK_SEED.get() && !this.level().isClientSide) {
+                    if (this.getAttribute(Attributes.ATTACK_DAMAGE) != null) {
+                        if (fredrick_damage() < 40) {
+                            setFredrickDamage(fredrick_damage() + 0.5f);
+                            player.sendSystemMessage(Component.literal("Attack Increased to " + decimalFormat.format((fredrick_damage()))));
+                            itemstack.shrink(1);
+                        } else {
+                            player.sendSystemMessage(Component.literal("Attack Damage is at Max Value!"));
+                        }
                     }
-                }
-            } else if (item == Moditems.GREEN_KOROK_SEED.get()&&!this.level().isClientSide) {
-                if (luck() < 30) {
-                    this.setLuck(this.luck() + 1);
-                    player.sendSystemMessage(Component.literal("Trade Luck Increased to " + this.luck()));
-                    itemstack.shrink(1);
-                } else {
-                    player.sendSystemMessage(Component.literal("Luck is at Max Value"));
-                }
-            } else if (item == Moditems.RED_KOROK_SEED.get()&&!this.level().isClientSide) {
-                if (this.getAttribute(Attributes.BURNING_TIME) != null) {
-                    double current = this.getAttribute(Attributes.BURNING_TIME).getBaseValue();
-                    if (current > 0.01) {
-                        this.getAttribute(Attributes.BURNING_TIME).setBaseValue(current - 0.1);
-                        current = this.getAttribute(Attributes.BURNING_TIME).getBaseValue();
-                        player.sendSystemMessage(Component.literal("Burn Time Reduced to " + decimalFormat.format(current)));
-                        itemstack.shrink(1);
-                    } else{
-                        player.sendSystemMessage(Component.literal("Burn Time is at Minimum Value!"));
-                        this.getAttribute(Attributes.BURNING_TIME).setBaseValue(0);
+                } else if (item == Moditems.DARK_BLUE_KOROK_SEED.get() && !this.level().isClientSide) {
+                    if (this.getAttribute(Attributes.SCALE) != null) {
+                        double current = this.getAttribute(Attributes.SCALE).getBaseValue();
+                        if (current < 16) {
+                            this.getAttribute(Attributes.SCALE).setBaseValue(current * 1.05);
+                            current = this.getAttribute(Attributes.SCALE).getBaseValue();
+                            player.sendSystemMessage(Component.literal("Size Increased to " + decimalFormat.format(current)));
+                            itemstack.shrink(1);
+                        } else {
+                            player.sendSystemMessage(Component.literal("Size is at Max Value!"));
+                        }
                     }
-                }
-            } else if (item == Moditems.BLACK_KOROK_SEED.get()&&!this.level().isClientSide) {
-                if (this.getAttribute(Attributes.ATTACK_SPEED) != null) {
-                    if (effectLevel() < 3) {
-                        this.setEffectLevel(effectLevel() + 1);
-                        player.sendSystemMessage(Component.literal("Effect Level Increased to " + effectLevel()));
+                } else if (item == Moditems.GREEN_KOROK_SEED.get() && !this.level().isClientSide) {
+                    if (luck() < 30) {
+                        this.setLuck(this.luck() + 1);
+                        player.sendSystemMessage(Component.literal("Trade Luck Increased to " + this.luck()));
                         itemstack.shrink(1);
                     } else {
-                        player.sendSystemMessage(Component.literal("Effect Level is at Max Value!"));
+                        player.sendSystemMessage(Component.literal("Luck is at Max Value"));
                     }
-                }
-            } else if (item == Moditems.PURPLE_KOROK_SEED.get()&&!this.level().isClientSide) {
-                if (this.getAttribute(Attributes.MAX_HEALTH) != null) {
-                    double current = this.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
-                    if (current < 400) {
-                        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(current + 1);
-                        current = this.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
-                        player.sendSystemMessage(Component.literal("Max Health Increased to " + current));
-                        itemstack.shrink(1);
-                    }else{
-                        player.sendSystemMessage(Component.literal("Max Health is at Max Value!"));
+                } else if (item == Moditems.RED_KOROK_SEED.get() && !this.level().isClientSide) {
+                    if (this.getAttribute(Attributes.BURNING_TIME) != null) {
+                        double current = this.getAttribute(Attributes.BURNING_TIME).getBaseValue();
+                        if (current > 0.01) {
+                            this.getAttribute(Attributes.BURNING_TIME).setBaseValue(current - 0.1);
+                            current = this.getAttribute(Attributes.BURNING_TIME).getBaseValue();
+                            player.sendSystemMessage(Component.literal("Burn Time Reduced to " + decimalFormat.format(current)));
+                            itemstack.shrink(1);
+                        } else {
+                            player.sendSystemMessage(Component.literal("Burn Time is at Minimum Value!"));
+                            this.getAttribute(Attributes.BURNING_TIME).setBaseValue(0);
+                        }
                     }
-                }
-            }else if (item == Moditems.OBSIDIAN_KOROK_SEED.get()&&!this.level().isClientSide) {
-                if (this.getAttribute(Attributes.ARMOR) != null) {
-                    double current = this.getAttribute(Attributes.ARMOR).getBaseValue();
-                    if (current < 30) {
-                        this.getAttribute(Attributes.ARMOR).setBaseValue(current + 1);
-                        current = this.getAttribute(Attributes.ARMOR).getBaseValue();
-                        player.sendSystemMessage(Component.literal("Defense Increased to " + current));
-                        itemstack.shrink(1);
-                    } else {
-                        player.sendSystemMessage(Component.literal("Defense is at Max Value!"));
+                } else if (item == Moditems.BLACK_KOROK_SEED.get() && !this.level().isClientSide) {
+                    if (this.getAttribute(Attributes.ATTACK_SPEED) != null) {
+                        if (effectLevel() < 3) {
+                            this.setEffectLevel(effectLevel() + 1);
+                            player.sendSystemMessage(Component.literal("Effect Level Increased to " + effectLevel()));
+                            itemstack.shrink(1);
+                        } else {
+                            player.sendSystemMessage(Component.literal("Effect Level is at Max Value!"));
+                        }
                     }
-                }
-            } else if ((item == Items.IRON_NUGGET)){
-                if (this.getHealth() < this.getMaxHealth()) {
-                    if(!player.getAbilities().instabuild){
-                        itemstack.shrink(1);
+                } else if (item == Moditems.PURPLE_KOROK_SEED.get() && !this.level().isClientSide) {
+                    if (this.getAttribute(Attributes.MAX_HEALTH) != null) {
+                        double current = this.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
+                        if (current < 400) {
+                            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(current + 1);
+                            current = this.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
+                            player.sendSystemMessage(Component.literal("Max Health Increased to " + current));
+                            itemstack.shrink(1);
+                        } else {
+                            player.sendSystemMessage(Component.literal("Max Health is at Max Value!"));
+                        }
                     }
-                    this.setHealth(this.getHealth() + 2);
-                    this.spawnTamingParticles(true);
-                }
-            } else if ((item == Items.GOLD_NUGGET)){
-                if (this.getHealth() < this.getMaxHealth()) {
-                    if(!player.getAbilities().instabuild){
-                        itemstack.shrink(1);
+                } else if (item == Moditems.OBSIDIAN_KOROK_SEED.get() && !this.level().isClientSide) {
+                    if (this.getAttribute(Attributes.ARMOR) != null) {
+                        double current = this.getAttribute(Attributes.ARMOR).getBaseValue();
+                        if (current < 30) {
+                            this.getAttribute(Attributes.ARMOR).setBaseValue(current + 1);
+                            current = this.getAttribute(Attributes.ARMOR).getBaseValue();
+                            player.sendSystemMessage(Component.literal("Defense Increased to " + current));
+                            itemstack.shrink(1);
+                        } else {
+                            player.sendSystemMessage(Component.literal("Defense is at Max Value!"));
+                        }
                     }
-                    this.setHealth(this.getHealth() + 6);
-                    this.spawnTamingParticles(true);
-                }
-            } else if ((item == Items.DIAMOND)){
-                if (this.getHealth() < this.getMaxHealth()) {
-                    if(!player.getAbilities().instabuild){
-                        itemstack.shrink(1);
-                    }
-                    this.setHealth(this.getMaxHealth());
-                    this.spawnTamingParticles(true);
-                }
-            }else if (player.isCrouching()) {
-                if (level.isClientSide()) {
-                    if (this.getOwner() != null && this.getDisplayName() != null) {
-                        Minecraft.getInstance().setScreen(new FredrickStatScreen(Component.literal(this.getDisplayName().getString() + " (" + this.getOwner().getName().getString() + ")"), this, this.luck(), this.buffRadius(), this.getLookAngle(), this, fredrick_damage(), effectLevel()));
-                        return InteractionResult.SUCCESS;
-                    }
-                }
-            }else {
-
-                if (item == itemForTaming && !isTame()&&!this.level().isClientSide) {
-                    if (this.level().isClientSide) {
-                        return InteractionResult.CONSUME;
-                    } else {
+                } else if ((item == Items.IRON_NUGGET)) {
+                    if (this.getHealth() < this.getMaxHealth()) {
                         if (!player.getAbilities().instabuild) {
                             itemstack.shrink(1);
                         }
-
-                        if (!ForgeEventFactory.onAnimalTame(this, player)) {
-                            if (!this.level().isClientSide) {
-                                super.tame(player);
-                                tamePlayer = player;
-                                this.navigation.recomputePath();
-                                this.setTarget(null);
-                                this.level().broadcastEntityEvent(this, (byte) 7);
-                                setSitting(true);
-                            }
+                        this.setHealth(this.getHealth() + 2);
+                        this.spawnTamingParticles(true);
+                    }
+                } else if ((item == Items.GOLD_NUGGET)) {
+                    if (this.getHealth() < this.getMaxHealth()) {
+                        if (!player.getAbilities().instabuild) {
+                            itemstack.shrink(1);
                         }
+                        this.setHealth(this.getHealth() + 6);
+                        this.spawnTamingParticles(true);
+                    }
+                } else if ((item == Items.DIAMOND)) {
+                    if (this.getHealth() < this.getMaxHealth()) {
+                        if (!player.getAbilities().instabuild) {
+                            itemstack.shrink(1);
+                        }
+                        this.setHealth(this.getMaxHealth());
+                        this.spawnTamingParticles(true);
+                    }
+                }else if (player.isCrouching()) {
+                }  else {
+
+                    if (item == itemForTaming && !isTame() && !this.level().isClientSide) {
+                        if (this.level().isClientSide) {
+                            return InteractionResult.CONSUME;
+                        } else {
+                            if (!player.getAbilities().instabuild) {
+                                itemstack.shrink(1);
+                            }
+
+                            if (!ForgeEventFactory.onAnimalTame(this, player)) {
+                                if (!this.level().isClientSide) {
+                                    super.tame(player);
+                                    tamePlayer = player;
+                                    this.navigation.recomputePath();
+                                    this.setTarget(null);
+                                    this.level().broadcastEntityEvent(this, (byte) 7);
+                                    setSitting(true);
+                                }
+                            }
+                            return InteractionResult.SUCCESS;
+                        }
+                    }
+                    if (isTame() && !this.level().isClientSide && hand == InteractionHand.MAIN_HAND) {
+                        setSitting(!isSitting());
                         return InteractionResult.SUCCESS;
                     }
-                }
-                if (isTame() && !this.level().isClientSide && hand == InteractionHand.MAIN_HAND) {
-                    setSitting(!isSitting());
-                    return InteractionResult.SUCCESS;
-                }
 
-                if (itemstack.getItem() == itemForTaming) {
-                    return InteractionResult.PASS;
+                    if (itemstack.getItem() == itemForTaming) {
+                        return InteractionResult.PASS;
+                    }
                 }
             }
         }
         return super.mobInteract(player, hand);
+    }
+
+    @Override @OnlyIn(Dist.CLIENT)
+    public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
+        if (pPlayer.isCrouching()) {
+            if (pPlayer.level().isClientSide) {
+                if (this.getOwner() != null && this.getDisplayName() != null) {
+                    Minecraft.getInstance().setScreen(new FredrickStatScreen(Component.literal(this.getDisplayName().getString() + " (" + this.getOwner().getName().getString() + ")"), this, this.luck(), this.buffRadius(), this, fredrick_damage(), effectLevel()));
+                }
+            }
+        }
+        return super.interactAt(pPlayer, pVec, pHand);
+    }
+
+    @Override
+    public boolean ignoreExplosion(Explosion pExplosion) {
+        return true;
     }
 
     int tickCounter = 0;
@@ -601,7 +624,7 @@ public class CryoFredrickMob extends TamableAnimal implements GeoEntity, Neutral
 
             if (distance <= radius) {
                 if (entity == tamePlayer) {
-                    entity.addEffect((new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 80, effectLevel()-1)));
+                    entity.addEffect((new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 85, effectLevel()-1)));
                 }
             }
         }

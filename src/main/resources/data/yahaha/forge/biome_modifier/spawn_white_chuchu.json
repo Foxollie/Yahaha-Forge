@@ -11,8 +11,8 @@
   ],
   "spawners": {
     "type": "yahaha:white_chuchu",
-    "weight": 50,
-    "minCount": 2,
-    "maxCount": 3
+    "maxCount": 6,
+    "minCount": 3,
+    "weight": 50
   }
 }

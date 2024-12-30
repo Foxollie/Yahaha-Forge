@@ -39,20 +39,17 @@ public class FredrickStatScreen extends Screen {
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "textures/gui/fredrick_stats_gui.png");
 
-    @Override
-    protected void init() {
-    }
-    private LivingEntity preview;
-    private LivingEntity fredrickMob;
-    private LivingEntity fredrick;
-    private int luck;
-    private int radius;
-    private int effectLevel;
-    private float damage;
-    private String screenTitle;
+    private final LivingEntity preview;
+    private final LivingEntity fredrickMob;
+    private final LivingEntity fredrick;
+    private final int luck;
+    private final int radius;
+    private final int effectLevel;
+    private final float damage;
+    private final String screenTitle;
     private Vec3 fredrickDir;
     boolean savedDir = false;
-    public FredrickStatScreen(Component pTitle, Mob fredrickMob, int luck, int radius, Vec3 dir, LivingEntity fredrick, float damage, int effectLevel) {
+    public FredrickStatScreen(Component pTitle, Mob fredrickMob, int luck, int radius, LivingEntity fredrick, float damage, int effectLevel) {
         super(pTitle);
         this.fredrick = fredrick;
         this.fredrickMob = fredrickMob;

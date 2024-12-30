@@ -96,7 +96,7 @@ public class KorokWandPuffshroom extends Item implements GeoItem {
 
             // Set the new item stack in the player's hand
             player.setItemInHand(player.getUsedItemHand(), newItemStack);
-            if (!player.getCooldowns().isOnCooldown(Moditems.PUFFSHROOM_SWORD.get())) {
+            if (!player.getCooldowns().isOnCooldown(Moditems.KOROK_WAND_PUFFSHROOM.get())) {
                 player.getCooldowns().addCooldown(this, 200);
                 Level level = player.level();
                 if (currentUses == 1) {

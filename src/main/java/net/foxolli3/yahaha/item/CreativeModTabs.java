@@ -21,7 +21,6 @@ public class CreativeModTabs {
                     .title(Component.translatable("creativetab.yahaha_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(Moditems.KOROK_SEED.get());
-                        pOutput.accept(Moditems.KOROK_SEED_POWDER.get());
                         pOutput.accept(Moditems.KOROK_WAND_EMPTY.get());
                         pOutput.accept(Moditems.KOROK_FROND.get());
                         pOutput.accept(Moditems.OCTOROK_EYEBALL.get());
@@ -67,16 +66,18 @@ public class CreativeModTabs {
                         pOutput.accept(ModBlocks.WATERY_KOROK_BLOCK.get());
 
                         pOutput.accept(Moditems.BLUE_KOROK_SEED.get());
-                        pOutput.accept(Moditems.RED_KOROK_SEED.get());
                         pOutput.accept(Moditems.ORANGE_KOROK_SEED.get());
                         pOutput.accept(Moditems.GREEN_KOROK_SEED.get());
                         pOutput.accept(Moditems.DARK_BLUE_KOROK_SEED.get());
                         pOutput.accept(Moditems.WHITE_KOROK_SEED.get());
                         pOutput.accept(Moditems.BLACK_KOROK_SEED.get());
+                        pOutput.accept(Moditems.RED_KOROK_SEED.get());
                         pOutput.accept(Moditems.PURPLE_KOROK_SEED.get());
                         pOutput.accept(Moditems.OBSIDIAN_KOROK_SEED.get());
 
                         pOutput.accept(ModBlocks.WAND_CONSTRUCTION_TABLE.get());
+
+                        pOutput.accept(Moditems.CHUCHU_UNEARTHER.get());
 
                     })
                     .build());

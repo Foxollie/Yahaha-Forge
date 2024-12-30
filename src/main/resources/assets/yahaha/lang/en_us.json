@@ -39,9 +39,17 @@
   "item.yahaha.red_chuchu_spawn_egg": "Red Chuchu Spawn Egg",
   "item.yahaha.white_chuchu_spawn_egg": "White Chuchu Spawn Egg",
   "item.yahaha.puffshroom": "Puffshroom",
-  "tooltip.yahaha.korok_wand_empty": "§3EMPTY",
-  "tooltip.yahaha.korok_wand_block": "§3Korok Seed Block",
-  "tooltip.yahaha.korok_wand_full": "§3Fredrick",
+  "tooltip.yahaha.korok_wand_empty": "When Used on a Placed Korok Block or any Elemental Version, Creats a Wand of the Respective Block",
+  "tooltip.yahaha.korok_wand_block": "Use in Wand Construction Table to Craft a Full Korok Wand; Summons §3Fredrick§r",
+  "tooltip.yahaha.korok_wand_fire": "Use in Wand Construction Table to Craft a Full Korok Wand; Summons §3Fredrick §c[Pyro]§r",
+  "tooltip.yahaha.korok_wand_ice": "Use in Wand Construction Table to Craft a Full Korok Wand; Summons §3Fredrick §7[Cryo]§r",
+  "tooltip.yahaha.korok_wand_thunder": "Use in Wand Construction Table to Craft a Full Korok Wand; Summons §3Fredrick §a[Electro]§r",
+  "tooltip.yahaha.korok_wand_water": "Use in Wand Construction Table to Craft a Full Korok Wand; Summons §3Fredrick §b[Hydro]§r",
+  "tooltip.yahaha.korok_wand_full": "Use to summon §3Fredrick§r",
+  "tooltip.yahaha.korok_wand_fire_full": "Use to summon §3Fredrick §c[Pyro]§r",
+  "tooltip.yahaha.korok_wand_ice_full": "Use to summon §3Fredrick §7[Cryo]§r",
+  "tooltip.yahaha.korok_wand_water_full": "Use to summon §3Fredrick §b[Hydro]§r",
+  "tooltip.yahaha.korok_wand_thunder_full": "Use to summon §3Fredrick §a[Electro]§r",
   "tooltip.yahaha.korok_wand_frond.shift_down": "Swing to blow away enemies in radius. Swing while falling to negate fall damage",
   "tooltip.yahaha.korok_wand_frond": "[Press §eShift§r]",
   "tooltip.yahaha.korok_wand_puffshroom.shift_down": "Swing to create a cloud of smoke. You'll become invisible and enemies will be pacified temporally",
@@ -76,10 +84,18 @@
   "block.yahaha.korok_seed_block": "Block of Korok Seed",
   "block.yahaha.wand_construction_table": "Wand Construction Table",
 
+  "item.yahaha.chuchu_unearther": "Chuchu Unearther",
+
   "block.yahaha.fiery_korok_block": "Fiery Korok Block",
   "block.yahaha.icy_korok_block": "Icy Korok Block",
   "block.yahaha.electric_korok_block": "Electric Korok Block",
   "block.yahaha.watery_korok_block": "Watery Korok Block",
 
-  "creativetab.yahaha_tab": "YAHAHA"
+  "creativetab.yahaha_tab": "YAHAHA",
+  "tooltip.yahaha.chuchu_jelly": "[Press §eShift§r]",
+  "tooltip.yahaha.blue_chuchu_jelly_shift": "Use on a Korok Seed Block to Turn into a Watery Korok Block",
+  "tooltip.yahaha.red_chuchu_jelly_shift": "Use on a Korok Seed Block to Turn into a Fiery Korok Block",
+  "tooltip.yahaha.yellow_chuchu_jelly_shift": "Use on a Korok Seed Block to Turn into a Electric Korok Block",
+  "tooltip.yahaha.white_chuchu_jelly_shift": "Use on a Korok Seed Block to Turn into a Icy Korok Block",
+  "tooltip.yahaha.chuchu_unearther": "Unearths all Chuchus in Area. Consumed upon Use."
 }

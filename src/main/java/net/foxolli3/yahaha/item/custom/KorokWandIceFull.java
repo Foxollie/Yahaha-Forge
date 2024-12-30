@@ -8,6 +8,7 @@ import net.foxolli3.yahaha.item.Moditems;
 import net.foxolli3.yahaha.item.client.KorokWandFullRenderer;
 import net.foxolli3.yahaha.item.client.KorokWandIceFullRenderer;
 import net.foxolli3.yahaha.sound.ModSounds;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,6 +35,7 @@ import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.RenderUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -117,15 +120,15 @@ public class KorokWandIceFull extends Item implements GeoItem {
                 if (attempts < 10) {
                     player.sendSystemMessage(Component.literal("Cannot spawn here!"));
                 } else if (attempts == 10) {
-                    player.sendSystemMessage(Component.literal("bruh"));
+                    player.sendSystemMessage(Component.literal("..."));
                 } else if (attempts == 11) {
-                    player.sendSystemMessage(Component.literal("you cant spawn Fredrick here!!!!"));
+                    player.sendSystemMessage(Component.literal("......"));
                 } else if (attempts == 12) {
-                    player.sendSystemMessage(Component.literal("ok, fine"));
+                    player.sendSystemMessage(Component.literal("........."));
                 } else if (attempts == 13) {
-                    player.sendSystemMessage(Component.literal("go ahead"));
+                    player.sendSystemMessage(Component.literal("............"));
                 } else if (attempts == 14) {
-                    player.sendSystemMessage(Component.literal("yahaha?"));
+                    player.sendSystemMessage(Component.literal("...yahaha?"));
                     spawnFredrick(clickedPos, _level, player, hand); // Force spawn Fredrick
                     spawnAttemptTracker.remove(clickedPos); // Reset tracker for this position
                 }
@@ -142,7 +145,7 @@ public class KorokWandIceFull extends Item implements GeoItem {
     }
 
     private BlockPos findValidSpawnPosition(BlockPos startPos, ServerLevel level) {
-        for (int dy = 0; dy <= 3; dy++) {
+        for (int dy = 0; dy <= 2; dy++) {
             BlockPos testPos = startPos.above(dy);
             BlockState blockState = level.getBlockState(testPos);
             BlockState blockAboveState = level.getBlockState(testPos.above());
@@ -173,5 +176,15 @@ public class KorokWandIceFull extends Item implements GeoItem {
             // Play sound
             level.playSeededSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.FREDRICK_SPAWN.get(), SoundSource.BLOCKS, 0.4f, 1f, 0);
         }
+    }
+    @Override
+    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+        if(Screen.hasShiftDown()) {
+            pTooltipComponents.add(Component.translatable("tooltip.yahaha.korok_wand_ice_full"));
+        } else {
+            pTooltipComponents.add(Component.translatable("tooltip.yahaha.chuchu_jelly"));
+        }
+        pTooltipComponents.add(Component.literal("§3FREDRICK §7[CRYO]§r"));
+        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 }

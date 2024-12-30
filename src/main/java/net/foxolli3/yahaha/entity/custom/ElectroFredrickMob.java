@@ -49,6 +49,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
@@ -251,17 +253,15 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (!this.level().isClientSide) {
-
-        }
         if (player == tamePlayer) {
             ItemStack itemstack = player.getItemInHand(hand);
             ItemStack tradeItemStack;
             Item item = itemstack.getItem();
-            Item itemForTaming = Moditems.KOROK_SEED_POWDER.get();
+            Item itemForTaming = Items.APPLE;
             Item tradeOutcome = Items.STICK;
             Level level = player.level();
 
-            if (item == Moditems.KOROK_SEED.get()&&!this.level().isClientSide) {
+            if (item == Moditems.KOROK_SEED.get() && !this.level().isClientSide) {
 
                 {
                     if (this.getTeam() != null && !this.getTeam().equals(player.getTeam())) {
@@ -274,18 +274,18 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                             int randomTradeInt = randomTrade();
                             int tradeAmount = 1;
                             if (randomTradeInt >= 0 && randomTradeInt <= 5) {
-                                tradeAmount = random.nextInt(1,8);
+                                tradeAmount = random.nextInt(1, 8);
                                 tradeOutcome = Items.COPPER_INGOT;
                             }
                             if (randomTradeInt >= 6 && randomTradeInt <= 10) {
                                 tradeOutcome = Items.JUNGLE_LOG;
-                                tradeAmount = random.nextInt(1,12);
+                                tradeAmount = random.nextInt(1, 12);
                             }
                             if (randomTradeInt >= 11 && randomTradeInt <= 13) {
                                 tradeOutcome = Moditems.KOROK_WAND_EMPTY.get();
                             }
                             if (randomTradeInt >= 14 && randomTradeInt <= 18) {
-                                tradeAmount = random.nextInt(1,16);
+                                tradeAmount = random.nextInt(1, 16);
                                 tradeOutcome = Items.GOLD_INGOT;
                             }
                             if (randomTradeInt >= 19 && randomTradeInt <= 20) {
@@ -298,50 +298,50 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                                 tradeOutcome = Moditems.SUIKA_GAME_THEME_KAZOO_COVER_MUSIC_DISC.get();
                             }
                             if (randomTradeInt >= 29 && randomTradeInt <= 32) {
-                                tradeAmount = random.nextInt(1,4);
+                                tradeAmount = random.nextInt(1, 4);
                                 tradeOutcome = Items.HONEYCOMB;
                             }
                             if (randomTradeInt >= 33 && randomTradeInt <= 35) {
-                                tradeAmount = random.nextInt(1,4);
+                                tradeAmount = random.nextInt(1, 4);
                                 tradeOutcome = Items.AZALEA;
                             }
                             if (randomTradeInt >= 36 && randomTradeInt <= 38) {
                                 tradeOutcome = Items.WIND_CHARGE;
                             }
                             if (randomTradeInt >= 39 && randomTradeInt <= 41) {
-                                tradeAmount = random.nextInt(1,2);
+                                tradeAmount = random.nextInt(1, 2);
                                 tradeOutcome = Items.TURTLE_SCUTE;
                             }
                             if (randomTradeInt >= 42 && randomTradeInt <= 45) {
-                                tradeAmount = random.nextInt(1,3);
+                                tradeAmount = random.nextInt(1, 3);
                                 tradeOutcome = Items.BONE_MEAL;
                             }
                             if (randomTradeInt >= 46 && randomTradeInt <= 50) {
-                                tradeAmount = random.nextInt(1,4);
+                                tradeAmount = random.nextInt(1, 4);
                                 tradeOutcome = Items.GOLDEN_CARROT;
                             }
                             if (randomTradeInt >= 50 && randomTradeInt <= 53) {
-                                tradeAmount = random.nextInt(1,12);
+                                tradeAmount = random.nextInt(1, 12);
                                 tradeOutcome = Items.CARROT;
                             }
                             if (randomTradeInt >= 54 && randomTradeInt <= 55) {
                                 tradeOutcome = Items.MOSS_BLOCK;
-                                tradeAmount = random.nextInt(1,12);
+                                tradeAmount = random.nextInt(1, 12);
                             }
                             if (randomTradeInt >= 56 && randomTradeInt <= 57) {
                                 tradeOutcome = Moditems.KOROK_FROND.get();
                             }
                             if (randomTradeInt >= 21 && randomTradeInt <= 22) {
                                 tradeOutcome = Moditems.YELLOW_CHUCHU_JELLY.get();
-                                tradeAmount = random.nextInt(1,3);
+                                tradeAmount = random.nextInt(1, 3);
                             }
                             if (randomTradeInt >= 58 && randomTradeInt <= 63) {
                                 tradeOutcome = Items.ACACIA_LOG;
-                                tradeAmount = random.nextInt(1,12);
+                                tradeAmount = random.nextInt(1, 12);
                             }
                             if (randomTradeInt >= 64 && randomTradeInt <= 77) {
                                 tradeOutcome = Moditems.YELLOW_CHUCHU_JELLY.get();
-                                tradeAmount = random.nextInt(1,3);
+                                tradeAmount = random.nextInt(1, 3);
                             }
                             if (randomTradeInt >= 64 && randomTradeInt <= 77) {
                                 tradeOutcome = Items.TRIDENT;
@@ -354,11 +354,11 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                                 int randomDurability = random.nextInt(maxDurability / 2, maxDurability); //between half and full durability
                                 tradeItemStack.setDamageValue(maxDurability - randomDurability);
                                 if (!this.level().isClientSide) {
-                                    tradeItemStack.enchant(thunder,1);
+                                    tradeItemStack.enchant(thunder, 1);
                                 }
                             }
-                            ItemEntity itementity = new ItemEntity(level, (double) this.getX() , (double) (this.getY() + 1D), (double) this.getZ(), new ItemStack(tradeOutcome, tradeAmount));
-                            for (int i = 0; i < 12; i++){
+                            ItemEntity itementity = new ItemEntity(level, (double) this.getX(), (double) (this.getY() + 1D), (double) this.getZ(), new ItemStack(tradeOutcome, tradeAmount));
+                            for (int i = 0; i < 12; i++) {
                                 if (level() instanceof ServerLevel _level) {
                                     scheduler.schedule(() -> _level.sendParticles(ParticleTypes.WAX_ON, this.getX(), this.getY(), this.getZ(), 5, -0.5, 0.5, -0.5, 1), i / 4, TimeUnit.SECONDS);
                                 }
@@ -371,19 +371,19 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                         }
                     }
                 }
-            } else if (item == Moditems.ORANGE_KOROK_SEED.get()&&!this.level().isClientSide) {
+            } else if (item == Moditems.ORANGE_KOROK_SEED.get() && !this.level().isClientSide) {
                 if (this.getAttribute(Attributes.MOVEMENT_SPEED) != null) {
                     double current = this.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue();
                     if (current < 0.49) {
                         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(current + 0.01);
                         current = this.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue();
-                        player.sendSystemMessage(Component.literal("Movement Speed Increased to " + decimalFormat.format((current*100-20))));
+                        player.sendSystemMessage(Component.literal("Movement Speed Increased to " + decimalFormat.format((current * 100 - 20))));
                         itemstack.shrink(1);
-                    } else{
+                    } else {
                         player.sendSystemMessage(Component.literal("Movement Speed is at Max Value!"));
                     }
                 }
-            } else if (item == Moditems.BLUE_KOROK_SEED.get()&&!this.level().isClientSide) {
+            } else if (item == Moditems.BLUE_KOROK_SEED.get() && !this.level().isClientSide) {
                 if (buffRadius() < 120) {
                     this.setBuffRadius(buffRadius() + 10);
                     player.sendSystemMessage(Component.literal("Effect Area Increased to " + buffRadius()));
@@ -391,17 +391,17 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                 } else {
                     player.sendSystemMessage(Component.literal("Effect Area is at Max Value!"));
                 }
-            } else if (item == Moditems.WHITE_KOROK_SEED.get()&&!this.level().isClientSide) {
+            } else if (item == Moditems.WHITE_KOROK_SEED.get() && !this.level().isClientSide) {
                 if (this.getAttribute(Attributes.ATTACK_DAMAGE) != null) {
                     if (fredrick_damage() < 40) {
-                        setFredrickDamage(fredrick_damage()+0.5f);
+                        setFredrickDamage(fredrick_damage() + 0.5f);
                         player.sendSystemMessage(Component.literal("Attack Increased to " + decimalFormat.format((fredrick_damage()))));
                         itemstack.shrink(1);
                     } else {
                         player.sendSystemMessage(Component.literal("Attack Damage is at Max Value!"));
                     }
                 }
-            } else if (item == Moditems.DARK_BLUE_KOROK_SEED.get()&&!this.level().isClientSide) {
+            } else if (item == Moditems.DARK_BLUE_KOROK_SEED.get() && !this.level().isClientSide) {
                 if (this.getAttribute(Attributes.SCALE) != null) {
                     double current = this.getAttribute(Attributes.SCALE).getBaseValue();
                     if (current < 16) {
@@ -409,11 +409,11 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                         current = this.getAttribute(Attributes.SCALE).getBaseValue();
                         player.sendSystemMessage(Component.literal("Size Increased to " + decimalFormat.format(current)));
                         itemstack.shrink(1);
-                    }else{
+                    } else {
                         player.sendSystemMessage(Component.literal("Size is at Max Value!"));
                     }
                 }
-            } else if (item == Moditems.GREEN_KOROK_SEED.get()&&!this.level().isClientSide) {
+            } else if (item == Moditems.GREEN_KOROK_SEED.get() && !this.level().isClientSide) {
                 if (luck() < 30) {
                     this.setLuck(this.luck() + 1);
                     player.sendSystemMessage(Component.literal("Trade Luck Increased to " + this.luck()));
@@ -421,7 +421,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                 } else {
                     player.sendSystemMessage(Component.literal("Luck is at Max Value"));
                 }
-            } else if (item == Moditems.RED_KOROK_SEED.get()&&!this.level().isClientSide) {
+            } else if (item == Moditems.RED_KOROK_SEED.get() && !this.level().isClientSide) {
                 if (this.getAttribute(Attributes.BURNING_TIME) != null) {
                     double current = this.getAttribute(Attributes.BURNING_TIME).getBaseValue();
                     if (current > 0.01) {
@@ -429,12 +429,12 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                         current = this.getAttribute(Attributes.BURNING_TIME).getBaseValue();
                         player.sendSystemMessage(Component.literal("Burn Time Reduced to " + decimalFormat.format(current)));
                         itemstack.shrink(1);
-                    } else{
+                    } else {
                         player.sendSystemMessage(Component.literal("Burn Time is at Minimum Value!"));
                         this.getAttribute(Attributes.BURNING_TIME).setBaseValue(0);
                     }
                 }
-            } else if (item == Moditems.BLACK_KOROK_SEED.get()&&!this.level().isClientSide) {
+            } else if (item == Moditems.BLACK_KOROK_SEED.get() && !this.level().isClientSide) {
                 if (this.getAttribute(Attributes.ATTACK_SPEED) != null) {
                     if (effectLevel() < 3) {
                         this.setEffectLevel(effectLevel() + 1);
@@ -444,7 +444,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                         player.sendSystemMessage(Component.literal("Effect Level is at Max Value!"));
                     }
                 }
-            } else if (item == Moditems.PURPLE_KOROK_SEED.get()&&!this.level().isClientSide) {
+            } else if (item == Moditems.PURPLE_KOROK_SEED.get() && !this.level().isClientSide) {
                 if (this.getAttribute(Attributes.MAX_HEALTH) != null) {
                     double current = this.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
                     if (current < 400) {
@@ -452,11 +452,11 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                         current = this.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
                         player.sendSystemMessage(Component.literal("Max Health Increased to " + current));
                         itemstack.shrink(1);
-                    }else{
+                    } else {
                         player.sendSystemMessage(Component.literal("Max Health is at Max Value!"));
                     }
                 }
-            }else if (item == Moditems.OBSIDIAN_KOROK_SEED.get()&&!this.level().isClientSide) {
+            } else if (item == Moditems.OBSIDIAN_KOROK_SEED.get() && !this.level().isClientSide) {
                 if (this.getAttribute(Attributes.ARMOR) != null) {
                     double current = this.getAttribute(Attributes.ARMOR).getBaseValue();
                     if (current < 30) {
@@ -468,40 +468,34 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                         player.sendSystemMessage(Component.literal("Defense is at Max Value!"));
                     }
                 }
-            } else if ((item == Items.IRON_NUGGET)){
+            } else if ((item == Items.IRON_NUGGET)) {
                 if (this.getHealth() < this.getMaxHealth()) {
-                    if(!player.getAbilities().instabuild){
+                    if (!player.getAbilities().instabuild) {
                         itemstack.shrink(1);
                     }
                     this.setHealth(this.getHealth() + 2);
                     this.spawnTamingParticles(true);
                 }
-            } else if ((item == Items.GOLD_NUGGET)){
+            } else if ((item == Items.GOLD_NUGGET)) {
                 if (this.getHealth() < this.getMaxHealth()) {
-                    if(!player.getAbilities().instabuild){
+                    if (!player.getAbilities().instabuild) {
                         itemstack.shrink(1);
                     }
                     this.setHealth(this.getHealth() + 6);
                     this.spawnTamingParticles(true);
                 }
-            } else if ((item == Items.DIAMOND)){
+            } else if ((item == Items.DIAMOND)) {
                 if (this.getHealth() < this.getMaxHealth()) {
-                    if(!player.getAbilities().instabuild){
+                    if (!player.getAbilities().instabuild) {
                         itemstack.shrink(1);
                     }
                     this.setHealth(this.getMaxHealth());
                     this.spawnTamingParticles(true);
                 }
             }else if (player.isCrouching()) {
-                if (level.isClientSide()) {
-                    if (this.getOwner() != null && this.getDisplayName() != null) {
-                        Minecraft.getInstance().setScreen(new FredrickStatScreen(Component.literal(this.getDisplayName().getString() + " (" + this.getOwner().getName().getString() + ")"), this, this.luck(), this.buffRadius(), this.getLookAngle(), this, fredrick_damage(), effectLevel()));
-                        return InteractionResult.SUCCESS;
-                    }
-                }
-            }else {
+            } else {
 
-                if (item == itemForTaming && !isTame()&&!this.level().isClientSide) {
+                if (item == itemForTaming && !isTame() && !this.level().isClientSide) {
                     if (this.level().isClientSide) {
                         return InteractionResult.CONSUME;
                     } else {
@@ -532,7 +526,19 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                 }
             }
         }
+        }
         return super.mobInteract(player, hand);
+    }
+    @Override @OnlyIn(Dist.CLIENT)
+    public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
+        if (pPlayer.isCrouching()) {
+            if (pPlayer.level().isClientSide) {
+                if (this.getOwner() != null && this.getDisplayName() != null) {
+                    Minecraft.getInstance().setScreen(new FredrickStatScreen(Component.literal(this.getDisplayName().getString() + " (" + this.getOwner().getName().getString() + ")"), this, this.luck(), this.buffRadius(), this, fredrick_damage(), effectLevel()));
+                }
+            }
+        }
+        return super.interactAt(pPlayer, pVec, pHand);
     }
 
     int tickCounter = 0;
@@ -705,7 +711,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
             if (this.level() instanceof ServerLevel _level) {
 
                 double radius = 2.1; // Radius of the sphere
-                int increment = 40; // Angle increment in degrees
+                int increment = 80; // Angle increment in degrees
 
                 for (int theta = 0; theta < 360; theta += increment) { // Horizontal angle (longitude)
                     for (int phi = 0; phi <= 180; phi += increment) { // Vertical angle (latitude)
@@ -765,8 +771,8 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                 if (i % 8 == 0) {
                     if (this.level() instanceof ServerLevel _level) {
 
-                        double particleRadius = 1.5; // Radius of the sphere
-                        int increment = 30; // Angle increment in degrees
+                        double particleRadius = 0.5; // Radius of the sphere
+                        int increment = 90; // Angle increment in degrees
 
                         for (int theta = 0; theta < 360; theta += increment) { // Horizontal angle (longitude)
                             for (int phi = 0; phi <= 180; phi += increment) { // Vertical angle (latitude)
@@ -843,12 +849,12 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
             if (distance <= radius) {
                 if (entity == tamePlayer) {
                     if (effectLevel() <= 2) {
-                        entity.addEffect((new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 80, effectLevel() - 1)));
+                        entity.addEffect((new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 85, effectLevel() - 1)));
                     } else {
-                        entity.addEffect((new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 80, 1)));
+                        entity.addEffect((new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 85, 1)));
                     }
                     if (effectLevel() > 1){
-                        entity.addEffect((new MobEffectInstance(MobEffects.DIG_SPEED, 80, effectLevel() - 2)));
+                        entity.addEffect((new MobEffectInstance(MobEffects.DIG_SPEED, 85, effectLevel() - 2)));
                     }
                 }
             }

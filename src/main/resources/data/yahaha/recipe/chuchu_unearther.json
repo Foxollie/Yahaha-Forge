@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:blue_dye"
+    },
+    {
+      "item": "minecraft:red_dye"
+    },
+    {
+      "item": "minecraft:yellow_dye"
+    },
+    {
+      "item": "minecraft:white_dye"
+    }
+  ],
+  "pattern": [
+    " R ",
+    "B#W",
+    " Y "
+  ],
+  "result": {
+    "count": 3,
+    "id": "yahaha:chuchu_unearther"
+  }
+}

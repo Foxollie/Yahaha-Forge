@@ -33,7 +33,7 @@ public class BlueChuchuModel extends GeoModel<BlueChuchuMob> {
          if (chuchu != null) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
 
-            chuchu.setRotX(entityData.headPitch() * Mth.DEG_TO_RAD);
+            chuchu.setRotX((entityData.headPitch()) * Mth.DEG_TO_RAD);
             chuchu.setRotY((entityData.headPitch()+90) * Mth.DEG_TO_RAD);
         }
     }

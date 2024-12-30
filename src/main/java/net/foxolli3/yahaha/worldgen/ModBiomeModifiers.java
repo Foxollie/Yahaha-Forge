@@ -1,19 +1,25 @@
 package net.foxolli3.yahaha.worldgen;
 
 import net.foxolli3.yahaha.Yahaha;
+import net.foxolli3.yahaha.entity.ModEntities;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ForgeBiomeModifiers;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
+
 public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ADD_OVERWORLD_KOROK_SEED_BLOCKS = registerKey("add_korok_seed_blocks");
+    public static final ResourceKey<BiomeModifier> SPAWN_BLUE_CHUCHU = registerKey("spawn_blue_chuchu");
 
 
     public static void bootstrap(BootstrapContext<BiomeModifier> context) {

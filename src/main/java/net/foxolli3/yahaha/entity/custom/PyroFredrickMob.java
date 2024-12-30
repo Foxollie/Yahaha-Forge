@@ -40,9 +40,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
@@ -251,7 +254,7 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
             ItemStack itemstack = player.getItemInHand(hand);
             ItemStack tradeItemStack;
             Item item = itemstack.getItem();
-            Item itemForTaming = Moditems.KOROK_SEED_POWDER.get();
+            Item itemForTaming = Items.APPLE;;
             Item tradeOutcome = Items.STICK;
             Level level = player.level();
 
@@ -476,13 +479,7 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
                     this.spawnTamingParticles(true);
                 }
             }else if (player.isCrouching()) {
-                if (level.isClientSide()) {
-                    if (this.getOwner() != null && this.getDisplayName() != null) {
-                        Minecraft.getInstance().setScreen(new FredrickStatScreen(Component.literal(this.getDisplayName().getString() + " (" + this.getOwner().getName().getString() + ")"), this, this.luck(), this.buffRadius(), this.getLookAngle(), this, fredrick_damage(), effectLevel()));
-                        return InteractionResult.SUCCESS;
-                    }
-                }
-            }else {
+            }  else {
 
                 if (item == itemForTaming && !isTame()&&!this.level().isClientSide) {
                     if (this.level().isClientSide) {
@@ -517,6 +514,17 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
         }
         return super.mobInteract(player, hand);
     }
+    @Override @OnlyIn(Dist.CLIENT)
+    public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
+        if (pPlayer.isCrouching()) {
+            if (pPlayer.level().isClientSide) {
+                if (this.getOwner() != null && this.getDisplayName() != null) {
+                    Minecraft.getInstance().setScreen(new FredrickStatScreen(Component.literal(this.getDisplayName().getString() + " (" + this.getOwner().getName().getString() + ")"), this, this.luck(), this.buffRadius(), this, fredrick_damage(), effectLevel()));
+                }
+            }
+        }
+        return super.interactAt(pPlayer, pVec, pHand);
+    }
 
     int tickCounter = 0;
 
@@ -537,6 +545,13 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
         }
         super.tick();
     }
+
+    @Override
+    public boolean fireImmune() {
+        return true;
+    }
+
+
 
     private int randomTrade() {
         return RandomSource.createNewThreadLocalInstance().nextInt(63);
@@ -577,7 +592,7 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
 
             if (distance <= radius) {
                 if (entity == tamePlayer) {
-                    entity.addEffect((new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 80, 0)));
+                    entity.addEffect((new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 85, 0)));
                     if (effectLevel() > 1){
                         entity.addEffect((new MobEffectInstance(MobEffects.SATURATION, 85, effectLevel()-2)));
                     }

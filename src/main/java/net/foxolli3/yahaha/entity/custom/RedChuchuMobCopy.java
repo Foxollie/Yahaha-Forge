@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-public class WhiteChuchuMob extends Monster implements GeoEntity {
+public class RedChuchuMobCopy extends Monster implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private final SimpleContainer inventory = new SimpleContainer(27);
 
@@ -46,7 +46,7 @@ public class WhiteChuchuMob extends Monster implements GeoEntity {
     private Instant lastSeenTime = Instant.now();
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    public WhiteChuchuMob(EntityType<? extends Monster> entityType, Level level) {
+    public RedChuchuMobCopy(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         //this.hasBecomeVisible = false;
         if(!isVisible()) {
@@ -54,11 +54,6 @@ public class WhiteChuchuMob extends Monster implements GeoEntity {
         } else {
             this.removeEffect(MobEffects.INVISIBILITY);
         }
-    }
-    @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
-        pBuilder.define(IS_VISIBLE, false);
-        super.defineSynchedData(pBuilder);
     }
     public void setVisible(boolean visible) {
         this.entityData.set(IS_VISIBLE, visible);
@@ -73,7 +68,7 @@ public class WhiteChuchuMob extends Monster implements GeoEntity {
     }
 
     private static final EntityDataAccessor<Boolean> IS_VISIBLE =
-            SynchedEntityData.defineId(WhiteChuchuMob.class, EntityDataSerializers.BOOLEAN);
+            SynchedEntityData.defineId(RedChuchuMobCopy.class, EntityDataSerializers.BOOLEAN);
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
@@ -103,14 +98,17 @@ public class WhiteChuchuMob extends Monster implements GeoEntity {
     private boolean hasBecomeVisible;
 
     public static AttributeSupplier setAttributes() {
-        return WhiteChuchuMob.createMobAttributes()
+        return RedChuchuMobCopy.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 2D)
                 .add(Attributes.ATTACK_DAMAGE, 3.0f)
                 .add(Attributes.ATTACK_SPEED, 0.2f)
                 .add(Attributes.MOVEMENT_SPEED, 0.2f).build();
     }
 
-
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+    }
 
     @Override
     protected void registerGoals() {
@@ -149,13 +147,13 @@ public class WhiteChuchuMob extends Monster implements GeoEntity {
         controllerRegistrar.add(new AnimationController<>(this, "spawnController", 0, this::spawnPredicate));
     }
 
-    private PlayState spawnPredicate(AnimationState<WhiteChuchuMob> WhiteChuchuMobAnimationState) {
+    private PlayState spawnPredicate(AnimationState<RedChuchuMobCopy> RedChuchuMobAnimationState) {
         if (shouldPlaySpawnAnimation) {
-            WhiteChuchuMobAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blue_chuchu.spawn", Animation.LoopType.PLAY_ONCE));
+            RedChuchuMobAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blue_chuchu.spawn", Animation.LoopType.PLAY_ONCE));
             shouldPlaySpawnAnimation = false;
         }
         if (shouldPlayAttackAnimation) {
-            WhiteChuchuMobAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blue_chuchu.attack", Animation.LoopType.PLAY_ONCE));
+            RedChuchuMobAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blue_chuchu.attack", Animation.LoopType.PLAY_ONCE));
             shouldPlayAttackAnimation = false;
             return PlayState.CONTINUE;
         }
@@ -181,7 +179,7 @@ public class WhiteChuchuMob extends Monster implements GeoEntity {
         super.aiStep();
 
 
-        double detectionRadius = 3.0;
+        double detectionRadius = 3.0; // Define the radius within which the mob checks for players
 
         boolean playerNearby = isPlayerNearby(detectionRadius);
 
@@ -197,7 +195,7 @@ public class WhiteChuchuMob extends Monster implements GeoEntity {
                     double x = this.getX();
                     double y = this.getY();
                     double z = this.getZ();
-                    _level.sendParticles(ModParticles.WHITE_CHUCHU_BURST_PARTICLES.get(), x, y, z, 5, 0.2, 0.2, 0.2, 0.05f);
+                    _level.sendParticles(ModParticles.RED_CHUCHU_BURST_PARTICLES.get(), x, y, z, 5, 0.2, 0.2, 0.2, 0.05f);
                     _level.playSeededSound(null, x, y, z, ModSounds.CHUCHU_SPAWN.get(), SoundSource.HOSTILE, 1f, 1f, 0);
                 }
             } else {
@@ -248,7 +246,7 @@ public class WhiteChuchuMob extends Monster implements GeoEntity {
 
     @Override
     public boolean fireImmune() {
-        return false;
+        return true;
     }
 
 
@@ -282,7 +280,7 @@ public class WhiteChuchuMob extends Monster implements GeoEntity {
                             // Schedule particle spawning
                             if (delay == 2) {
                                 _level.sendParticles(
-                                        ParticleTypes.SNOWFLAKE,
+                                        ParticleTypes.FLAME,
                                         this.getX() + xOffset,
                                         (this.getY() -0.5) + yOffset,
                                         this.getZ() + zOffset,
@@ -298,7 +296,7 @@ public class WhiteChuchuMob extends Monster implements GeoEntity {
             }
             if (tickCounter % 12 == 0) {
                 if (this.level() instanceof ServerLevel _level) {
-                    _level.sendParticles(ModParticles.WHITE_CHUCHU_BURST_PARTICLES_SMALL.get(), this.getX(), this.getY() + 0, this.getZ(), 1, 0.2, 0, 0.2, 0);
+                    _level.sendParticles(ModParticles.RED_CHUCHU_BURST_PARTICLES_SMALL.get(), this.getX(), this.getY() + 0, this.getZ(), 1, 0.2, 0, 0.2, 0);
                 }
             }
         }
