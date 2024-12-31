@@ -128,16 +128,16 @@ public class WandConstructionTableBlockEntity extends BlockEntity implements Men
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        pTag.put("inventory", itemHandler.serializeNBT(pRegistries));
+    protected void saveAdditional(CompoundTag pTag) {
+        pTag.put("inventory", itemHandler.serializeNBT());
         pTag.putInt("wand_construction_table.progress", progress);
-        super.saveAdditional(pTag, pRegistries);
+        super.saveAdditional(pTag);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
-        itemHandler.deserializeNBT(pRegistries, pTag.getCompound("inventory"));
+    public void load(CompoundTag pTag) {
+        super.load(pTag);
+        itemHandler.deserializeNBT(pTag.getCompound("inventory"));
         progress = pTag.getInt("wand_construction_table.progress");
     }
 
@@ -199,12 +199,12 @@ public class WandConstructionTableBlockEntity extends BlockEntity implements Men
                 this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount());
 
         // Check if the result has the FROND_USES component and copy it
-            if (result.has(ModDataComponentTypes.FROND_USES.get())) {
+           /* if (result.has(ModDataComponentTypes.FROND_USES.get())) {
                 outputStack.set(ModDataComponentTypes.FROND_USES.get(), result.get(ModDataComponentTypes.FROND_USES.get()));
             }
             if (result.has(ModDataComponentTypes.PUFFSHROOM_USES.get())) {
                 outputStack.set(ModDataComponentTypes.PUFFSHROOM_USES.get(), result.get(ModDataComponentTypes.PUFFSHROOM_USES.get()));
-            }
+            }*/
 
         this.itemHandler.setStackInSlot(OUTPUT_SLOT, outputStack);
 
@@ -297,14 +297,14 @@ public class WandConstructionTableBlockEntity extends BlockEntity implements Men
 
                 result = new ItemStack(Moditems.KOROK_WAND_FROND.get());
 
-                result.set(ModDataComponentTypes.FROND_USES.get(), korokFrondCount);
+                //result.set(ModDataComponentTypes.FROND_USES.get(), korokFrondCount);
 
                 canCraft = canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem()) && noFrondClutter;
 
             } else if (hasShroomsAndWandEmpty){
                 result = new ItemStack(Moditems.KOROK_WAND_PUFFSHROOM.get());
 
-                result.set(ModDataComponentTypes.PUFFSHROOM_USES.get(), shroomCount);
+                //result.set(ModDataComponentTypes.PUFFSHROOM_USES.get(), shroomCount);
 
                 canCraft = canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem()) && noShroomClutter;
             }

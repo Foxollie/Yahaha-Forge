@@ -6,6 +6,7 @@ import net.foxolli3.yahaha.item.custom.*;
 import net.foxolli3.yahaha.sound.ModSounds;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -40,11 +41,11 @@ public class Moditems {
     public static final RegistryObject<Item> PURPLE_KOROK_SEED = ITEMS.register("purple_korok_seed",
             () -> new TooltipItem(new Item.Properties(),"Upgrade Fredrick's Max Health"));
     public static final RegistryObject<Item> KAZOO_VIEW_HIGHWAY_DISC = ITEMS.register("kazoo_view_highway_music_disc",
-            () -> new Item(new Item.Properties().jukeboxPlayable(ModSounds.KAZOO_VIEW_HIGHWAY_KEY).stacksTo(1)));
+            () -> new RecordItem(6, ModSounds.KAZOO_VIEW_HIGHWAY, new Item.Properties().stacksTo(1),2520));
     public static final RegistryObject<Item> PIRANHA_PLANTS_ON_PARADE_KAZOO_COVER_MUSIC_DISC = ITEMS.register("piranha_plants_on_parade_kazoo_cover_music_disc",
-            () -> new Item(new Item.Properties().jukeboxPlayable(ModSounds.PIRANHA_PLANTS_ON_PARADE_KAZOO_COVER_KEY).stacksTo(1)));
+            () -> new RecordItem(6, ModSounds.PIRANHA_PLANTS_ON_PARADE_KAZOO_COVER, new Item.Properties().stacksTo(1),980));
     public static final RegistryObject<Item> SUIKA_GAME_THEME_KAZOO_COVER_MUSIC_DISC = ITEMS.register("suika_game_theme_kazoo_cover_music_disc",
-            () -> new Item(new Item.Properties().jukeboxPlayable(ModSounds.SUIKA_GAME_THEME_KAZOO_COVER_KEY).stacksTo(1)));
+            () -> new RecordItem(6, ModSounds.SUIKA_GAME_THEME_KAZOO_COVER, new Item.Properties().stacksTo(1),4140));
     public static final RegistryObject<Item> KOROK_FROND = ITEMS.register("korok_frond",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OCTOROK_EYEBALL = ITEMS.register("octorok_eyeball",

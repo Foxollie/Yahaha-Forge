@@ -24,13 +24,15 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.util.RenderUtil;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.RenderUtils;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -68,7 +70,7 @@ public class KorokWandPuffshroom extends Item implements GeoItem {
 
     @Override
     public double getTick(Object itemStack) {
-        return RenderUtil.getCurrentTick();
+        return RenderUtils.getCurrentTick();
     }
 
     @Override
@@ -89,27 +91,27 @@ public class KorokWandPuffshroom extends Item implements GeoItem {
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         if (entity.getType() == EntityType.PLAYER) {
-            if (!stack.has(ModDataComponentTypes.PUFFSHROOM_USES.get())) {
+            /*if (!stack.has(ModDataComponentTypes.PUFFSHROOM_USES.get())) {
                 stack.set(ModDataComponentTypes.PUFFSHROOM_USES.get(), 1);
-            }
+            }*/
             Player player = (Player) entity;
 
             // Create a new ItemStack for the iron sword
             ItemStack newItemStack = new ItemStack(Moditems.KOROK_WAND_EMPTY.get(), 1);
 
 
-            int currentUses = stack.get(ModDataComponentTypes.PUFFSHROOM_USES.get());
+            //int currentUses = stack.get(ModDataComponentTypes.PUFFSHROOM_USES.get());
 
             // Set the new item stack in the player's hand
             player.setItemInHand(player.getUsedItemHand(), newItemStack);
             if (!player.getCooldowns().isOnCooldown(Moditems.KOROK_WAND_PUFFSHROOM.get())) {
                 player.getCooldowns().addCooldown(this, 200);
                 Level level = player.level();
-                if (currentUses == 1) {
+              /*  if (currentUses == 1) {
                     if (player.getMainHandItem().getItem() == Moditems.KOROK_WAND_PUFFSHROOM.get()) {
                         player.setItemInHand(InteractionHand.MAIN_HAND, newItemStack);
                     }
-                }
+                }*/
                 if (!level.isClientSide) {
                     for (Mob mob : level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(RADIUS))) {
                         mob.setNoAi(true);
@@ -134,14 +136,13 @@ public class KorokWandPuffshroom extends Item implements GeoItem {
         }
         return super.onEntitySwing(stack, entity);
     }
-    @Override
-    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         if(Screen.hasShiftDown()) {
             pTooltipComponents.add(Component.translatable("tooltip.yahaha.korok_wand_puffshroom.shift_down"));
         } else {
             pTooltipComponents.add(Component.translatable("tooltip.yahaha.korok_wand_puffshroom"));
         }
-        pTooltipComponents.add(Component.literal("Puffshroom - Uses: " + pStack.get(ModDataComponentTypes.PUFFSHROOM_USES.get())));
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
+        pTooltipComponents.add(Component.literal("Puffshroom - Uses: "));
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }

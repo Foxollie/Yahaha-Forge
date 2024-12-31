@@ -3,7 +3,7 @@ package net.foxolli3.yahaha.worldgen;
 import net.foxolli3.yahaha.Yahaha;
 import net.foxolli3.yahaha.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
@@ -19,7 +19,7 @@ import java.util.List;
 public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_KOROK_SEED_BLOCKS_KEY = registerKey("korok_seed_infused_blocks");
 
-    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         RuleTest dirtReplacables = new BlockMatchTest(Blocks.DIRT);
         RuleTest gravelReplacables = new BlockMatchTest(Blocks.GRAVEL);
 
@@ -34,10 +34,10 @@ public class ModConfiguredFeatures {
 
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Yahaha.MOD_ID, name));
     }
 
-    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstrapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, Feature<OreConfiguration> feature, OreConfiguration configuration) {
+    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, Feature<OreConfiguration> feature, OreConfiguration configuration) {
         context.register(key, new ConfiguredFeature<>(feature, configuration));
     }
 }

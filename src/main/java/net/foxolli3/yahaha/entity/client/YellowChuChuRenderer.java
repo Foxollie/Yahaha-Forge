@@ -16,7 +16,7 @@ public class YellowChuChuRenderer extends GeoEntityRenderer<YellowChuchuMob> {
     }
     @Override
     public ResourceLocation getTextureLocation(YellowChuchuMob animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "textures/entity/yellow_chuchu_center.png");
+        return new ResourceLocation(Yahaha.MOD_ID, "textures/entity/yellow_chuchu_center.png");
     }
     @Override
     public void render(YellowChuchuMob entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {

@@ -28,44 +28,44 @@ public class ModEntities<T extends Entity>{
     public static final RegistryObject<EntityType<FredrickMob>> FREDRICK =
         ENTITY_TYPES.register("fredrick",() -> EntityType.Builder.of(FredrickMob::new, MobCategory.CREATURE)
                 .sized(0.75f,0.75f)
-                .build( ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "fredrick").toString()));
+                .build( new ResourceLocation(Yahaha.MOD_ID, "fredrick").toString()));
 
     public static final RegistryObject<EntityType<CryoFredrickMob>> CRYO_FREDRICK =
             ENTITY_TYPES.register("cryo_fredrick",() -> EntityType.Builder.of(CryoFredrickMob::new, MobCategory.CREATURE)
                     .sized(0.75f,0.75f)
-                    .build( ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "cryo_fredrick").toString()));
+                    .build( new ResourceLocation(Yahaha.MOD_ID, "cryo_fredrick").toString()));
 
     public static final RegistryObject<EntityType<PyroFredrickMob>> PYRO_FREDRICK =
             ENTITY_TYPES.register("pyro_fredrick",() -> EntityType.Builder.of(PyroFredrickMob::new, MobCategory.CREATURE)
                     .sized(0.75f,0.75f)
-                    .build( ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "pyro_fredrick").toString()));
+                    .build( new ResourceLocation(Yahaha.MOD_ID, "pyro_fredrick").toString()));
 
     public static final RegistryObject<EntityType<ElectroFredrickMob>> ELECTRO_FREDRICK =
             ENTITY_TYPES.register("electro_fredrick",() -> EntityType.Builder.of(ElectroFredrickMob::new, MobCategory.CREATURE)
                     .sized(0.75f,0.75f)
-                    .build( ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "electro_fredrick").toString()));
+                    .build(new ResourceLocation(Yahaha.MOD_ID, "electro_fredrick").toString()));
 
     public static final RegistryObject<EntityType<HydroFredrickMob>> HYDRO_FREDRICK =
             ENTITY_TYPES.register("hydro_fredrick",() -> EntityType.Builder.of(HydroFredrickMob::new, MobCategory.CREATURE)
                     .sized(0.75f,0.75f)
-                    .build( ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "electro_fredrick").toString()));
+                    .build( new ResourceLocation(Yahaha.MOD_ID, "electro_fredrick").toString()));
 
     public static final RegistryObject<EntityType<BlueChuchuMob>> BLUE_CHUCHU =
             ENTITY_TYPES.register("blue_chuchu",() -> EntityType.Builder.of(BlueChuchuMob::new, MobCategory.MONSTER)
                     .sized(0.75f,0.75f)
-                    .build(ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "blue_chuchu").toString()));
+                    .build(new ResourceLocation(Yahaha.MOD_ID, "blue_chuchu").toString()));
     public static final RegistryObject<EntityType<YellowChuchuMob>> YELLOW_CHUCHU =
             ENTITY_TYPES.register("yellow_chuchu",() -> EntityType.Builder.of(YellowChuchuMob::new, MobCategory.MONSTER)
                     .sized(0.75f,0.75f)
-                    .build(ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "yellow_chuchu").toString()));
+                    .build(new ResourceLocation(Yahaha.MOD_ID, "yellow_chuchu").toString()));
 public static final RegistryObject<EntityType<RedChuchuMob>> RED_CHUCHU =
             ENTITY_TYPES.register("red_chuchu",() -> EntityType.Builder.of(RedChuchuMob::new, MobCategory.MONSTER)
                     .sized(0.75f,0.75f)
-                    .build(ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "red_chuchu").toString()));
+                    .build(new ResourceLocation(Yahaha.MOD_ID, "red_chuchu").toString()));
 public static final RegistryObject<EntityType<WhiteChuchuMob>> WHITE_CHUCHU =
             ENTITY_TYPES.register("white_chuchu",() -> EntityType.Builder.of(WhiteChuchuMob::new, MobCategory.MONSTER)
                     .sized(0.75f,0.75f)
-                    .build(ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "white_chuchu").toString()));
+                    .build(new ResourceLocation(Yahaha.MOD_ID, "white_chuchu").toString()));
 
     public static void register(IEventBus eventBus) {
     ENTITY_TYPES.register(eventBus);

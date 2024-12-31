@@ -25,12 +25,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.util.RenderUtil;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.RenderUtils;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -70,7 +71,7 @@ public class KorokWandFrond extends Item implements GeoItem {
 
     @Override
     public double getTick(Object itemStack) {
-        return RenderUtil.getCurrentTick();
+        return RenderUtils.getCurrentTick();
     }
 
     @Override
@@ -92,25 +93,25 @@ public class KorokWandFrond extends Item implements GeoItem {
     private static final int KNOCKBACK_RADIUS = 6;
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
-        if (!stack.has(ModDataComponentTypes.FROND_USES.get())) {
-            stack.set(ModDataComponentTypes.FROND_USES.get(), 1);
-        }
+        //if (!stack.has(ModDataComponentTypes.FROND_USES.get())) {
+        //    stack.set(ModDataComponentTypes.FROND_USES.get(), 1);
+        //}
         Player player = (Player) entity;
 
         // Create a new ItemStack for the iron sword
         ItemStack newItemStack = new ItemStack(Moditems.KOROK_WAND_EMPTY.get(), 1);
 
-        int currentUses = stack.get(ModDataComponentTypes.FROND_USES.get());
+        //int currentUses = stack.get(ModDataComponentTypes.FROND_USES.get());
 
             if (!player.getCooldowns().isOnCooldown(Moditems.KOROK_WAND_FROND.get())) {
                 player.getCooldowns().addCooldown(this, 8);
                 Level level = player.level();
-                if (currentUses == 1) {
+               /* if (currentUses == 1) {
                     if (player.getMainHandItem().getItem() == Moditems.KOROK_WAND_FROND.get()) {
                         player.setItemInHand(InteractionHand.MAIN_HAND, newItemStack);
                     }
-                }
-                stack.set(ModDataComponentTypes.FROND_USES.get(), Math.max(0, currentUses - 1));
+                }*/
+                //stack.set(ModDataComponentTypes.FROND_USES.get(), Math.max(0, currentUses - 1));
                 if (!level.isClientSide) {
                     for (Mob mob : level.getEntitiesOfClass(Mob.class, entity.getBoundingBox().inflate(KNOCKBACK_RADIUS))) {
                         double d0 = mob.getX() - entity.getX();
@@ -149,14 +150,13 @@ public class KorokWandFrond extends Item implements GeoItem {
         return super.use(level, player, hand);
     }
 
-    @Override
-    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         if(Screen.hasShiftDown()) {
             pTooltipComponents.add(Component.translatable("tooltip.yahaha.korok_wand_frond.shift_down"));
         } else {
             pTooltipComponents.add(Component.translatable("tooltip.yahaha.korok_wand_frond"));
         }
-        pTooltipComponents.add(Component.literal("Korok Frond - Uses: " + pStack.get(ModDataComponentTypes.FROND_USES.get())));
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
+        pTooltipComponents.add(Component.literal("Korok Frond - Uses: "));
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }

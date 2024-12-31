@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -54,7 +53,7 @@ public class Yahaha {
         ModEntities.register(modEventBus);
         ModLootModifier.register(modEventBus);
     
-        ModDataComponentTypes.register(modEventBus);
+        //ModDataComponentTypes.register(modEventBus);
     
         ModParticles.register(modEventBus);
     
@@ -114,6 +113,6 @@ public class Yahaha {
     public static final String ID = "yahaha";
     private static final String MODEL_DIR = "textures/entity/";
     public static ResourceLocation getModelTexture(String name) {
-        return ResourceLocation.fromNamespaceAndPath(ID, MODEL_DIR + name);
+        return new ResourceLocation(ID, MODEL_DIR + name);
     }
 }

@@ -8,17 +8,17 @@ import software.bernie.geckolib.model.GeoModel;
 public class ElectroFredrickModel extends GeoModel<ElectroFredrickMob> {
     @Override
     public ResourceLocation getModelResource(ElectroFredrickMob animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "geo/fredrick.geo.json");
+        return new ResourceLocation(Yahaha.MOD_ID, "geo/fredrick.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(ElectroFredrickMob animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "textures/entity/electro_fredrick_texture.png");
+        return new ResourceLocation(Yahaha.MOD_ID, "textures/entity/electro_fredrick_texture.png");
     }
 
     @Override
     public ResourceLocation getAnimationResource(ElectroFredrickMob animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "animations/fredrick.animation.json");
+        return new ResourceLocation(Yahaha.MOD_ID, "animations/fredrick.animation.json");
     }
 
    /* @Override

@@ -16,7 +16,7 @@ public class PyroFredrickRenderer extends GeoEntityRenderer<PyroFredrickMob> {
 
     @Override
     public ResourceLocation getTextureLocation(PyroFredrickMob animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "textures/entity/pyro_fredrick_texture.png");
+        return new ResourceLocation(Yahaha.MOD_ID, "textures/entity/pyro_fredrick_texture.png");
     }
 
     @Override

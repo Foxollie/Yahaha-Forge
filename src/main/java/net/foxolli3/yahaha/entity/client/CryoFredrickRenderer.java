@@ -16,7 +16,7 @@ public class CryoFredrickRenderer extends GeoEntityRenderer<CryoFredrickMob> {
 
     @Override
     public ResourceLocation getTextureLocation(CryoFredrickMob animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "textures/entity/cryo_fredrick_texture.png");
+        return new ResourceLocation(Yahaha.MOD_ID, "textures/entity/cryo_fredrick_texture.png");
     }
 
     @Override

@@ -15,7 +15,7 @@ public class ElectroFredrickRenderer extends GeoEntityRenderer<ElectroFredrickMo
 
     @Override
     public ResourceLocation getTextureLocation(ElectroFredrickMob animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "textures/entity/electro_fredrick_texture.png");
+        return new ResourceLocation(Yahaha.MOD_ID, "textures/entity/electro_fredrick_texture.png");
     }
 
     @Override

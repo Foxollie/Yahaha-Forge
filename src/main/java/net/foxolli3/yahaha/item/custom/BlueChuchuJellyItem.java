@@ -59,13 +59,12 @@ public class BlueChuchuJellyItem extends Item {
         return InteractionResult.FAIL;
     }
 
-    @Override
-    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         if(Screen.hasShiftDown()) {
             pTooltipComponents.add(Component.translatable("tooltip.yahaha.blue_chuchu_jelly_shift"));
         } else {
             pTooltipComponents.add(Component.translatable("tooltip.yahaha.chuchu_jelly"));
         }
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }

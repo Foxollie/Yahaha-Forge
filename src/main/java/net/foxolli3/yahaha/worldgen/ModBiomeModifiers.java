@@ -4,7 +4,7 @@ import net.foxolli3.yahaha.Yahaha;
 import net.foxolli3.yahaha.entity.ModEntities;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
@@ -22,7 +22,7 @@ public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> SPAWN_BLUE_CHUCHU = registerKey("spawn_blue_chuchu");
 
 
-    public static void bootstrap(BootstrapContext<BiomeModifier> context) {
+    public static void bootstrap(BootstapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         var biomes = context.lookup(Registries.BIOME);
 
@@ -33,6 +33,6 @@ public class ModBiomeModifiers {
     }
 
     private static ResourceKey<BiomeModifier> registerKey(String name) {
-        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, name));
+        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(Yahaha.MOD_ID, name));
     }
 }

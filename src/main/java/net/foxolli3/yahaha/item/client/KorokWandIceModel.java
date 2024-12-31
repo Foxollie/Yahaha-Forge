@@ -9,16 +9,16 @@ import software.bernie.geckolib.model.GeoModel;
 public class KorokWandIceModel extends GeoModel<KorokWandIce> {
     @Override
     public ResourceLocation getModelResource(KorokWandIce animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "geo/korok_wand_block_center.geo.json");
+        return new ResourceLocation(Yahaha.MOD_ID, "geo/korok_wand_block_center.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(KorokWandIce animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "textures/item/korok_wand_ice_trans.png");
+        return new ResourceLocation(Yahaha.MOD_ID, "textures/item/korok_wand_ice_trans.png");
     }
 
     @Override
     public ResourceLocation getAnimationResource(KorokWandIce animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "animations/korok_wand_block.animation.json");
+        return new ResourceLocation(Yahaha.MOD_ID, "animations/korok_wand_block.animation.json");
     }
 }

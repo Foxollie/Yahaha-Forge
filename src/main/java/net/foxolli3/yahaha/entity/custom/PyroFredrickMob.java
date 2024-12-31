@@ -44,16 +44,18 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
+import net.minecraft.world.scores.Team;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.text.DecimalFormat;
 import java.util.Random;
@@ -88,7 +90,7 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
                 .add(Attributes.ATTACK_SPEED, 0.2f)
                 .add(Attributes.ATTACK_KNOCKBACK, 1.0)
                 .add(Attributes.ARMOR, 8.0)
-                .add(Attributes.BURNING_TIME, 1)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1)
                 .add(Attributes.MOVEMENT_SPEED, 0.2F).build();
     }
 
@@ -104,7 +106,7 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(3, new FollowOwnerGoal(this, 1.5f, 10.0f,2.0f));
+        this.goalSelector.addGoal(3, new FollowOwnerGoal(this, 1.5f, 10.0f,2.0f,false));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.2D, false));
         this.goalSelector.addGoal(9, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
@@ -153,13 +155,13 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
-        super.defineSynchedData(pBuilder);
-        pBuilder.define(SITTING, false);
-        pBuilder.define(LUCK, 0);
-        pBuilder.define(BUFF_RADIUS, 0);
-        pBuilder.define(FREDRICK_DAMAGE, 0f);
-        pBuilder.define(EFFECT_LEVEL, 1);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(SITTING, false);
+        this.entityData.define(LUCK, 0);
+        this.entityData.define(BUFF_RADIUS, 0);
+        this.entityData.define(FREDRICK_DAMAGE, 0f);
+        this.entityData.define(EFFECT_LEVEL, 1);
     }
     public int testLuck(int x) {
         if (x < 10) {
@@ -206,7 +208,7 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
     }
 
     @Override
-    public PlayerTeam getTeam() {
+    public Team getTeam() {
         return super.getTeam();
     }
 
@@ -345,13 +347,11 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
                             }
                             tradeItemStack = new ItemStack(tradeOutcome, tradeAmount);
                             if (tradeOutcome == Items.GOLDEN_CHESTPLATE) {
-                                HolderLookup<Enchantment> enchantmentLookup = this.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-                                Holder<Enchantment> fire_res = enchantmentLookup.getOrThrow(Enchantments.FIRE_PROTECTION);
                                 int maxDurability = tradeItemStack.getMaxDamage();
                                 int randomDurability = random.nextInt(maxDurability / 2, maxDurability); //between half and full durability
                                 tradeItemStack.setDamageValue(maxDurability - randomDurability);
                                 if (!this.level().isClientSide) {
-                                    tradeItemStack.enchant(fire_res, random.nextInt(1, 4));
+                                    tradeItemStack.enchant(Enchantments.FIRE_PROTECTION, random.nextInt(1, 4));
                                 }
                             }
                             ItemEntity itementity = new ItemEntity(level, (double) this.getX(), (double) (this.getY() + 1D), (double) this.getZ(), new ItemStack(tradeOutcome, tradeAmount));
@@ -398,7 +398,7 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
                         player.sendSystemMessage(Component.literal("Attack Damage is at Max Value!"));
                     }
                 }
-            } else if (item == Moditems.DARK_BLUE_KOROK_SEED.get()&&!this.level().isClientSide) {
+            } /*else if (item == Moditems.DARK_BLUE_KOROK_SEED.get()&&!this.level().isClientSide) {
                 if (this.getAttribute(Attributes.SCALE) != null) {
                     double current = this.getAttribute(Attributes.SCALE).getBaseValue();
                     if (current < 16) {
@@ -410,7 +410,7 @@ public class PyroFredrickMob extends TamableAnimal implements GeoEntity, Neutral
                         player.sendSystemMessage(Component.literal("Size is at Max Value!"));
                     }
                 }
-            } else if (item == Moditems.GREEN_KOROK_SEED.get()&&!this.level().isClientSide) {
+            }*/ else if (item == Moditems.GREEN_KOROK_SEED.get()&&!this.level().isClientSide) {
                 if (luck() < 30) {
                     this.setLuck(this.luck() + 1);
                     player.sendSystemMessage(Component.literal("Trade Luck Increased to " + this.luck()));

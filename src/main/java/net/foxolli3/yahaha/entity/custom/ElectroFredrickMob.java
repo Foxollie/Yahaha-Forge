@@ -40,6 +40,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -49,16 +50,18 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
+import net.minecraft.world.scores.Team;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.text.DecimalFormat;
 import java.util.Random;
@@ -93,7 +96,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                 .add(Attributes.ATTACK_SPEED, 0.2f)
                 .add(Attributes.ATTACK_KNOCKBACK, 1.0)
                 .add(Attributes.ARMOR, 8.0)
-                .add(Attributes.BURNING_TIME, 1)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1)
                 .add(Attributes.MOVEMENT_SPEED, 0.2F).build();
     }
 
@@ -109,7 +112,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(3, new FollowOwnerGoal(this, 1.5f, 10.0f,2.0f));
+        this.goalSelector.addGoal(3, new FollowOwnerGoal(this, 1.5f, 10.0f,2.0f,false));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.2D, false));
         this.goalSelector.addGoal(9, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
@@ -158,13 +161,13 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
-        super.defineSynchedData(pBuilder);
-        pBuilder.define(SITTING, false);
-        pBuilder.define(LUCK, 0);
-        pBuilder.define(BUFF_RADIUS, 0);
-        pBuilder.define(FREDRICK_DAMAGE, 0f);
-        pBuilder.define(EFFECT_LEVEL, 1);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(SITTING, false);
+        this.entityData.define(LUCK, 0);
+        this.entityData.define(BUFF_RADIUS, 0);
+        this.entityData.define(FREDRICK_DAMAGE, 0f);
+        this.entityData.define(EFFECT_LEVEL, 1);
     }
     public int testLuck(int x) {
         if (x < 10) {
@@ -211,7 +214,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
     }
 
     @Override
-    public PlayerTeam getTeam() {
+    public Team getTeam() {
         return super.getTeam();
     }
 
@@ -306,11 +309,12 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                                 tradeOutcome = Items.AZALEA;
                             }
                             if (randomTradeInt >= 36 && randomTradeInt <= 38) {
-                                tradeOutcome = Items.WIND_CHARGE;
+                                tradeOutcome = Items.BAMBOO_BLOCK;
+                                tradeAmount = random.nextInt(1, 8);
                             }
                             if (randomTradeInt >= 39 && randomTradeInt <= 41) {
                                 tradeAmount = random.nextInt(1, 2);
-                                tradeOutcome = Items.TURTLE_SCUTE;
+                                tradeOutcome = Items.SCUTE;
                             }
                             if (randomTradeInt >= 42 && randomTradeInt <= 45) {
                                 tradeAmount = random.nextInt(1, 3);
@@ -348,13 +352,11 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                             }
                             tradeItemStack = new ItemStack(tradeOutcome, tradeAmount);
                             if (tradeOutcome == Items.TRIDENT) {
-                                HolderLookup<Enchantment> enchantmentLookup = this.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-                                Holder<Enchantment> thunder = enchantmentLookup.getOrThrow(Enchantments.CHANNELING);
                                 int maxDurability = tradeItemStack.getMaxDamage();
                                 int randomDurability = random.nextInt(maxDurability / 2, maxDurability); //between half and full durability
                                 tradeItemStack.setDamageValue(maxDurability - randomDurability);
                                 if (!this.level().isClientSide) {
-                                    tradeItemStack.enchant(thunder, 1);
+                                    tradeItemStack.enchant(Enchantments.CHANNELING,1);
                                 }
                             }
                             ItemEntity itementity = new ItemEntity(level, (double) this.getX(), (double) (this.getY() + 1D), (double) this.getZ(), new ItemStack(tradeOutcome, tradeAmount));
@@ -401,7 +403,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                         player.sendSystemMessage(Component.literal("Attack Damage is at Max Value!"));
                     }
                 }
-            } else if (item == Moditems.DARK_BLUE_KOROK_SEED.get() && !this.level().isClientSide) {
+            }/* else if (item == Moditems.DARK_BLUE_KOROK_SEED.get() && !this.level().isClientSide) {
                 if (this.getAttribute(Attributes.SCALE) != null) {
                     double current = this.getAttribute(Attributes.SCALE).getBaseValue();
                     if (current < 16) {
@@ -413,7 +415,7 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                         player.sendSystemMessage(Component.literal("Size is at Max Value!"));
                     }
                 }
-            } else if (item == Moditems.GREEN_KOROK_SEED.get() && !this.level().isClientSide) {
+            }*/ else if (item == Moditems.GREEN_KOROK_SEED.get() && !this.level().isClientSide) {
                 if (luck() < 30) {
                     this.setLuck(this.luck() + 1);
                     player.sendSystemMessage(Component.literal("Trade Luck Increased to " + this.luck()));
@@ -422,16 +424,16 @@ public class ElectroFredrickMob extends TamableAnimal implements GeoEntity, Neut
                     player.sendSystemMessage(Component.literal("Luck is at Max Value"));
                 }
             } else if (item == Moditems.RED_KOROK_SEED.get() && !this.level().isClientSide) {
-                if (this.getAttribute(Attributes.BURNING_TIME) != null) {
-                    double current = this.getAttribute(Attributes.BURNING_TIME).getBaseValue();
+                if (this.getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null) {
+                    double current = this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getBaseValue();
                     if (current > 0.01) {
-                        this.getAttribute(Attributes.BURNING_TIME).setBaseValue(current - 0.1);
-                        current = this.getAttribute(Attributes.BURNING_TIME).getBaseValue();
+                        this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(current - 0.1);
+                        current = this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getBaseValue();
                         player.sendSystemMessage(Component.literal("Burn Time Reduced to " + decimalFormat.format(current)));
                         itemstack.shrink(1);
                     } else {
                         player.sendSystemMessage(Component.literal("Burn Time is at Minimum Value!"));
-                        this.getAttribute(Attributes.BURNING_TIME).setBaseValue(0);
+                        this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
                     }
                 }
             } else if (item == Moditems.BLACK_KOROK_SEED.get() && !this.level().isClientSide) {

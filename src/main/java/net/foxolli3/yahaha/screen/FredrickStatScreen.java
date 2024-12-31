@@ -35,7 +35,7 @@ import static net.minecraft.world.item.crafting.RecipeType.SMITHING;
 
 public class FredrickStatScreen extends Screen {
     private static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "textures/gui/fredrick_stats_gui.png");
+           new ResourceLocation(Yahaha.MOD_ID, "textures/gui/fredrick_stats_gui.png");
 
     private final LivingEntity preview;
     private final LivingEntity fredrickMob;
@@ -77,7 +77,8 @@ public class FredrickStatScreen extends Screen {
         super.render(guiGraphics, mouseX, mouseY, delta);
         pmouseX = mouseX;
         pmouseY = mouseY;
-        // Render the backgroundstats
+        renderBackground(guiGraphics);
+        //render the backgroundstats
         guiGraphics.drawString(Minecraft.getInstance().font, "Health: " +decimalFormat.format(fredrickMob.getHealth()) + "/" + decimalFormat.format(fredrickMob.getMaxHealth()), this.width / 2 - 120, this.height / 2 - 80, 0xe0b1ff);
         guiGraphics.drawCenteredString(Minecraft.getInstance().font, screenTitle, this.width / 2 + 40, this.height / 2 - 80, 0xffffff);
         guiGraphics.drawString(Minecraft.getInstance().font, "Attack: " + this.damage, this.width / 2 - 120, this.height / 2 - 65, 0xebebec);
@@ -90,12 +91,12 @@ public class FredrickStatScreen extends Screen {
         if (preview.getType() == ModEntities.PYRO_FREDRICK.get()){
             guiGraphics.drawString(Minecraft.getInstance().font, "Burn Time: N/A", this.width / 2 - 120, this.height / 2 + 40, 0xff9d8c);
         }else {
-            guiGraphics.drawString(Minecraft.getInstance().font, "Burn Time: " + decimalFormat.format(fredrick.getAttributeValue(Attributes.BURNING_TIME)), this.width / 2 - 120, this.height / 2 + 40, 0xff9d8c);
+            guiGraphics.drawString(Minecraft.getInstance().font, "Burn Time: " + decimalFormat.format(fredrick.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)), this.width / 2 - 120, this.height / 2 + 40, 0xff9d8c);
         }
     }
 
     @Override
-    protected void renderMenuBackground(GuiGraphics pGuiGraphics, int pX, int pY, int pWidth, int pHeight) {
+    public void renderBackground(GuiGraphics pGuiGraphics) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
@@ -105,14 +106,12 @@ public class FredrickStatScreen extends Screen {
         pGuiGraphics.blit(TEXTURE, x - 85, y - 80, 0, 0, 256, 256);
         Vec3 cameraPosition = new Vec3(0, preview.getEyeHeight(), -1); // Adjust as needed
         preview.lookAt(EntityAnchorArgument.Anchor.FEET,cameraPosition);
-        super.renderMenuBackground(pGuiGraphics, pX, pY, pWidth, pHeight);
         try {
             renderEntityInInventory(
                     pGuiGraphics,
                     (width) / 2 + 40,  // X position
                     (height) / 2 + 35,      // Y position
-                    80,                // Scale
-                    new Vector3f(),    // Translation vector
+                    80,    // Translation vector
                     new Quaternionf().rotateY((float) Math.toRadians(190)).rotateX((float) Math.toRadians(180)),
                     new Quaternionf().rotateX((float) Math.toRadians(0)).rotateZ((float) Math.toRadians(180)),   // Pitch rotation (to ensure upright orientation)
                     preview            // The entity to render
@@ -120,10 +119,6 @@ public class FredrickStatScreen extends Screen {
         } catch (NullPointerException e) {
 
         }
-    }
-    @Override
-    public boolean isMouseOver(double pMouseX, double pMouseY) {
-        return false;
     }
 
     @Override

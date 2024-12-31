@@ -25,11 +25,13 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.PlayerTeam;
-import software.bernie.geckolib.animatable.GeoAnimatable;
+import net.minecraft.world.scores.Team;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -104,9 +106,9 @@ public class RedChuchuMob extends Monster implements GeoEntity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
-        pBuilder.define(IS_VISIBLE, false);
-        super.defineSynchedData(pBuilder);
+    protected void defineSynchedData() {
+        this.entityData.define(IS_VISIBLE, false);
+        super.defineSynchedData();
     }
 
     @Override
@@ -219,7 +221,7 @@ public class RedChuchuMob extends Monster implements GeoEntity {
     }
 
     @Override
-    public PlayerTeam getTeam() {
+    public Team getTeam() {
         return super.getTeam();
     }
 

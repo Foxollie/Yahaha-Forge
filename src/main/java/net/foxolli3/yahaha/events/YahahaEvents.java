@@ -4,8 +4,6 @@ package net.foxolli3.yahaha.events;
 import net.foxolli3.yahaha.Yahaha;
 import net.foxolli3.yahaha.entity.ModEntities;
 import net.foxolli3.yahaha.entity.custom.*;
-import net.minecraft.world.entity.SpawnPlacementType;
-import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -30,16 +28,16 @@ public class YahahaEvents {
     }
     @SubscribeEvent
     public static void entitySpawnRestriction(SpawnPlacementRegisterEvent event) {
-        event.register(ModEntities.BLUE_CHUCHU.get(), SpawnPlacementTypes.ON_GROUND,
+        event.register(ModEntities.BLUE_CHUCHU.get(), SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Monster::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-        event.register(ModEntities.RED_CHUCHU.get(), SpawnPlacementTypes.ON_GROUND,
+        event.register(ModEntities.RED_CHUCHU.get(), SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Monster::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-        event.register(ModEntities.YELLOW_CHUCHU.get(), SpawnPlacementTypes.ON_GROUND,
+        event.register(ModEntities.YELLOW_CHUCHU.get(), SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Monster::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-        event.register(ModEntities.WHITE_CHUCHU.get(), SpawnPlacementTypes.ON_GROUND,
+        event.register(ModEntities.WHITE_CHUCHU.get(), SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Monster::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
     }

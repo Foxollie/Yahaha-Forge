@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class WandConstructionTableScreen extends AbstractContainerScreen<WandConstructionTableMenu> {
     private static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(Yahaha.MOD_ID, "textures/gui/wand_construction_table_gui.png");
+            new ResourceLocation(Yahaha.MOD_ID, "textures/gui/wand_construction_table_gui.png");
 
 
     public WandConstructionTableScreen(WandConstructionTableMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
@@ -48,7 +48,7 @@ public class WandConstructionTableScreen extends AbstractContainerScreen<WandCon
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics,0,0,0);
+        renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, delta);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }
