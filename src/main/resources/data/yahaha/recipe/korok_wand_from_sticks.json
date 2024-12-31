@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "/": {
-      "item": "yahaha:korok_seed"
+      "tag": "minecraft:logs"
     }
   },
   "pattern": [

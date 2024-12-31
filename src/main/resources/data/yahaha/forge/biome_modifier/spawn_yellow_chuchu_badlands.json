@@ -1,6 +1,6 @@
 {
 "type": "forge:add_spawns",
-"biomes": "#forge:is_badlands",
+"biomes": "#minecraft:is_badlands",
 "spawners": {
 "type": "yahaha:yellow_chuchu",
 "maxCount": 6,

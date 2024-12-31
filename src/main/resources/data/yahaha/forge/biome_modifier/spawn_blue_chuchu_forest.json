@@ -1,6 +1,6 @@
 {
   "type": "forge:add_spawns",
-  "biomes": "#forge:is_forest",
+  "biomes": "#minecraft:is_forest",
   "spawners": {
     "type": "yahaha:blue_chuchu",
     "maxCount": 6,
